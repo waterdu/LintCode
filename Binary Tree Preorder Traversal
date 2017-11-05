@@ -17,7 +17,7 @@
  * is (# of stack frames)*(space per stack frame).
  */
 
-
+//Travelsal method
 public class Solution {
     /*
      * @param root: A Tree
@@ -39,3 +39,20 @@ public class Solution {
         traverse(root.right, result);
     }
 }
+
+//devide and conquer method
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // write your code here
+        List<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
+        
+        List<Integer> left = preorderTraversal(root.left);
+        List<Integer> right = preorderTraversal(root.right);
+        
+        result.add(root.val);
+        result.addAll(left);
+        result.addAll(right);
+        return result;
+    }
