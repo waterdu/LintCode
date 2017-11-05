@@ -1,0 +1,41 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ * 
+ * preoder mean mid left right
+ * the time complexity is O(n), because you traverse each node once.
+ * The space complexity of this traversal seems to be O(h). 
+ * h is height of tree.
+ * The best way to think about space complexity of recursive functions
+ * is (# of stack frames)*(space per stack frame).
+ */
+
+
+public class Solution {
+    /*
+     * @param root: A Tree
+     * @return: Preorder in ArrayList which contains node values.
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // write your code here
+        List<Integer> result = new ArrayList<Integer>();
+        traverse(root, result);
+        return result;
+    }
+    private void traverse(TreeNode root, List<Integer> result){
+        if (root == null) {
+            return; 
+        }
+        
+        result.add(root.val);
+        traverse(root.left, result);
+        traverse(root.right, result);
+    }
+}
