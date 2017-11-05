@@ -1,0 +1,22 @@
+class Solution {
+    /**
+     * @return: The same instance of this class every time
+     * 为了防止多个线程创建多个实例，要在new之前加一个锁，
+     * 即synchronized。同时为了防止多个线程在判断实例为null之后先
+     * 后进入synchronized依然创建多个实例，
+     * 可以在synchronized之后double check一下实例是否为null。更多讨论见下：
+     * reference:http://www.cnblogs.com/EdwardLiu/p/4443230.html
+     */
+    private static volatile Solution mSolution = null;
+    public static Solution getInstance() {
+        // write your code here
+        if (mSolution == null){
+            synchronized(Solution.class) {
+                if (mSolution == null) {
+                    mSolution = new Solution();
+                }    
+            }
+        }
+        return mSolution;
+    }
+};
