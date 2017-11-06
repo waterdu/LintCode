@@ -56,3 +56,28 @@ public class Solution {
         result.addAll(right);
         return result;
     }
+ * 要把recursion想成不递归，就必须得用stack来存recursion的stack
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // write your code here
+        List<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            TreeNode current = stack.pop();
+            result.add(current.val);
+            //stack is last in first out, we want first out left
+        //so we first add right, last add left
+            if(current.right != null){
+                stack.push(current.right);
+            }
+             if(current.left != null){
+                stack.push(current.left);
+            }
+        }
+   
+        return result;
+    }
