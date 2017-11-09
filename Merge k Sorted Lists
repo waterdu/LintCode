@@ -1,0 +1,44 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    //java's heap is called priorityQ
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length == 0) {
+            return null;
+        }    
+        
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<ListNode>(new Comparator<ListNode>(){
+            public int compare(ListNode n1,ListNode n2){
+                //this means the left one is the top heap
+                return n1.val-n2.val;
+            }
+        });
+        
+        
+        //initialize, put all ListNode into the Heap
+        for(ListNode list:lists){
+            if(list != null){
+                minHeap.offer(list);
+            }
+        }
+        
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        while(!minHeap.isEmpty()){
+            // 拿出堆顶元素
+            current.next = minHeap.poll();//the polled element is a listNode,so it will have next
+            current = current.next;
+            if(current.next != null){
+                minHeap.offer(current.next);
+                current.next = null;
+            }
+        }
+        return dummy.next;     
+    }
+}
