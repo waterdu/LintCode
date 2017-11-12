@@ -1,0 +1,23 @@
+class Solution {
+    
+    // If we calculate all distances between 4 points, 4 smaller distances should be equal (sides), 
+    // and 2 larger distances should be equal too (diagonals). diamond
+    public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+        int[][] input = {{p1[0], p1[1]}, {p2[0], p2[1]},{p3[0], p3[1]}, {p4[0], p4[1]}};
+        int[] len = new int[6];
+        
+        int count = 0;
+        for( int i = 0; i < 4; i++){
+            for(int j = i + 1; j < 4; j++){
+                len[count] = (input[i][0] - input[j][0]) * (input[i][0] - input[j][0]) +
+                     (input[i][1] - input[j][1]) *  (input[i][1] - input[j][1]);    
+                count++;
+            }
+        }
+        Arrays.sort(len);
+        if(len[0] == len[3] && len[3] != len[4] && len[4] == len[5]){
+            return true;
+        }
+        return false;
+    }
+}
