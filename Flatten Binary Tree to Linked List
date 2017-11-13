@@ -1,0 +1,34 @@
+
+public class Solution {
+    /*
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: 
+     */
+     
+    //most native solution change to LinkedList then connect
+    public void flatten(TreeNode root) {
+        if(root == null){
+            return;
+        }
+        // write your code here
+        ArrayList<TreeNode> allNodes = new ArrayList<>();
+        preOrder(root, allNodes);
+        int n = allNodes.size();
+        for(int i = 0; i < n - 1; i++){
+            TreeNode current = allNodes.get(i);
+            current.left = null;
+            current.right = allNodes.get(i + 1);
+        }
+        allNodes.get(n - 1).left = null; 
+        allNodes.get(n - 1).right = null; 
+    }
+    
+    private void preOrder(TreeNode root, ArrayList<TreeNode> allNodes){
+        if (root == null) {
+            return;
+        }
+        allNodes.add(root);
+        preOrder(root.left, allNodes);
+        preOrder(root.right, allNodes);
+    }
+}
