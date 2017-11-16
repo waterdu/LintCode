@@ -32,3 +32,75 @@ public class Solution {
         preOrder(root.right, allNodes);
     }
 }
+
+
+
+public class Solution {
+    /*
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: 
+     */
+    public void flatten(TreeNode root) {
+        helper(root);
+    }
+    //flatten root and return the last node
+    private TreeNode helper(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+        
+        TreeNode leftLast = helper(root.left);
+        TreeNode rightLast = helper(root.right);
+        
+        //connect leftLast to root.right
+        if (leftLast != null) {
+            leftLast.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+        
+        if (rightLast != null){
+            return rightLast;
+        }
+        
+        if (leftLast != null){
+            return leftLast;
+        } 
+        return root;
+    }
+}
+
+//这个巨简单，实际上就是第一个的dfs的实现
+
+public class Solution {
+    /*
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: 
+     */
+    public void flatten(TreeNode root) {
+        // write your code here
+        if (root == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        
+        while (!stack.empty()){
+            TreeNode current = stack.pop();
+            if(current.right != null) {
+                stack.push(current.right);
+            }
+            if(current.left != null) {
+                stack.push(current.left);
+            }
+            
+            //connect
+            current.left = null;
+            if(!stack.empty()){
+                current.right = stack.peek();
+            } else {
+                current.right = null;
+            }
+        }
+    }
+}
