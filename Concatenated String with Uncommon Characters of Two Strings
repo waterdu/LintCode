@@ -49,3 +49,42 @@ class Solution:
         result = [a for a in s1 if a not in s2] +\
             [b for b in s2 if b not in s1]
         return ''.join(result)
+
+//c++解法
+class Solution {
+public:
+    /*
+     * @param : the 1st string
+     * @param : the 2nd string
+     * @return: uncommon characters of given strings
+     */
+    string concatenetedString(string &s1, string &s2) {
+        // write your code here
+        string res = "";
+         // store all characters of s2 in map
+        unordered_map<char, int> m;
+        for (int i = 0; i < s2.size(); i++){
+            m[s2[i]] = 1;
+        }
+        
+    // Find characters of s1 that are not
+    // present in s2 and append to result
+        for (int i = 0; i < s1.size(); i++) {
+            if (m.find(s1[i]) == m.end()) {
+                res += s1[i];
+            } else {
+                m[s1[i]] = 2;
+            }
+        }
+        
+    // Find characters of s2 that are not
+    // present in s1.
+        for (int i = 0; i < s2.size(); i++){
+            if(m[s2[i]] == 1) {
+                res += s2[i];
+            }
+        }
+        
+        return res;
+    }
+};
