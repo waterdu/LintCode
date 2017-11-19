@@ -1,0 +1,51 @@
+public class Solution {
+    /*
+     * @param : the 1st string
+     * @param : the 2nd string
+     * @return: uncommon characters of given strings
+     */
+    public String concatenetedString(String s1, String s2) {
+        // write your code here
+        if(s1 == null || s1.length() == 0){
+            return s2;
+        }
+        StringBuilder sb = new StringBuilder();
+        
+        Map<Character, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < s2.length(); i++) {
+            if(!map.containsKey(s2.charAt(i))){
+                map.put(s2.charAt(i), 1);
+            }
+        }
+        
+        for (int i = 0; i < s1.length(); i++) {
+            if (!map.containsKey(s1.charAt(i))){
+                sb.append(s1.charAt(i));
+            } else {
+                map.put(s1.charAt(i), 2);
+            }
+        }
+        
+        for (int i = 0; i < s2.length(); i++) {
+            if(map.get(s2.charAt(i)) == 1) {
+                sb.append(s2.charAt(i));
+            }    
+        }
+        return sb.toString();
+    }
+};
+
+python 解法
+class Solution:
+    """
+    @param: : the 1st string
+    @param: : the 2nd string
+    @return: uncommon characters of given strings
+    """
+
+    def concatenetedString(self, s1, s2):
+        # write your code here
+        result = [a for a in s1 if a not in s2] +\
+            [b for b in s2 if b not in s1]
+        return ''.join(result)
