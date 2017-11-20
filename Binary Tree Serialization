@@ -1,0 +1,75 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * This method will be invoked first, you should design your own algorithm 
+     * to serialize a binary tree which denote by a root node to a string which
+     * can be easily deserialized by your own "deserialize" method later.
+     */
+    public String serialize(TreeNode root) {
+        // write your code here
+        if(root == null) {
+            return "{}";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()){
+            TreeNode current = q.poll();
+            if(current == null) {
+                sb.append(",#");
+                continue;
+            }
+            sb.append(",");
+            sb.append(current.val);
+            q.add(current.left);
+            q.add(current.right);
+        }
+        return sb.toString().trim();
+    }
+    
+    /**
+     * This method will be invoked second, the argument data is what exactly
+     * you serialized at method "serialize", that means the data is not given by
+     * system, it's given by your own serialize method. So the format of data is
+     * designed by yourself, and deserialize it here as you serialize it in 
+     * "serialize" method.
+     */
+    public TreeNode deserialize(String data) {
+        // write your code here
+        if(data == null || data.length() == 0) {
+            return null;
+        }
+        String[] strArray = data.split(",");
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        TreeNode result = new TreeNode(Integer.parseInt(strArray[0]));
+        q.add(result);
+        int count = 0;
+        count++;
+        while(!q.isEmpty()){
+            TreeNode temp = q.poll();
+            if(!strArray[count].equals(",")) {
+                temp.left = new TreeNode(Integer.parseInt(strArray[count]));
+                q.add(temp.left);
+            }
+            count++;
+            if(!strArray[count].equals(",")) {
+                temp.right = new TreeNode(Integer.parseInt(strArray[count]));
+                q.add(temp.right);
+            }
+            count++;
+        }
+        return result;
+    }
+}
