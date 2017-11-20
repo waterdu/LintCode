@@ -1,0 +1,55 @@
+public class Solution {
+    /*
+     * @param s: a string
+     * @return: it's index
+     */
+    public int firstUniqChar(String s) {
+        // write your code here
+        if(s == null || s.length() == 0) {
+            return -1;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = s.length() - 1; i >= 0; i--){
+            if(!map.containsKey(s.charAt(i))) {
+                map.put(s.charAt(i), i);
+            }
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if(map.get(s.charAt(i)) != i) {
+                map.put(s.charAt(i), -1);
+            } else {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+//更好的解法
+public class Solution {
+    /*
+     * @param s: a string
+     * @return: it's index
+     */
+    public int firstUniqChar(String s) {
+        // write your code here
+        if(s == null || s.length() == 0) {
+            return -1;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0;i < s.length(); i++){
+            if(map.containsKey(s.charAt(i))) {
+                map.put(s.charAt(i), map.get(s.charAt(i)) + 1);
+            } else {
+                map.put(s.charAt(i), 1);
+            }
+        }
+        
+        for (int i = 0; i < s.length(); i++) {
+            if(map.get(s.charAt(i)) == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
