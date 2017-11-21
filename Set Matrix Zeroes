@@ -1,0 +1,89 @@
+//first solution
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        Set<Integer> row = new HashSet<>();
+        Set<Integer> column = new HashSet<>();
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        //find zero
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if(matrix[i][j] == 0) {
+                    row.add(i);
+                    column.add(j);
+                }
+            }
+        }
+        //set row to 0
+        for (Integer value:row) {
+            for(int j = 0; j < n; j++){
+                matrix[value][j] = 0;
+            }
+        }
+         //set column to 0
+        for (Integer value:column) {
+            for(int i = 0; i < m; i++){
+                matrix[i][value] = 0;
+            }
+        }        
+    }
+}
+
+//优化解法 O（1）space
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        boolean firstColumnHasZero = false;
+        boolean firstRowHasZero = false;
+        for (int j = 0; j < n; j ++){
+            if(matrix[0][j] == 0) {
+                firstRowHasZero = true;
+            }
+        }
+        
+        for (int i = 0; i < m; i ++){
+            if(matrix[i][0] == 0) {
+                firstColumnHasZero = true;
+            }
+        }
+        
+        
+        //find zero
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                if(matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        //set row to 0
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                if(matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        //set column and row to 0
+        if (firstRowHasZero == true) {
+            for (int j = 0; j < n; j++){
+                matrix[0][j] = 0;
+            }
+        }  
+        if (firstColumnHasZero == true) {
+            for (int i = 0; i < m; i++){
+                matrix[i][0] = 0;
+            }
+        }   
+    }
+}
