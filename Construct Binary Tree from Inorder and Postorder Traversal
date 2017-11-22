@@ -1,0 +1,21 @@
+
+class Solution:
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        if not inorder: return None #inorder is empty
+        root = TreeNode(postorder[-1]) #last one is root
+        rootPos = inorder.index(postorder[-1])
+        root.left = self.buildTree(inorder[:rootPos], postorder[:rootPos])
+        root.right = self.buildTree(inorder[rootPos + 1 : ], postorder[rootPos : -1])
+        return root
+  
+  //Java解法类似，但是多写get Index的方法
+   //将元素和其下标存放在map中，便于寻找
+        // value, index
+        HashMap<Integer, Integer> map = new HashMap<Integer,Integer>();
+        for(int i=0;i<inorder.length;i++)
+        	map.put(inorder[i], i);
