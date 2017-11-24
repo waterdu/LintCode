@@ -1,0 +1,17 @@
+public class Solution {
+    public int getSum(int a, int b) {
+       
+// a与b之间没有进位，那么a^b就是结果
+// a与b之间有进位，即a&b不等与０，那么结果就是a&b<<1 +　a^b
+// 考虑循环进位，使用递归处理sum;
+        // 1, 1
+        int sum = a ^ b; //is no carry
+        int carry = a & b;
+        while(carry != 0) {
+            int temp = sum;
+            sum = temp ^ (carry << 1);
+            carry = (carry << 1) & temp; //move to next bit
+        }
+        return sum;
+    }
+}
