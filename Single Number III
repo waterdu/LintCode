@@ -1,0 +1,20 @@
+class Solution {
+    public int[] singleNumber(int[] nums) {
+        int sum = 0;
+        for (int n:nums){
+            sum = sum ^ n;
+        }
+        //令lowbit = xor & -xor，lowbit的含义为xor从低位向高位，第一个非0位所对应的数字
+        //例如假设xor = 6（二进制：0110），则-xor为（二进制：1010，-6的补码，two's complement）
+        int lowbit = sum & (-sum);
+        int[] res = new int[2];
+        for (int n:nums){
+            if ((n & lowbit) != 0) {
+                res[0] = res[0] ^ n;
+            } else {
+                res[1] = res[1] ^ n;
+            }
+        }
+        return res;
+    }
+}
