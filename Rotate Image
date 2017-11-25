@@ -1,0 +1,70 @@
+class Solution {
+    
+//   [1,2,3],
+//   [4,5,6],
+//   [7,8,9]
+   
+//   [7,8,9],
+//   [4,5,6],
+//   [1,2,3]    
+    
+//     [7,4,1]
+//     [8,5,2]
+//     [9,6,3]
+    
+    
+    public void rotate(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        //upside down
+        int n = matrix.length;
+        for(int j = 0; j < n/2; j++){
+            for (int i = 0; i < n; i++){
+                int temp = matrix[j][i];
+                matrix[j][i] = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = temp;
+            }
+        }
+        //diagnoal swap
+        for (int i = 0; i < n; i++){
+            for(int j = i; j < n;j++){
+                if(i != j) {
+                    int temp = matrix[j][i];
+                    matrix[j][i] = matrix[i][j];
+                    matrix[i][j] = temp;
+                }    
+            }
+        }    
+    }
+}
+
+public class Solution {
+    public void rotate(int[][] matrix) {//rotate from out layer to inner
+        if(matrix==null||matrix.length==0) return;
+        if(matrix[0]==null||matrix[0].length==0) return;
+        int n=matrix.length;//[123],n=3
+        //swap
+        for(int i = 0; i < n;i++){
+            for(int j = 0; j < n; j++){
+                if(i>j){
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
+                }
+            }
+        }
+        // reverse row
+        for(int i = 0;i < n;i++){
+            int left = 0;
+            int right = n - 1;
+            while(left < right){
+                int temp = matrix[i][left];
+                matrix[i][left] = matrix[i][right];
+                matrix[i][right] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+}
