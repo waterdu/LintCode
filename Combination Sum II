@@ -1,0 +1,35 @@
+public class Solution {
+    /**
+     * @param num: Given the candidate numbers
+     * @param target: Given the target number
+     * @return: All the combinations that sum to target
+     */
+    public List<List<Integer>> combinationSum2(int[] num, int target) {
+        // write your code here
+        List<List<Integer>> result = new ArrayList<>();
+        if (num == null || num.length == 0){
+            return result;
+        }
+        List<Integer> list = new ArrayList<>();
+        Arrays.sort(num);
+        dfs(result, list, num, target, 0);
+        return result;
+    }
+    private void dfs(List<List<Integer>> result, List<Integer> list, int[] num,
+        int target, int pos){
+        if (target == 0){
+            result.add(new ArrayList<Integer>(list));
+            return;
+        }        
+        if (target > 0){
+            for (int i = pos; i < num.length; i++){
+                if (i != pos && num[i] == num[i - 1]){
+                    continue;
+                }
+                list.add(num[i]);
+                dfs(result, list, num, target - num[i], i + 1);
+                list.remove(list.size() - 1);
+            }
+        }    
+    }
+}
