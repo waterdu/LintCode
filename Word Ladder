@@ -1,0 +1,135 @@
+public class Solution {
+    /*
+     * @param start: a string
+     * @param end: a string
+     * @param dict: a set of string
+     * @return: An integer
+     */
+    public int ladderLength(String start, String end, Set<String> dict) {
+        // write your code here
+        if (dict == null) {
+            return 0;
+        }
+        if(start.equals(end)) {
+            return 1;
+        }
+        
+
+        dict.add(end);
+        int length = 1;
+        Queue<String> q = new LinkedList<>();
+        HashSet<String> visited = new HashSet<>();
+        q.add(start);
+        while(!q.isEmpty()) {
+            length++;
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                String current = q.poll();
+                for (String s:nextWords(current, dict)) {
+                    if(visited.contains(s)) {
+                        continue;
+                    }
+                    if(s.equals(end)) {
+                        return length;
+                    }
+                    visited.add(s);
+                    q.add(s);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    private ArrayList<String> nextWords(String current, Set<String> dict) {
+        ArrayList<String> result = new ArrayList<>();
+        if (dict == null || dict.size() == 0) {
+            return result;
+        }
+        int n = current.length();
+        for (char c = 'a'; c <= 'z';c++){
+            for (int i = 0; i < n; i++) {
+                if(c == current.charAt(i)) {
+                    continue;
+                }
+                StringBuilder sb = new StringBuilder(current);
+                sb.setCharAt(i, c);
+                String newS = sb.toString();
+                if(dict.contains(newS)) {
+                    result.add(newS);
+                }
+            }
+        }
+        return result;
+    }
+}
+
+
+//不用StringBuilder的解法
+public class Solution {
+    /*
+     * @param start: a string
+     * @param end: a string
+     * @param dict: a set of string
+     * @return: An integer
+     */
+    public int ladderLength(String start, String end, Set<String> dict) {
+        // write your code here
+        if (dict == null) {
+            return 0;
+        }
+        if(start.equals(end)) {
+            return 1;
+        }
+        
+
+        dict.add(end);
+        int length = 1;
+        Queue<String> q = new LinkedList<>();
+        HashSet<String> visited = new HashSet<>();
+        q.add(start);
+        while(!q.isEmpty()) {
+            length++;
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                String current = q.poll();
+                for (String s:nextWords(current, dict)) {
+                    if(visited.contains(s)) {
+                        continue;
+                    }
+                    if(s.equals(end)) {
+                        return length;
+                    }
+                    visited.add(s);
+                    q.add(s);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    private ArrayList<String> nextWords(String current, Set<String> dict) {
+        ArrayList<String> result = new ArrayList<>();
+        if (dict == null || dict.size() == 0) {
+            return result;
+        }
+        int n = current.length();
+        for (char c = 'a'; c <= 'z';c++){
+            for (int i = 0; i < n; i++) {
+                if(c == current.charAt(i)) {
+                    continue;
+                }
+                String newS = replace(current, c, i);
+                if(dict.contains(newS)) {
+                    result.add(newS);
+                }
+            }
+        }
+        return result;
+    }
+    
+    private String replace(String s, char c, int index) {
+        char[] chars = s.toCharArray();
+        chars[index] = c;
+        return new String(chars);
+    }
+}
