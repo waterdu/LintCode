@@ -1,0 +1,30 @@
+class MovingAverage {
+    double sum = 0;
+    int currentSize = 0;
+    int maxSize = 0;
+    Queue<Integer> q;
+    /** Initialize your data structure here. */
+    public MovingAverage(int size) {
+        q = new LinkedList<>();
+        maxSize = size;
+    }
+    
+    public double next(int val) {
+        if(q.size() == maxSize) {
+            sum -= q.poll();
+        }
+        sum += val;
+        q.add(val);
+        double res = sum / q.size();
+        return res;
+    }
+}
+
+/**
+ * Your MovingAverage object will be instantiated and called as such:
+ * MovingAverage obj = new MovingAverage(size);
+ * double param_1 = obj.next(val);
+ */
+
+//if don't allow space 
+Save the q linked list to disk, we only need to manipulate the top and tail
