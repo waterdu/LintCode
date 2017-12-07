@@ -1,0 +1,7 @@
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        Arrays.sort(nums);//1,2,3;k=3,
+        return nums[nums.length-k];
+    }
+}
+//还有种考quick sort
