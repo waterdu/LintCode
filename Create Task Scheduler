@@ -1,0 +1,24 @@
+class Solution {
+    
+    //aaabbbccdde
+    //we need the letter happen most 
+    //  AABBC ||AABBX ||ABXXX
+    //题目会变种让你把原来的顺序保存出来
+    
+    public int leastInterval(char[] tasks, int n) {
+        int[] c = new int[26];
+        for (char t: tasks) {
+            c[t - 'A']++;
+        }
+        Arrays.sort(c);
+        //i是出现次数和最大字母一样的数的个数
+        int i = 25;
+        while (i >=0 && c[i] == c[25]) {
+            i--;
+        }
+        
+        // + 25 - 1: count for the most frequent letters, it is the length of the last frame
+        return Math.max(tasks.length, (c[25] - 1) * (n + 1) + 25 -i);
+        //                                AABBC length * (idel least needed) - extra X
+    }
+}
