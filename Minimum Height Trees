@@ -1,0 +1,59 @@
+class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        List<Integer> result = new ArrayList<>();
+        if(n == 0) {
+            return result;
+        }
+        if(n <= 2) {
+            for(int i = 0; i < n; i++) {
+                result.add(i);
+            }
+            return result;
+        }
+        int[] degree = new int[n];
+        List<List<Integer>> myGraph = new ArrayList<List<Integer>>();
+        //To save connected leave
+        for(int i = 0; i < n; i++) {
+            myGraph.add(new ArrayList<Integer>());
+        }
+        for(int[] edge:edges) {
+            int x = edge[0];
+            int y = edge[1];
+            myGraph.get(x).add(y);
+            myGraph.get(y).add(x);
+            degree[x]++;
+            degree[y]++;
+        }
+        //start topological sort
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < n; i++) {
+            if(degree[i] == 0) {
+                return result;
+            } else if(degree[i] == 1) {
+                q.offer(i);
+            }
+        }
+        while(!q.isEmpty()) {
+            //the last while loop round will be the result
+            result = new ArrayList<Integer>();
+            int size = q.size();
+            for(int i = 0; i< size; i++) {
+                int curr = q.poll();
+                result.add(curr);
+                degree[curr]--;
+                for(int k = 0; k<myGraph.get(curr).size(); k++) {
+                    int next = myGraph.get(curr).get(k);
+                    if(degree[next] == 0) { // the edge has been cut
+                        continue;
+                    }
+                    degree[next]--;
+                    //start to cut
+                    if(degree[next] == 1) {
+                        q.offer(next);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
