@@ -1,0 +1,36 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (word == null || word.length() == 0) {
+            return true;
+        }
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(dfs(board, word, 0, i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean dfs(char[][] board, String word, int indexInWord, int i, int j) {
+        if(indexInWord == word.length()) {
+            return true;
+        }
+        if(i<0||i==board.length||j<0||j==board[0].length) {
+            return false;//edge case
+        }
+        char c = word.charAt(indexInWord);
+        if(board[i][j] == c) {
+            board[i][j] = '#';//means visited
+            boolean rest = dfs(board,word,indexInWord+1,i+1,j)||dfs(board,word,indexInWord+1,i-1,j)||dfs(board,word,indexInWord+1,i,j-1)||
+            dfs(board,word,indexInWord+1,i,j+1);
+            board[i][j] = c; //back trace
+            return rest;
+        }
+        return false;//can't find
+    }
+}
