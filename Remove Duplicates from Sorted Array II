@@ -1,0 +1,22 @@
+public class Solution {
+    public int removeDuplicates(int[] nums) {//think about startIndex first
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int index = 0;
+        //
+        //[1,1,1,2,2,3],index = 0, i = 2
+        for(int n:nums) {
+            if (index < 2 || n != nums[index - 2]){
+                nums[index] = n;
+                index++;
+            }
+        }
+        int result = index;
+    
+        for(int i = index; i < nums.length; i++) {
+            nums[i] = 0;
+        }
+        return result;
+    }
+} 
