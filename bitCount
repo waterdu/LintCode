@@ -1,0 +1,13 @@
+//count how many 1's for number in binary.
+// the same method in Java bitCount
+
+public int bitCount( int x )  {  
+  
+       int count = 0;  
+  
+       while ( x != 0 ) {  
+         x &= x - 1;  
+         count++;  
+       }  
+       return count;  
+}       
