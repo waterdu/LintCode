@@ -1,0 +1,27 @@
+class Solution {
+    //this question ask to get the maximum number till the sliding window
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums == null || nums.length == 0 || k <= 0){
+            return new int[0];
+        }
+        //get size of the result
+        int n = nums.length - k + 1;
+        int[] result = new int[n];
+        int index = 0;
+        Deque<Integer> q = new ArrayDeque<>(); // we can garentee the first is alwasy the max
+        for (int i = 0; i < nums.length; i++) {
+            while (!q.isEmpty() && nums[i] > q.peekLast()) {
+                q.pollLast();//remove the last, get new max
+            }
+            q.addLast(nums[i]);
+            if(i >= k && !q.isEmpty() && q.peekFirst() == nums[i - k]) {
+                q.pollFirst();
+            }
+            if(!q.isEmpty() && i >= k - 1) {
+                result[index] = q.peekFirst();
+                index++;
+            }     
+        }
+        return result; 
+    }
+}
