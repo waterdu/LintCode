@@ -1,0 +1,54 @@
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        // 1, 2, 3
+        int n = nums.length;
+        
+        //when there's only 2 or 1 numbers, first player can choose the largest, garenteed a win
+        if(n <= 2) {
+            return true;
+        }
+        
+        //dp[i][j] means the largest score you can take subarray from i to j
+        int[][] dp = new int[n][n];
+        // if the size is 1, the player1 get the largest one number
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = nums[i];
+        }
+        //when player1 turn, add the score, when player2 turn, reduce the score
+        //get score from right to left
+        for (int i = n - 2; i >= 0; i--) {
+            for(int j = i + 1; j < n; j++) {
+        //state change function     score     previous players highest score
+                dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+            }
+        }
+        //if the score same, player1 also win
+        return dp[0][n - 1] >= 0;
+    }
+}
+
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        // 1, 2, 3
+        int n = nums.length;
+        
+        //when there's only 2 or 1 numbers, first player can choose the largest, garenteed a win
+        if(n <= 2) {
+            return true;
+        }
+        // if the size is 1, the player1 get the largest one number
+        // from 0 to i
+        // we only need to know dp[0][i], so it can be overrighted by later dp
+        int[] dp = new int[n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    dp[i] = nums[i]; // if the size is 1, player1 always get the score
+                } else {
+                    dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+                }
+            }
+        }
+        return dp[n - 1] >= 0;
+    }
+}
