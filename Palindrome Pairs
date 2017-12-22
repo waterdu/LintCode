@@ -1,0 +1,93 @@
+class Solution {
+      // From naive O(nnk) to O(nkk) time.
+    public List<List<Integer>> palindromePairs(String[] words) {
+        Map<String, Integer> map = new HashMap<>();
+         int n = words.length;
+        for (int i = 0; i < n; i++) {
+            map.put(words[i], i);
+        }
+        List<List<Integer>> result = new ArrayList<>();
+         for (int i = 0; i < n; i++) {//n
+            for (int j = 0; j <= words[i].length(); j++) {//k
+                String s1 = words[i].substring(0, j);
+                String s2 = words[i].substring(j);
+                if (isPalindrome(s1)) { // word1 + s1 + s2 is palindrom, s1 in the middle
+                    String reverseS2 = new StringBuilder(s2).reverse().toString();
+                    if(map.containsKey(reverseS2) && map.get(reverseS2) != i) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(map.get(reverseS2));
+                        list.add(i);
+                        result.add(list);
+                    }
+                }
+                if (isPalindrome(s2)) {// s1 + s2 + word2 is palindrom, s2 in the middle 
+                    String reverseS1 = new StringBuilder(s1).reverse().toString();
+                    // check s2 != 0 to avoid duplicates
+                    if(map.containsKey(reverseS1) && map.get(reverseS1) != i && s2.length() != 0) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(i);
+                        list.add(map.get(reverseS1));
+                        result.add(list);
+                    }
+                }
+            }
+         }
+        return result;
+        
+    }
+        // Utility function to check if a string is a palindrome
+    private static boolean isPalindrome(String str)
+    {
+        int len = str.length();
+      
+        // compare each character from starting
+        // with its corresponding character from last
+        for (int i = 0; i < len/2; i++) {
+            if(str.charAt(i) != str.charAt(len - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+class Solution {
+// brute force
+//  1- Consider each pair one by one.
+// 2- Check if any of the pairs forms a palindrome
+//    after concatenating them.
+// 3- Return true, if any such pair exists.
+// 4- Else, return false.
+// n^2k, k is the length of the words to check palindrome
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> result = new ArrayList<>();
+        int n = words.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(i == j) {
+                    continue;
+                }
+                String check = words[i] + words[j];
+                if(isPalindrome(check)) {
+                    result.add(new ArrayList<>(Arrays.asList(i, j)));
+                }
+            }
+        }
+        return result;
+    }
+    
+    // Utility function to check if a string is a palindrome
+    private static boolean isPalindrome(String str)
+    {
+        int len = str.length();
+      
+        // compare each character from starting
+        // with its corresponding character from last
+        for (int i = 0; i < len/2; i++) {
+            if(str.charAt(i) != str.charAt(len - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
