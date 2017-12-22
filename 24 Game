@@ -1,0 +1,49 @@
+class Solution {
+    //replace a, b with 6 posobilities a+b, a-b,b-a,...
+    public boolean judgePoint24(int[] nums) {
+        List<Double> listArray = new ArrayList<>();
+        for (int i:nums) {
+            listArray.add((double)i);
+        }
+        return dfs(listArray);
+    }
+    private boolean dfs(List<Double> listArray) {
+        if(listArray.size() < 1) {
+            return false;
+        }
+        if(listArray.size() == 1) {
+            if(Math.abs(listArray.get(0) - 24.0) < 0.0001) {
+                return true;
+            }
+        }
+        for (int i = 0; i < listArray.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                double a = listArray.get(i);
+                double b = listArray.get(j);
+                List<Double> temp = new ArrayList<>();
+                temp.addAll(Arrays.asList(a+b,a-b,b-a,a*b));
+                //if a != 0
+                if(Math.abs(a)>0.0001){
+                    temp.add(b/a);
+                }
+                //if b != 0
+                if(Math.abs(b)>0.0001){
+                    temp.add(a/b);
+                }
+                listArray.remove(i);
+                listArray.remove(j);
+                for (double e:temp) {
+                    listArray.add(e);
+                    if(dfs(listArray)){
+                        return true;
+                    }
+                    listArray.remove(listArray.size() - 1);
+                }
+                //the order need to be very carefully
+                listArray.add(j, b);
+                listArray.add(i, a);
+            }
+        }
+        return false;
+    }
+}
