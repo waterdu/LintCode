@@ -1,0 +1,36 @@
+class Solution {
+    //use map<word, freq>
+    //use heap
+    //O(nlogk) time & O(n) space
+    public List<String> topKFrequent(String[] words, int k) {
+        List<String> result = new LinkedList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            String cur = words[i];
+            if(map.containsKey(cur)) {
+                map.put(cur, map.get(cur) + 1);
+            } else {
+                map.put(cur, 1);
+            }
+        }
+        
+        //Heap
+        PriorityQueue<String> pq = new PriorityQueue<>(new Comparator<String>(){
+            public int compare(String s1, String s2) {
+               return map.get(s1) == map.get(s2)? s2.compareTo(s1) : map.get(s1) - map.get(s2);
+            }
+        });
+        for(String s:map.keySet()) {
+            pq.offer(s);
+            if(pq.size() > k) {
+                pq.poll();
+            }
+        }
+        while(!pq.isEmpty()) {
+            result.add(0,pq.poll());
+        }
+        return result;
+    }
+}
+
+//要更快可以把map改成trie
