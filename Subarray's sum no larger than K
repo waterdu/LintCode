@@ -1,0 +1,8 @@
+1 subarray想到presum
+2 no larger than,想到用TreeSet的binary search
+
+save all presum into set<Integer> set = new TreeSet<>();
+
+presum[i] + dleta = presum[j]
+delta <= k
+so presum[j] - 
