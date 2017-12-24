@@ -1,0 +1,45 @@
+/**
+ * Definition of Interval:
+ * public classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this.start = start;
+ *         this.end = end;
+ *     }
+ */
+
+
+public class Solution {
+    /*
+     * @param airplanes: An interval array
+     * @return: Count of airplanes are in the sky.
+     */
+    public int countOfAirplanes(List<Interval> airplanes) {
+        // write your code here
+        int n = airplanes.size();
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+        for (int i = 0; i < n; i++) {
+            Interval airplane = airplanes.get(i);
+            starts[i] = airplane.start;
+            ends[i] = airplane.end;
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        
+        int startIndex = 0, endIndex = 0;
+        int count = 0, res = 0;
+        while(startIndex < n) {
+            if(ends[endIndex] <= starts[startIndex]) {
+                count--;//enter end -> landing
+                endIndex++;
+            } else {
+                //enter start- > flying
+                count++;
+                startIndex++;
+                res = Math.max(res, count);
+            }
+        }
+        return res;
+    }
+}
