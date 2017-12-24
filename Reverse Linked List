@@ -11,3 +11,16 @@ class Solution {
         return prev;
     }
 }
+//recursion 解法
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode nextNode = head.next; //2- 3
+        ListNode newHead = reverseList(nextNode); //3-2
+        nextNode.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
