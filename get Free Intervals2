@@ -1,0 +1,30 @@
+public class Solution {
+    public List<Interval> getFreeIntervals2<List<Interval>> intervals) {
+        int[] begs = this.mergeKLists(intervals, INTERVAL_START_COMPARE);
+        int[] ends = this.mergeKLists(intervals, INTERVAL_END_COMPARE);
+        List<Interval> res= new ArrayList<>();
+        int count = 0, start = 0;
+        for (int i = 0, j = 0; i < begs.length;) {
+            if(begs[i] < end[j]) {
+                count++;
+                if(count == 1) {
+                    // exit free time
+                    if(start > 0) {
+                        res.add(new Interval(start, begs[i]));
+                    }
+                }
+                i++;
+            } else if(begs[i] > end[i]) {
+                count--;
+                if(count == 0) {
+                    start = ends[i];
+                }
+                j++;
+            } else {
+                i++;
+                j++;
+            }
+        }
+        return res;
+    }
+}
