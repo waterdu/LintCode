@@ -1,0 +1,24 @@
+class Solution {
+    //very basic level order traveral
+    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+        List<Integer> result = new ArrayList<>();
+        //parent id
+        Map<Integer,List<Integer>> adjacentList = new HashMap<>();
+        for(int i = 0; i < pid.size(); i++) {
+            //getOrDefault
+           adjacentList.computeIfAbsent(ppid.get(i), k -> new LinkedList<>()).add(pid.get(i));
+        }
+        Queue<Integer> q = new LinkedList<>();
+        q.add(kill);
+        while(!q.isEmpty()) {
+            int cur = q.poll();
+            result.add(cur);
+            List<Integer> children = adjacentList.get(cur);
+            if(children == null) {
+                continue;
+            }
+            q.addAll(children);
+        }
+        return result;
+    }
+}
