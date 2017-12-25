@@ -32,8 +32,72 @@ public int minMeetingRooms2(Interval[] intervals) {
     for(int i = 0; i < rooms.length; i++) {
       m.computeIfAbsent(roomsNums[i], k -> new ArrayList<>()).add(intervals[i])
     }
-    
-    
+//我的解法， 建立一个minHeap把room放进去，比较的是结束时间，每次interval和最早结束时间的room比较，如果有conflict，就建一个新的room，加进room的时候更新最早
+结束时间
+
+
+//sd解法
+import java.util.*;
+class Interval{
+    int start;
+    int end;
+    // mark with slot, it should be
+    int pos;
+    public Interval(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
+    public String toString(){
+        return "[" + start + "," + end + "]";
+    }
+}
+class Solution {//heap
+    public List<List<Interval>> minMeetingRooms(Interval[] intervals) {
+        List<List<Interval>> res = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> (a.start - b.start));
+        PriorityQueue<Interval> queue = new PriorityQueue<>((a, b) -> a.end - b.end);
+        for(Interval i : intervals){
+            if(!queue.isEmpty() && i.start >= queue.peek().end){                
+                Interval top = queue.remove();
+                res.get(top.pos).add(top);
+                i.pos = top.pos;
+            }else{
+                res.add(new ArrayList<>());
+                i.pos = res.size() - 1;
+            }
+      queue.add(i);
+        }
+        int reslen = queue.size();
+        while(!queue.isEmpty()){
+            Interval top = queue.remove();
+            res.get(top.pos).add(top);
+        }
+        
+        for(List<Interval> item:res){
+            System.out.print("[");
+            for(Interval in:item){
+                System.out.print(in.toString());
+            }
+            System.out.println("]");
+        }
+        return reslen;
+    }
+    /*
+    返回每个房间 所有的会议 的开始时间和结束时间，比如 room1 [1,3] [4,6]   
+    room2 [2,5] [5,6] 这类的
+    */
+    public static void main(String[] args){
+        Solution s = new Solution();
+        Interval i1 = new Interval(1, 3);
+        Interval i2 = new Interval(2, 5);
+        Interval i3 = new Interval(4, 6);
+        Interval i4 = new Interval(5, 6);
+        Interval i5 = new Interval(12, 15);
+        Interval[] intervals = {i1, i2, i3, i4, i5};
+        System.out.println(s.minMeetingRooms(intervals));
+    }
+}
+
     
     
     
