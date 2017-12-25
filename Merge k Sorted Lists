@@ -42,3 +42,34 @@ public class Solution {
         return dummy.next;     
     }
 }
+
+//两两merge法, 但是没好处，多线程也很慢，没好处
+public ListNode mergeKLists(List<ListNode> lists) {
+    if(lists.isEmpty()) {
+        return null;
+    }
+    int end = list.size() - 1;
+    while(end > 0) {
+        int begin = 0;
+        while(begin < end) {
+            list.set(begin, merge2Lists(lists.get(begin), lists.get(end))
+            begin++;
+            end--;
+        }
+    }
+    return lists.get(0);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
