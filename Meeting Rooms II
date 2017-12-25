@@ -34,6 +34,9 @@ class Solution {
 
 //减少不必要空间的更快解法
     public int minMeetingRooms(Interval[] intervals) {
+        if(intervals == null || intervals.length == 0) {
+            return 0;
+        }
         int[] starts = new int[intervals.length];
         int[] ends = new int[intervals.length];
         for(int i=0; i<intervals.length; i++) {
