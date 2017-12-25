@@ -1,0 +1,78 @@
+//if you need to output ListOfRoom with meeting intervals
+For example,
+Given [[0, 30],[5, 10],[15, 20]],
+return room 0:[0, 30]
+       room 1:[5, 10][15,20]
+       
+//解法，你需要保留room的Index信息，创建新的class，同时具有val和index
+
+class Element implement Comparable<Element> {
+  int val;
+  int index;
+  public Element (int v, int i ){
+  ...
+  public int getIndex()
+  public int getVal();
+  
+}
+
+public int minMeetingRooms2(Interval[] intervals) {
+    Element[] starts = new Element[length];
+    Element[] ends = new Element[length];
+    
+    
+    
+    int[] rooms = new int[length];
+    for(int i = 0; i< starts.length; i++) {
+      int currentIndex = starts[i].index;
+      if(start[i].compareTo())
+    }
+    
+    Map<Integer, List<Integer>> m = new HashMap<>();
+    for(int i = 0; i < rooms.length; i++) {
+      m.computeIfAbsent(roomsNums[i], k -> new ArrayList<>()).add(intervals[i])
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
