@@ -1,0 +1,36 @@
+//fb真题
+//giving two lists of intervals , ind their overlapping intervals
+//l1:[1,5],[7, 10],[12,18], [22,24]
+//l2:[3, 5],[13, 15] [16,17],[18,21],[22, 23]
+// return [3, 5] [7,8] [13,15] [16,17] [18,18] [22,23]
+
+public List<Interval> getOverLappingIntervals(List<Interval> l1, List<Interval> l2) {
+  if(l1 == null || l2 == null || l1.isEmpty() || l2.isEmpty()) {
+    return Collections.emptyList();
+  }
+  int[] begs = this.merge2Lists(l1, l2, INTERVAL_START_COMPARE);
+  int[] ends = this.merge2Lists(l1, l2, INTERVAL_END_COMPARE);
+  List<Interval> res = new ArrayList<>();
+  int count = 0, start = 0;
+  for (int i = 0, j =0; j < ends.length; ){
+    if(i < begs.length && begs[i] < ends[j]) {
+      //get over lap
+      count++;
+      if(count == 2) {
+        start = begs[i];
+      }
+      i++;
+    } else if (i == begs.length || begs[i] > ends[j] {
+      //out over lap
+      count--;
+      if(count == 1) {
+        res.add(start, ends[j]);
+      }
+      j++
+    } else {
+      // begs[i] == ends[j];
+      res.add(new Interval(begs[i++], ends[j++]));
+    }
+  }
+  return res;
+}
