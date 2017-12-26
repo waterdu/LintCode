@@ -7,7 +7,27 @@
  * };
  */
 
-
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        return clone(node, new HashMap<>());
+    }
+    private UndirectedGraphNode clone(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> clones){
+        if(node == null) {
+            return null;
+        }
+        UndirectedGraphNode clone = clones.get(node);
+        if(clone != null) {
+            return clone;
+        } 
+        clone = new UndirectedGraphNode(node.label);
+        clones.put(node, clone);
+        for(UndirectedGraphNode neighbor:node.neighbors) {
+            clone.neighbors.add(clone(neighbor, clones));
+        }
+        return clone;
+    }
+}
+//xcode 
 public class Solution {
     /*
      * @param node: A undirected graph node
@@ -19,6 +39,40 @@ public class Solution {
             return null;
         }
         
+        //  original             ,clone
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        Queue<UndirectedGraphNode> q = new LinkedList<>();
+        q.add(node);
+        UndirectedGraphNode graphCopy = new UndirectedGraphNode(node.label);
+        map.put(node, graphCopy);
+        
+        //clone node first
+        while(!q.isEmpty()){
+            UndirectedGraphNode cur = q.poll();
+            UndirectedGraphNode clone = map.get(cur);
+            for (UndirectedGraphNode neighbor: cur.neighbors) {
+                UndirectedGraphNode copy = map.computeIfAbsent(neighbor, k -> {
+                    q.add(k);
+                    return new UndirectedGraphNode(k.label);  
+                });
+                clone.neighbors.add(copy);
+            }      
+        }
+        
+        return graphCopy;
+    }
+}
+
+public class Solution {
+    /*
+     * @param node: A undirected graph node
+     * @return: A undirected graph node
+     */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        // write your code here
+        if (node == null){
+            return null;
+        }
         Map<UndirectedGraphNode, UndirectedGraphNode> map =
             new HashMap<>();
         ArrayList<UndirectedGraphNode> nodes = 
