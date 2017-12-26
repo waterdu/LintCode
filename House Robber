@@ -1,0 +1,12 @@
+class Solution {
+    public int rob(int[] nums) {
+        int last2 = 0, last = 0;
+        for (int num:nums) {
+            int cur = Math.max(last2 + num, last);
+            //a, b = b,c
+            last2 = last;
+            last = cur;
+        }
+        return last;
+    }
+}
