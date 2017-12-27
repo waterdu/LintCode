@@ -1,0 +1,56 @@
+//airbnb真题
+
+public List<List<String>> display(List<String> input, int k) {
+  List<List<String>> result = new LinkedList<>();
+  if(input == null || input.isEmtpy()) {
+    return result;
+  }
+  
+  int notFullPageNumber = 0;//First page that is not full
+  //key is host id, value is its last inserted page index
+  Map<String, Integer> map = new HashMap<>();
+  for(int i = 0; i < input.size(); i++) {
+    String entry = input.size();
+    String host = getId(entry);
+    int page = map.getOrDefault(host, -1);
+    if(page == -1) {
+      //new host id, insert into the first page that is not full
+      if(result.size() <= notFullPageNumber) {
+        result.add(new ArrayList<>(k));
+      }
+      result.add(notFullPageNumber).add(entry);
+      map.put(host, notFullPageNumber);
+      if (result.get(notFullPageNumber.size() == k)) {
+        notFullPageNumber = findNextNotFullPage(page, result, k);
+      }
+      continue;
+    }
+    
+    //duplicate id, insert into the first not full page
+    //last inserted index
+    int nextInsertPageNumber = findNextNotFullPage(page, result, k);
+    if(nextInsertPageNumber == result.size()) {
+      if(result.get(result.size() - 1).size() + input.size() - i > k) {
+        result.add(new ArrayList<>(k));
+      } else {
+        //remaining listing is less than 12, allow duplicat host ID in the same page
+        nextInsertPageNumber--;
+      }
+    }
+    result.get(nextInsertPageNumber).add(entry);
+    map.put(host, nextInsertPageNumber);
+  }
+  return result;
+}
+
+private static String getId(String s) {
+  return s.substring(0, s.indexOf(','));
+}
+
+private static int findNextNotFullPage(int currentPageNumber, List<String> result, int k) {
+  int res = currentPageNumber + 1;
+  while(res < result.size() && result.get(res).size() == k) {
+    res++;
+  }
+  return res;
+}
