@@ -1,0 +1,16 @@
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        String[] words = str.split(" ");
+        if(pattern.length() != words.length) {
+            return false;
+        }
+        Map<Character, Integer> patternMap = new HashMap<>();
+        Map<String, Integer> strMap = new HashMap<>();
+        for(int i =0; i < words.length; i++) {
+            if(!Objects.equals(patternMap.put(pattern.charAt(i), i), strMap.put(words[i], i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
