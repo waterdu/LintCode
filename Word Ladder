@@ -1,3 +1,63 @@
+//two end bfs解法
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> dict = new HashSet<>(wordList);
+        if(!dict.contains(endWord)) {
+            return 0;
+        }
+        //Two-end BFS is much faster thant one-end BFS
+        Set<String> set1 = new HashSet<>();
+        set1.add(beginWord);
+        Set<String> set2 = new HashSet<>();
+        set2.add(endWord);
+        
+        int len = 2;
+        while (true) {
+            if (set1.size() > set2.size()) {
+                //swap set1 and set 2
+                Set<String> set = set1;
+                set1 = set2;
+                set2 = set;
+            }
+            
+            //set1.size() <= set2.size();
+            if (set1.isEmpty()) {
+                break;
+            }
+            // set for the next level
+            Set<String> set = new HashSet<>();
+            for (String str:set1) {
+                for(String word:getOneEditWords(str)) {
+                    if(set2.contains(word)) {
+                        return len;
+                    }
+                    if (dict.contains(word)) {
+                        set.add(word);
+                        dict.remove(word);
+                    }
+                }
+            }
+            set1 = set;
+            len++;
+        }
+        return 0; // no path connect 'start' and 'end'
+    }
+    
+    private Set<String> getOneEditWords(String str) {
+        Set<String> words = new HashSet<>();
+        for (int i = 0; i < str.length(); i++) {
+            for(char c = 'a'; c <= 'z'; c++) {
+                String tmp = str.substring(0, i) + c + str.substring(i + 1, str.length());
+                words.add(tmp);
+            }
+        }
+        return words;
+    }
+}
+
+//普通解法
+
+
 public class Solution {
     /*
      * @param start: a string
