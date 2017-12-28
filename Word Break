@@ -1,6 +1,34 @@
 /xcode解法
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
+        //complexity is s.length()^2,
+        //contains is O(1)
+        Set<String> dict = new HashSet<>(wordDict);
+        if (dict.contains(s)){
+            return true;
+        }
+        int n = s.length();
+        boolean[] canBreakIndex = new boolean[n + 1];
+        canBreakIndex[0] = true;
+        for (int i = 0; i < n + 1; i++) {
+            for(int j = 0; j < i; j++) {
+                if(canBreakIndex[j] && dict.contains(s.substring(j, i))) {
+                    canBreakIndex[i] = true;
+                    break;
+                }
+            }
+        }
+        return canBreakIndex[n];
+    }
+}
+
+//如何优化？别从0开始,计算可以break的最大String长度和最小长度，i,j从这些开始
+
+
+
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
         if(s == null || s.length() == 0 || wordDict.isEmpty()) {
             return false;
         }
