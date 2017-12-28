@@ -1,0 +1,46 @@
+遇到Trie题，
+先写TrieNode,
+一般是TrieNode里面不一定是array
+
+class TrieNode{
+  String word;//不一定是string,也可能是Boolean
+  TrieNode[] children; //不一定是array有可能是hashmap, 如果题目没说26英文字母,有可能是map
+  
+  public TrieNode(){
+    children = new TrieNode[26]
+  }
+}
+
+然后再写个class Trie,这个是不变的，这个模板要记下来
+Class Trie {
+  private TrieNode root;
+  
+  public Trie() {
+    root = new TrieNode;
+  }
+//Insert a word into the trie
+Public void insert(String word) {
+  TrieNode cur = root;
+  for (int i = 0; i < words.length(); i++) {
+    int index = word.charAt(i) - 'a';
+    TrieNode child = cur.childern[index];
+    if(child == null) {
+      child = new TrieNode();
+      cur.children[index] = child;
+    }
+  }
+  cur = child;
+}
+
+public TrieNode searchNextNode(TrieNode node, char c) {
+  if(node == null) {
+    node = root;
+  }
+  int index = c - 'a';
+  return node.children[index];  
+}
+
+public void delete(String word) {
+  这个很难
+}
+
