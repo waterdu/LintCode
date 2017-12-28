@@ -20,3 +20,28 @@ class Solution {
         return mSolution;
     }
 };
+
+volatile:
+cpu 有register 寄存器 l1,l2
+如果不加volatile, memory改了，但是缓存里面还是没改
+volatile disable jvm system optimization.
+
+SingleTon最优解
+singleton一定要说private constructor
+public class InitializationOnDemandSingleton {
+    // Inner class for correct implementation of lazy loading
+    private static class Holder {
+     private static final InitializationOnDemandSingleton instance = new InitializationOnDemandSingleton();
+    }
+    
+    private InitializationOnDemandSingleton() {
+    }
+    //为啥要private constractor?
+    //如果不用private,不能阻止别人new 它
+    public static InitializationOnDemandSingleton getInstance(){
+        return Holder.instance'
+    }
+
+
+
+}
