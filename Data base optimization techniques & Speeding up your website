@@ -1,0 +1,11 @@
+1 figure out where it slows down
+
+2  profire first, optimize last
+(monitor the mechics) 
+用什么Monitor framework? 我用的是internal propriaty framework
+
+3 如果发现database慢怎么办
+  1) Rewrite the queries. 怎么rewrite? Query execution plan， 对每个subquery一步一步做分析
+  2) change indexing strategy
+  3） schema
+  4) Use an external cache（caching service, 对 replicate query有用）
