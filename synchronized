@@ -1,0 +1,9 @@
+//给obj加锁
+synchronized(obj) {
+}
+
+//和synchronize这个方法一样
+synchronized(this) {
+}
+
+加锁意味着什么？ one at a time, sequential one at time
