@@ -1,0 +1,24 @@
+public String maskPhone(String phone) {
+  StringBuilder res = new StringBuilder();
+  int count = 0;
+  for(int i = phone.length() - 1; i >= 0; i--) {
+    char c = phone.charAt(i);
+    if (Character.isWhitespace(c) || c == '(' || c == '-' || c == ')') {
+      continue;
+    }
+    if (Character.isDigit(c)) {
+      count++;
+      if (count < 5) {
+        res.append(c);
+      } else {
+        if(count == 5 || count == 8 || count == 11) {
+          res.append('-');
+        }
+        res.append(*');
+      }
+    } else {
+      res.append(c);
+    }
+  }
+  return res.reverse().toString();
+}
