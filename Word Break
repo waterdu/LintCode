@@ -1,0 +1,28 @@
+/xcode解法
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(s == null || s.length() == 0 || wordDict.isEmpty()) {
+            return false;
+        }
+        // state[i] is true if input.substring(0, i+1) can be broken into words
+        List<Integer> breakableIndex = new ArrayList<>(s.length());
+        
+        for(int i = 0; i< s.length(); i++) {
+            if(wordDict.contains(s.substring(0, i + 1))){
+                breakableIndex.add(i);
+                continue;
+            }
+            
+            Iterator<Integer> iter = breakableIndex.iterator();
+            while(iter.hasNext()) {
+                if(wordDict.contains(s.substring(iter.next() + 1, i + 1))){
+                    //input.substring(0 , j+ 1) can be broken into words
+                    breakableIndex.add(i);
+                    break;
+                }
+                
+            }
+        }
+        return !breakableIndex.isEmpty() && breakableIndex.get(breakableIndex.size() - 1) == s.length() - 1;
+    }
+}
