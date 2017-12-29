@@ -10,3 +10,21 @@ class Solution {
         return dp[N];
     }    
 }
+
+//我的解法
+class Solution {
+    // dp[i - 1] + 1
+    // dp[i - 3] * 2 dp[i - j] * (j - 1) and j >= 3
+    // dp[i - 4] * 3
+    // dp[i - 5] * 4    
+    public int maxA(int N) {
+        int[] dp = new int[N + 1];
+        for (int i = 1; i <= N; i++) {
+            dp[i] = dp[i - 1] + 1;
+            for(int j = 3; i - j >= 1; j++) {
+                dp[i] = Math.max(dp[i], dp[i - j] * (j - 1));
+            }    
+        }
+        return dp[N];
+    }
+}
