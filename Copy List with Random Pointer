@@ -1,0 +1,80 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+public class Solution {
+    //这题不能像copy 图题这么解，因为random可能会指向自己
+
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if (head == null) {
+            return null;
+        }
+        // original,             copy
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+        
+        RandomListNode cur = head;
+        //loop 1. copy all the nodes
+        while(cur != null) {
+            map.put(cur, new RandomListNode(cur.label));
+            cur = cur.next;
+        }
+        
+        //loop 2. assign next and random pointers
+        cur = head;
+         while(cur != null) {
+            RandomListNode copy = map.get(cur);
+            copy.next = map.get(cur.next);
+            copy.random = map.get(cur.random);
+            cur = cur.next;
+        }
+        
+        return map.get(head);
+    }
+}
+
+//解法2，不用map额外空间
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        //first round, copy node
+        //one -> copyOne -> two
+        RandomListNode cur = head;
+        RandomListNode tmp;
+        while (cur != null) {
+            RandomListNode copy = new RandomListNode(cur.label);
+            tmp = cur.next;
+            cur.next = copy;
+            copy.next = tmp;
+            cur = tmp;
+        }
+        
+        // second round: assign random pointers for the copy nodes
+        cur = head;
+        while (cur != null) {
+            if(cur.random != null) {
+                cur.next.random = cur.random.next;
+            }
+            cur = cur.next.next;
+        }
+        
+        //third roundL restore the original list
+        cur = head;
+        RandomListNode dummy = new RandomListNode(0);
+        RandomListNode copyCur = dummy;
+        RandomListNode copy;
+        while(cur != null) {
+            tmp = cur.next.next;
+            
+            copy = cur.next;
+            copyCur.next = copy;
+            copyCur = copyCur.next;
+
+            cur.next = tmp;
+            cur = tmp;
+        }
+        return dummy.next;
+    }
+}
