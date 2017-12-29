@@ -1,0 +1,39 @@
+class Solution {
+    //this question ask for only one distance, if the same, also return false;
+    public boolean isOneEditDistance(String s, String t) {
+        int sLen = s.length(), tLen = t.length();
+        if(sLen == tLen) {
+            return isOneModified(s, t);
+        }
+        if(sLen - tLen == 1) {
+            return isOneDeleted(s, t);
+        }
+        if(tLen > sLen) {
+            return isOneEditDistance(t, s);
+        }
+        return false;
+    }
+    private boolean isOneModified(String s, String t) {
+        if(s.length() == 0 || t.length() == 0) {
+            return false;
+        }
+        boolean modified = false;
+        for (int i = 0; i < s.length(); i++){
+            if(s.charAt(i) != t.charAt(i)) {
+                if(modified) {
+                    return false;
+                }
+                modified = true;
+            }
+        }
+        return modified;
+    }
+    private boolean isOneDeleted(String big, String small) {
+        for(int i = 0; i < small.length(); i++){
+            if(big.charAt(i) != small.charAt(i)) {
+                return big.substring(i + 1).equals(small.substring(i));
+            }
+        }
+        return true;
+    }
+}
