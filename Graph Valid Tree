@@ -1,3 +1,7 @@
+1) There is no cycle.
+2) The graph is connected.
+//For an undirected graph we can either use BFS or DFS to detect above two properties.
+
 public class Solution {
     /**
      * @param n an integer
@@ -9,20 +13,64 @@ public class Solution {
         int[] nums = new int[n];
         Arrays.fill(nums, -1);
         //union find
+        //union all vetex
         for(int i = 0; i < edges.length; i++){
             int x = find(nums, edges[i][0]);
             int y = find(nums, edges[i][1]);
             if(x == y){//there is a cycle
                 return false;
             }
-            nums[x] = y;
+            nums[x] = y;//by default, set y is the father of x
         }
+        //if there's more than one union, the below statement will be false
         return edges.length == n - 1;
     }
-    private int find(int nums[], int i){
-        if(nums[i] == -1){//-1 is the superfather
-            return i;
+    private int find(int[] nums, int i){
+        if(nums[i] == -1){//-1 value means it is the superfather
+            return i;//return the superfather id
         }
         return find(nums, nums[i]);
+    }
+}
+
+//BFS
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (n == 0) {
+            return false;
+        }
+        if (edges.length != n - 1) {
+            return false;
+        }
+        //     id,      neighbor
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        //initialize
+        for (int i = 0; i< n; i++) {
+            graph.put(i, new HashSet<>());
+        }
+        
+        for(int i = 0; i <edges.length; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        //bfs
+        Queue<Integer> q = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        q.offer(0);
+        visited.add(0);
+        while(!q.isEmpty()){
+            int id = q.poll();
+            for (Integer neighbor:graph.get(id)) {
+                if(visited.contains(neighbor)) {
+                    continue;
+                }
+                visited.add(neighbor);
+                q.offer(neighbor);
+            }
+        }
+        
+        return visited.size() == n;
     }
 }
