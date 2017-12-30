@@ -50,6 +50,11 @@ public class Solution {
                  }
              }
          }
-         return result;
+         
+         //how to check if there's a cycle?
+         if(result.size() == graph.size()) {
+            return result;
+         } 
+         return null;
     }
 }
