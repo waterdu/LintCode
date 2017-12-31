@@ -27,3 +27,35 @@ class Solution {
         return res;
     }
 }
+
+//解法2
+public class Solution {
+    public int trap(int[] height) {
+        if (height == null || height.length == 0){
+            return 0;
+        }
+        int left = 0;
+        int right = height.length - 1;
+        int leftH = height[left];
+        int rightH = height[right];
+        int sum = 0;
+        while(left < right){
+            if (leftH < rightH){
+                left++;
+                if(leftH > height[left]){
+                    sum = leftH - height[left] + sum; 
+                } else {
+                    leftH = height[left];
+                }
+            } else {
+                right--;
+                if(rightH > height[right]){
+                    sum = rightH - height[right] + sum;
+                } else {
+                    rightH = height[right];
+                }
+            }
+        }
+        return sum;
+    }
+}
