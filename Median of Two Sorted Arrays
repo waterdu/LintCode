@@ -1,36 +1,39 @@
-public class Solution {
+class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int n1=nums1.length;
-        int n2=nums2.length;
+        int n1 = nums1.length;
+        int n2 = nums2.length;
         int len = n1 + n2;
-        // 1 ,2 ,3, 4
-        if (len % 2 == 1){
-            return findKth(nums1, 0 ,nums2, 0, len / 2 + 1);
+        if (len % 2 == 1) {
+            return findKth(nums1, 0, nums2, 0, len/2 + 1);
         } else {
-            return (findKth(nums1, 0 ,nums2, 0, len / 2) + findKth(nums1, 0 ,nums2, 0, len / 2 + 1)) / 2.0;
+            return (findKth(nums1, 0, nums2, 0, len/2) + findKth(nums1, 0, nums2, 0, len/2 + 1)) / 2.0;
         }
     }
-   private int findKth(int[] A, int A_start, int[] B, int B_start, int k){
-        if (A_start >= A.length){//a取不到情况，当它无穷
-            return B[B_start + k - 1];
+    
+    
+    //每次扔k/2个数， 每次比较k/2 - 1个数
+    private int findKth(int[] A, int a_start, int[] B, int b_start, int k) {
+        // If nums1 is exhausted, return kth number in nums2
+        if(a_start >= A.length) {
+            return B[b_start + k - 1];
         }
-        if (B_start >= B.length){
-            return A[A_start + k - 1];
+        // If nums2 is exhausted, return kth number in nums1
+        if (b_start >= B.length){
+            return A[a_start + k - 1];
         }
-        if (k == 1){
-            return Math.min(A[A_start], B[B_start]);
+        if (k == 1) {
+            return Math.min(A[a_start], B[b_start]);
         }
-        int A_key = A_start + k / 2 -1 < A.length?
-            A[A_start + k / 2 -1] : Integer.MAX_VALUE;
-        int B_key = B_start + k / 2 -1 < B.length?
-            B[B_start + k / 2 - 1] : Integer.MAX_VALUE;
+        int mid1 = Integer.MAX_VALUE;
+        int mid2 = Integer.MAX_VALUE;
+        if (a_start + k / 2 - 1 < A.length) mid1 = A[a_start + k / 2 - 1];
+        if (b_start + k / 2 - 1 < B.length) mid2 = B[b_start + k / 2 - 1];
         
-        if (A_key < B_key){
-            return findKth(A, A_start + k / 2, B, B_start, k - k / 2);
-        } else {
-            return findKth(A, A_start , B, B_start + k / 2, k - k / 2);
-        }   
-        
+        // Throw away half of the array from nums1 or nums2. And cut k in half
+         if (mid1 < mid2) {
+              return findKth(A, a_start + k / 2, B, b_start, k - k / 2);//nums1.right + nums2
+         } else {
+             return findKth(A, a_start, B, b_start + k / 2, k - k / 2); //nums1 + nums2.right
+         }
     }
-
 }
