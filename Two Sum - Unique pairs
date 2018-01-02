@@ -1,0 +1,29 @@
+public int twoSUm(int[] nums, int  target) {
+  if(nums == null || nums.length < 2) {
+    return 0;
+  }
+  Arrays.sort(nums);
+   int left = 0;
+   int count = 0
+    int right = numbers.length - 1;
+    while(left < right) {
+    if(numbers[left] + numbers[right] == target){
+          count++;
+          left++;
+          right--;
+          while(left < right && numbers[left] == numbers[left - 1]) {
+            left++;
+          }
+          while(left < right && numbers[right] == numbers[right + 1]) {
+            right--;
+          }
+    }
+     if(numbers[left] + numbers[right] < target) {
+                left++;
+     } else {
+                right--;
+      }
+   }
+   return new count;
+
+}
