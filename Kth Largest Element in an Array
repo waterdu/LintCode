@@ -1,7 +1,97 @@
+//heap sort解法
 public class Solution {
+    //nlgk, space k
+    //the rest is smaller, so keep minHeap
     public int findKthLargest(int[] nums, int k) {
-        Arrays.sort(nums);//1,2,3;k=3,
-        return nums[nums.length-k];
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i:nums){
+            pq.offer(i);
+            if(pq.size()>k){
+                pq.poll();
+            }
+        }
+        return pq.poll();//largest
     }
 }
-//还有种考quick sort
+
+//还有种考quick select
+//九章解法
+public class Solution {
+    //use quick select, nums > k put to left, nums < k, put to right
+    public int findKthLargest(int[] nums, int k) {
+        if(nums == null || nums.length == 0) {
+            return -1;
+        }  
+        return quickSelect(nums, 0, nums.length - 1, k);
+    }
+    
+    private int quickSelect(int[] nums, int start, int end, int k ){
+        if(start == end) {
+            return nums[start];
+        }
+        int left = start;
+        int right = end;
+        int pivot = nums[(left + right) / 2]; //pick the mid num
+        while(left < right) {
+            while(left < right && nums[left] > pivot) {
+                left++;
+            }
+            while(left < right && nums[right] < pivot) {
+                right--;
+            }
+            if(left <= right) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+                left++;
+                right--;
+            }
+        }
+        //determine if the index of pivot is k
+        if(right >= start + k - 1) {
+            return quickSelect(nums, start, right, k);
+        }
+        if(left <= start + k - 1) {
+            return quickSelect(nums, left, end, k - (left - start));
+        }
+        //exactly k
+        return nums[right + 1];
+    }
+}
+
+//标准quick sort解法
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        return findKthLargest(nums, 0, n - 1, n - k);// n - k th smallest number
+    }    
+    public int findKthLargest(int[] nums, int start, int end, int k) {
+    	if(start == end){
+    	    return nums[start];
+    	}//5 1 2 6 3
+        // 1 2 3 6 5
+      
+    	int pivot = nums[end]; // Take nums[end] as the pivot, 
+        System.out.println(pivot);
+    	int left = start;//left is first index that is >= pivot
+    	for(int i = left; i < end; i++) {// i 不能= end, 否者StackOverflowError
+    		if(nums[i] <= pivot){
+    		    swap(nums, left, i);
+                left++;
+    		}
+        }
+    	swap(nums, left, end);// Finally, swap nums[end] with nums[left]
+    	if(left == k){
+    	    return nums[left];
+    	}else if(left < k){
+    	    return findKthLargest(nums, left + 1, end, k);
+    	}else{
+    	    return findKthLargest(nums, start, left - 1, k);
+    	}
+    } 
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
