@@ -1,0 +1,47 @@
+public class Solution {
+    /*
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+    public void sortColors2(int[] colors, int k) {
+        // write your code here
+        //怎么猜时间复杂度
+        //k = 2时,o(n). k = n 时, o(nlgn)普通排序
+        //so nlgk
+        if(colors == null || colors.length <= 1) {
+            return;
+        }
+        quickSortColor(colors, 0, colors.length - 1, 1 , k);
+    }
+    
+    private void quickSortColor(int[] colors, int left, int right,
+    int colorFrom , int colorTo) {
+        if(colorFrom == colorTo) {
+            return;
+        }
+        if(left >= right) {
+            return;
+        }
+        int colorMid = (colorFrom + colorTo) / 2;
+        int l = left, r = right;
+        while(l <= r) {
+            while(l<= r && colors[l] <= colorMid) {
+                l++;
+            }
+            while(l <= r && colors[r] > colorMid){
+                r--;
+            }
+            if(l <= r) {
+                int tmp = colors[l];
+                colors[l] = colors[r];
+                colors[r] = tmp;
+                l++;
+                r--;
+            }
+        }
+        quickSortColor(colors, left,r , colorFrom, colorMid);
+        quickSortColor(colors, l, right, colorMid + 1, colorTo);
+        
+    }
+}
