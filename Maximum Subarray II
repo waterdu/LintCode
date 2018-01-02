@@ -1,0 +1,37 @@
+public class Solution {
+    /*
+     * @param nums: A list of integers
+     * @return: An integer denotes the sum of max two non-overlapping subarrays
+     */
+    public int maxTwoSubArrays(List<Integer> nums) {
+        // write your code here
+        int size = nums.size();
+        int[] maxSubarray1 = new int[size];
+        int[] right =new int[size]; //right to left max subarray
+        int sum = 0;
+        int max = Integer.MIN_VALUE;
+        int minSum = 0;
+        for(int i = 0; i<size; i++){
+            sum = sum + nums.get(i);
+            max = Math.max(max, sum - minSum);
+            minSum = Math.min(minSum, sum);
+            maxSubarray1[i] = max;
+        }
+        
+        sum = 0;
+        minSum = 0;
+        max = Integer.MIN_VALUE;
+        for(int i = size - 1; i >= 0; i--) {
+            sum = sum + nums.get(i);
+            max = Math.max(max, sum - minSum);
+            minSum = Math.min(minSum, sum);
+            right[i] = max;
+        }
+        
+        max = Integer.MIN_VALUE;
+        for(int i = 0; i < size - 1; i ++) {
+            max = Math.max(max, left[i] + right[i + 1]);
+        }
+        return max;
+    }
+}
