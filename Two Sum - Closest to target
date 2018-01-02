@@ -1,0 +1,22 @@
+find two integers in nums such that the sum is closest to a given number tarter 
+return the difference between the sum of the two integers and the target
+
+public int twoSum(int[] nums, int target) {
+  if (nums == null || nums.length < 2) {
+    return 0;
+  }
+  Arrays.sort(nums);
+  int left = 0;
+  int right = nums.length - 1;
+  int count = 0;
+  while(left < rigth) {
+    if(nums[left] + nums[right] <= target) {
+      diff = Math.min(diff, target - nums[left] - nums[right]);
+      left++;
+    } else {
+      diff = Math.min(diff, nums[left] + nums[right] - target);
+      right--;
+    }
+  }
+  return count;
+}
