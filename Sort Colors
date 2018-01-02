@@ -1,0 +1,58 @@
+public class Solution {
+    /*
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public void sortColors(int[] nums) {
+        // write your code here
+        if(nums == null || nums.length <= 0) {
+            return;
+        }
+        int index0 = 0;
+        int index2 = nums.length - 1;
+        int i = 0;
+        //only swap if meet 0, 2, ignore 1
+        while(i <= index2) {
+            if(nums[i] == 0) {
+                swap(nums, index0, i);
+                index0++;
+                i++;
+            } else if (nums[i] == 2) {
+                swap(nums, index2, i);
+                //may be the swap number is still 2 so don't increment i
+                index2--;
+            } else {
+                i++;
+            }
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
+
+public class Solution {
+    public void sortColors(int[] nums) {
+        //O(n), 1 space one pass
+        int zeros=0,twos=nums.length-1;//the position of one and zero
+        for(int i=0;i<=twos;i++){
+            while(nums[i]==2&&i<twos){
+                swap(nums,i,twos);
+                twos--;
+            }
+            while(nums[i]==0&&i>zeros){
+                swap(nums,i,zeros);
+                zeros++;
+            }
+        }
+     }
+    private void swap(int[] nums,int i,int j){
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
+ 
