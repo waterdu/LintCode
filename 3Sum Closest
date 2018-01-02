@@ -1,0 +1,41 @@
+public class Solution {
+    /**
+     * @param numbers: Give an array numbers of n integer
+     * @param target : An integer
+     * @return : return the sum of the three integers, the sum closest target.
+     */
+    public int threeSumClosest(int[] numbers, int target) {
+        // write your code here
+        int minDiff = Integer.MAX_VALUE;
+        int sum = 0;
+        int res = 0;
+        if(numbers.length <= 3){
+            for(int num:numbers){
+                sum += num;
+            }
+            return sum;
+        }
+        Arrays.sort(numbers);
+        for(int i = 0; i < numbers.length - 2; i++){
+            int left = i + 1;
+            int right = numbers.length - 1;
+            while(left < right){
+                sum = numbers[i] + numbers[left] + numbers[right];
+                int diff = Math.abs(sum - target);
+                if(diff < minDiff){
+                    res = sum;
+                    minDiff = diff;
+                    if (sum == target){
+                        return sum;
+                    }
+                } 
+                if(sum < target){
+                    left++;
+                } else if(sum > target){
+                    right--;
+                }
+            }
+        }
+        return res;
+    }
+}
