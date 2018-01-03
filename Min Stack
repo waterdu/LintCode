@@ -1,0 +1,30 @@
+public class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> min;
+    public MinStack() {
+        // do initialize if necessary
+        stack = new Stack<>();
+        min = new Stack<>();
+    }
+
+    public void push(int number) {
+        // write your code here
+        stack.push(number);
+        if(min.isEmpty()){
+            min.push(number);
+        } else {
+            min.push(Math.min(number, min.peek()));
+        }
+    }
+
+    public int pop() {
+        // write your code here
+        min.pop();
+        return stack.pop();
+    }
+
+    public int min() {
+        // write your code here
+        return min.peek();
+    }
+}
