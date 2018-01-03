@@ -1,0 +1,5 @@
+Closed Hashing: 如果自己的坑被占了，就去占其他人的坑
+
+Open Hashing:用linkedList
+
+Rehashing:我要把我的Hash表的size扩大
