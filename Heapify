@@ -1,0 +1,35 @@
+public class Solution {
+    /*
+     * @param A: Given an integer array
+     * @return: nothing
+     */
+    public void heapify(int[] A) {
+        for(int i = A.length / 2; i >= 0; i--) {
+            siftdown(A, i);
+        }
+    }
+    //i is the index
+    private void siftdown(int[] A, int i) {
+        while(i < A.length) {
+            int smallest = i;
+            //left child
+            if(i * 2 + 1 < A.length && A[i * 2 + 1] < A[smallest]) {
+                smallest = i * 2 + 1;
+            }
+            //right child
+            if(i * 2 + 2 < A.length && A[i * 2 + 2] < A[smallest]) {
+                smallest = i * 2 + 2;
+            }
+            if(smallest== i) {
+                break;
+            }
+            int tmp = A[smallest];
+            A[smallest] = A[i];
+            A[i] = tmp;
+            i = smallest;
+        }
+        
+    }
+}
+
+//
