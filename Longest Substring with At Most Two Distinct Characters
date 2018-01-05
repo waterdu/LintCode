@@ -1,0 +1,46 @@
+//very generic method, must remember
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        //   char,        index
+        Map<Character, Integer> indexes = new HashMap<>();
+        int left = 0, right = 0, res = 0;
+        char c;
+        while(right < s.length()) {
+            c = s.charAt(right);
+            indexes.put(c, right);
+            right++;
+            while(indexes.size() > 2) {
+                int leftMost = s.length();
+                for(int i : indexes.values()){
+                    leftMost = Math.min(leftMost, i);
+                }
+                c = s.charAt(leftMost);
+                indexes.remove(c);
+                left = leftMost + 1;
+            }
+            res = Math.max(res, right - left);
+        }
+        return res;
+    }
+}
+
+//
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int i = 0, j = -1, maxLen = 0;
+        for (int k = 1; k < s.length(); k++) {
+            if(s.charAt(k) == s.charAt(k - 1)){
+                continue;
+            }
+            if(j >= 0 && s.charAt(j) != s.charAt(k)) {
+                maxLen = Math.max(k - i, maxLen);
+                i = j + 1;
+            }
+            j = k - 1;
+        }
+        return Math.max(s.length() - i, maxLen);
+    }
+}
