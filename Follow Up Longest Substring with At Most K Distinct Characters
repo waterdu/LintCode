@@ -33,3 +33,5 @@ class Solution {
         return res;
     }
 }
+
+a better way is to use the LRU cache, remove the tail each time > k
