@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        if (s == null) {
+            return false;
+        }
+        if (s.length() != t.length()){
+            return false;
+        }
+        
+        //  char        index
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> tMap = new HashMap<>();
+        for(int i = 0; i < s.length(); i++) {//linear scan
+            char sc = s.charAt(i);
+            char tc = t.charAt(i);
+            if(!Objects.equals(sMap.put(sc, i), tMap.put(tc, i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
