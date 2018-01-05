@@ -1,0 +1,35 @@
+what if s is streaming in?
+answer, in this case, the c = s.charAt(left) doesn't work
+the window is too large, with data streaming in, the left pointer has gone.
+How to save it?
+
+We change the map, instead of saving the count, we store the index, rightMostIndex where the char appear
+
+
+class Solution {
+    //sliding window way
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        //  char        rightMostIndex
+        Map<Character, Integer> map = new HashMap<>();
+        int num = 0; // how many distinct
+        int left = 0, res = 0;
+        char c;
+        int count;
+        for (int right = 0; right < s.length(); right++) {
+            c = s.charAt(right);
+            map.put(c, right);
+            
+            if(map.size() > k) {
+                int leftMost = s.length();
+                for(int i:map.values()) {
+                    leftMost = Math.min(leftMost, i);
+                }
+                c = s.charAt(leftMost);
+                map.remove(c);
+                left = leftMost + 1;
+            }
+            res = Math.max(res, right - left +1);
+        }
+        return res;
+    }
+}
