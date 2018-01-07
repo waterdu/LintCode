@@ -1,3 +1,4 @@
+//So the worst time complexity is O(n*m * 4^L).
 class Solution {
     public boolean exist(char[][] board, String word) {
         if (word == null || word.length() == 0) {
