@@ -1,0 +1,48 @@
+public class Solution {
+    /*
+     * @param x: the base number
+     * @param n: the power number
+     * @return: the result
+     */
+    public double myPow(double x, int n) {
+        // 1 is 0, - ,+, over flow when negative
+        if(n == 0) {
+            return 1;
+        }
+        if(n == 1) {
+            return x;
+        }
+        if(n < 0) {
+                        //to prevent overflow
+            return 1 / (myPow(x, - (n + 1)) * x);
+        }
+        if(n % 2 == 0) {
+            
+            return myPow(x * x, n / 2);
+        } else {
+            return myPow(x * x, n / 2) * x;   
+        }
+    }
+}
+
+public double myPow(double x, int n) {
+        if(n == 0) {
+            return 1;
+        }
+        if( n == 1){
+            return x;
+        }
+        //might over flow
+        if(n < 0) {
+            return myPow( 1/x, -(n + 1)) / x ;
+        }
+        double res = 1;
+        while(n > 0) {
+            if((n & 1) > 0) {
+                res *= x;
+            }    
+            x = x * x;
+            n = n >> 1;//means n / 2;
+        }
+        return res;
+    }
