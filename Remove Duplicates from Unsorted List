@@ -1,0 +1,19 @@
+//Remove Duplicates from Unsorted List.java
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+       if(head==null || head.next == null) {
+           return head;
+       }    
+       ListNode cur = head;
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(cur.val);
+       while(cur != null && cur.next != null){
+           if(!set.add(cur.next.val)){
+               cur.next = cur.next.next;
+           } else {
+                cur = cur.next;
+           }    
+       }
+       return head;
+    }
+}
