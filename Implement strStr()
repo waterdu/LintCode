@@ -1,0 +1,25 @@
+class Solution {
+    public int strStr(String haystack, String needle) {
+        // "" ""
+        // "abc" "a"
+        // "abc" "abc"
+        if (haystack == null || needle == null) {
+            return -1;
+        }
+        int haystackLength = haystack.length();
+        int needleLength = needle.length();
+        // sure i + j < haystackLength   i + needleLength - 1 < haystackLength
+        int i,j;
+        for (i = 0; i < haystackLength - needleLength + 1; i++) {
+            for (j = 0; j < needleLength; j++) {
+                if(haystack.charAt(i + j) != needle.charAt(j)){
+                    break;
+                }
+            }
+            if (j == needleLength) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
