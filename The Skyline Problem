@@ -1,0 +1,30 @@
+public class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        List<int[]> height = new ArrayList<>();
+        List<int[]> result = new ArrayList<>();
+        for(int[] b:buildings){
+            height.add(new int[]{b[0],b[2]});//入度
+            height.add(new int[]{b[1],-b[2]});//出度
+        }
+        Collections.sort(height,(a,b) -> a[0]!=b[0]? a[0]-b[0]:b[1]-a[1]);
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(11,(l1,l2) ->
+        l2-l1);//构建堆，按照纵坐标来判断大小
+        pq.add(0);//将地平线0先加入堆中
+        //prev用于记录上次keypoint的高度
+        int prev=0;
+        for(int[] h:height){
+            if(h[1]>0){//将左顶店加入堆中
+                pq.add(h[1]);
+            } else {//将由定点对应的左顶点移去
+                pq.remove(-h[1]);
+            }
+            int cur = pq.peek();//如果堆的新顶部和上个keypoint的高度不一样，则加入一个新的keyppint
+            if(prev != cur){
+                result.add(new int[]{h[0],cur});
+                prev=cur;
+            }
+        }
+        return result;
+        
+    }
+}
