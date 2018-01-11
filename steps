@@ -1,0 +1,41 @@
+// package whatever; // don't place package name!
+
+import java.io.*;
+
+import java.util.*;
+
+class MyCode {
+  //第一轮是个印度姐姐，让写一个int steps(int n)， 
+  //返回n到1需要多少步，如果n是奇数 n = 3n + 1，
+  //偶数是 n = n/2，我先用iterative的方法写的。
+  public static int steps(int n) {
+    Set<Long> set = new HashSet<>();//防止循环
+    int count = 0;
+    long n2 = (long)n;
+    while(n2 != 1 && !set.contains(n2)) {
+      set.add(n2);
+      if(n2 %2 == 0) {
+        n2 = n2 /2;
+      } else {
+        n2 = 3* n2 + 3;
+      }
+      System.out.print(n2 + "->");
+      count++;
+    }
+    if(n2 == 1) {
+      return count;
+    } 
+    return -1;
+  }
+    
+  
+  
+  
+  public static void main (String[] args) {
+//     for(int i = 30; i < 100; i++){
+//       System.out.println(steps(i));
+//     }
+    System.out.println(steps(12));
+    
+  }
+}
