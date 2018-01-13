@@ -1,0 +1,22 @@
+亚麻OA, 不停地对左右两边做xor的操作
+0 {0, 1, 1, 0, 1, 1, 1} 0 day 1
+0 {1，1, 1，0， 1,0。 1} 0 day 2
+
+public static int[] daysChange2(int[] days, int n) {
+  if(days == null || n <= 0) {
+    return days;
+  }
+  int[] arr = new int[days.length + 2];
+  System.arraycopy(days, 0, arr, 1, days.length);
+  while(n > 0) {
+    n--;
+    int pre = arr[0];
+    System.out.println(Arrays.toString(arr));
+    for(int j = 1; j <= days.length; j++) {
+      int temp = arr[j];
+      arr[j] = pre ^ arr[j + 1];
+      pre = temp;
+    }
+  }
+  return Arrays.copyOfRange(arr, 1, days.length + 1);
+}
