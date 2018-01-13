@@ -1,0 +1,30 @@
+//fb真题 similar to 689. Maximum Sum of 3 Non-Overlapping Subarrays
+    //Given integer array nums and int k, find 3 non-overlapping subarrays, 
+    //each of length K, which give the largest sum
+    public int maxSumOfThreeSubarrays(int[] nums, int k) {
+        int n = nums.length;
+        if(n < 3 * k) {
+            return 0;
+        }
+        int[] presum = getPresum(nums, k);
+        int[] maxFromLeft = getMaxFromLeft(nums, k, presum);
+        int[] maFromRight = getMaxFromRight(nums, k, presum);
+        int result = Integer.MIN_VALUE;
+        for(int i = k; i<= n - 2*k; i++){
+            result = Math.max(result, maxFromLeft(i - k) + presum[i] + maxFromRight[i + k]);
+        }
+        return result;
+    }
+    
+    private int[] getMaxFromRight(int[] nums, int k, int[] presum) {
+        int n = nums.length;
+        //the beginning 2k elements are null
+        int[] maxFromRight = new int[n - k + 1];
+        int max = presum[n - k];
+        masFromRight[n - k] = max;
+        for(int i = n - k - 1; i>= 2* k; i--){
+            max = Math.max(max, presum[i]);
+            maxFromRight[i] = Math.max(max, maxFromRight[i + 1]);
+        }
+        return maxFromRight;
+    }
