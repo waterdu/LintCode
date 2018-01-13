@@ -1,0 +1,14 @@
+public class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> res= new ArrayList<>();
+        res.add(0);
+        for(int i=0;i<n;i++){
+            int size = res.size();//1,2,4,8
+            for(int j = size-1; j >= 0; j--){//get 0, get,1,0,get,3,2,1,0 
+                int num = res.get(j);
+                res.add(num | 1 << i);
+            }
+        }
+        return res;
+    }
+}
