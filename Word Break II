@@ -1,0 +1,40 @@
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if(wordDict == null || wordDict.size() == 0) {
+            return new ArrayList<>();
+        }                   //string, all its result
+        Set<String> set = new HashSet<>();
+        for(String word:wordDict){
+            set.add(word);
+        }
+        return dfs(s, set, new HashMap<String, List<String>>());
+    }
+    private List<String> dfs(String s, Set<String> set, HashMap<String, List<String>> map) {
+        if(map.containsKey(s)){
+            return map.get(s);
+        }
+        
+        List<String> res = new ArrayList<>();
+        int n = s.length();
+        if(n == 0) {
+            return res;
+        }
+        for(int i = 1; i <= n;i++){
+            String subfix = s.substring(0,i);
+            if(set.contains(subfix)) {
+                if(i == n) {
+                    res.add(subfix);
+                } else {
+                   String surfix = s.substring(i);
+                    List<String> tmp = dfs(surfix, set, map);
+                    for(String item:tmp){
+                        item = subfix + " " + item;
+                        res.add(item);
+                    }
+                }     
+            }
+        }
+        map.put(s, res);
+        return res;
+    }
+}
