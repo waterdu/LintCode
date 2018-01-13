@@ -1,0 +1,53 @@
+一个平面上一对二维的点，叫你找最近的K(find close k points near origin ot of points)
+//maxHeap solution, worst O(nlgk) time best O(n)time O(k) space
+ public Point[] findKClosestPoints(Point[] points, int k, Point target) {
+  if(point == null || points.length == 0 || k == 0){
+    return new Point[0];
+  }
+  if(k >= points.length) {
+    return points;
+  }
+  Comparator<Point> pointComparator = new Comparator<Point>(){
+     public int compare (Point a, Point b) {
+      long d1 = getDistance(a, target);
+      long d2 = getDistance(b ,target);
+      return Long.compare(d2, d1);
+     }
+  }
+  Queue<Point> maxHeap = new PriorityQueue<>(k, pointComparator);
+  for (Point point:points) {
+    maxHeap.offer(point);
+    if(maxHeap.size() > k) {
+      maxHeap.poll();
+    }
+  }
+  Point[] res = new Point[k];
+  int i = 0;
+  for(Point p:maxHeap) {
+    res[i] = p;
+    i++;
+  }
+ return res;
+ }
+ 
+ private long getDistance(Point a, Point b) {
+  return ((long) a.x - b.x) * ((long) a.x - b.x) +  ((long) a.y - b.y) * ((long) a.y - b.y);
+ }
+ 
+ //quick select 解法
+ int index = k - 1;
+ while(start < end) {
+  int pivot = partition(distances, start, end);
+  if(pivot < index) {
+    start = pivot + 1;
+  ) else if (pivot > index) {
+    end = pivot - 1;
+  } else {
+    break;
+  }
+ }
+ Point[] res= new Point[k];
+ for(int i = 0; i < k; i++) {
+  res[i] = distances[i].point;
+ }
+ return res;
