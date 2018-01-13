@@ -1,0 +1,24 @@
+//亚麻OA题
+given k for size of window and integer array nums, return array sum that its element sum[i] is 
+sum of nums[i ~ i + k - 1].
+for example, int[] nums = {2, 1, 1, 1, 2,2,3,2,2,2} and k = 3,
+return [4,3,4,5,7,7,7,6]
+public static int[] getPresum(int[] nums, int k) {
+  if(nums == null || nums.length < k || k <= 0) {
+    return null;
+  }
+  int n = nums.length;
+  if(n < k) {
+     throw new IllegalArgumentException();
+  }
+  int sum = 0;
+  for (int i = 0; i < n; i++) {
+    if(i >= k) {
+      presum[i - k] = sum;
+      sum -= nums[i - k];
+    }
+    sum += nums[i];
+  }
+  presum[n - k] = sum;
+  return presum;
+}
