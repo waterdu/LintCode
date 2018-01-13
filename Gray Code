@@ -12,3 +12,11 @@ public class Solution {
         return res;
     }
 }
+判断两个byte number 是不是互为gray code. The gray code is a binary numeral system where two sccessive values differ in only one bit
+// byte 16 
+public static boolean grayCode(byte a, byte b{
+    int c = (a ^ b) & 0xFF;
+    System.out.println(Integer.toBinaryString(c));//用这种自带函数
+    return c != 0 && (c & (c - 1) == 0;
+                      //删掉最右边的1
+}
