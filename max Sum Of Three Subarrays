@@ -7,7 +7,7 @@
         if(n < 3 * k) {
             return 0;
         }
-        int[] presum = getPresum(nums, k);//o n,亚麻的fix size window
+        int[] presum = getPresum(nums, k);//o n,亚麻的fix size window, k size sum
         int[] maxFromLeft = getMaxFromLeft(nums, k, presum);
         int[] maFromRight = getMaxFromRight(nums, k, presum);
         int result = Integer.MIN_VALUE;
