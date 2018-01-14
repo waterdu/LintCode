@@ -1,0 +1,27 @@
+class Solution {
+    //这道题用dfs,bfs更好写，更少犯错
+    public int countComponents(int n, int[][] edges) {
+        //因为点是0,1,2来定义的，所以可以用array不需要用map
+        int[] roots = new int[n];
+        for(int i = 0; i < n; i++) {
+            roots[i] = i;
+        }
+        
+        for(int[] e:edges) {
+            int root1 = find(roots, e[0]);
+            int root2 = find(roots, e[1]);
+            if(root1 != root2) {
+                roots[root1] = root2;//union
+                n--;
+            }
+        }
+        return n;
+    }
+    private int find(int[] roots, int id) {
+        while(roots[id] != id) {
+            roots[id] = roots[roots[id]];
+            id = roots[id];
+        }
+        return id;
+    }
+}
