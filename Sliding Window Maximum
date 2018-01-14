@@ -25,3 +25,34 @@ class Solution {
         return result; 
     }
 }
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        LinkedList<Integer> l =  new LinkedList<>();
+        int n = nums.length;
+        if(n == 0 || k == 0) {
+            return new int[0];
+        }
+        int[] result = new int[n-k+1];
+        for(int i = 0;i < k;i++){
+            addToSlidingWindow(nums[i], l); //first, get the res of first window
+        }
+        for(int i = k; i< n;i++) {
+            result[i - k] = l.getFirst();//compare the max one
+            if(nums[i - k] == l.getFirst()){
+                l.removeFirst();
+            }
+            addToSlidingWindow(nums[i], l);
+        }
+        result[n - k] = l.getFirst();
+        return result;
+    }
+    // max  first   last min
+    private void addToSlidingWindow(int a, LinkedList<Integer> l) {
+        while(!l.isEmpty() && l.getLast() < a) {
+            l.removeLast();
+        }
+        l.addLast(a);
+    }
+}
+
