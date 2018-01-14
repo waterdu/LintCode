@@ -1,0 +1,136 @@
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public.
+MST
+minimum spanning Tree
+题目内容是这样的，给十几个城市供电，连接不同城市的花费不同，让花费最小同时连到所有的边。
+给出一系列connection类，里面是edge两端的城市名和它们之间的一个cost，找出要你挑一些边，
+把所有城市连接起来并且总花费最小。不能有环，最后所以城市要连成一个连通块。
+不能的话输出空表，最后还要按城市名字排序输出，按照node1来排序,如果一样的话再排node2。
+输入:
+{"Acity","Bcity",1}
+("Acity","Ccity",2}
+("Bcity","Ccity",3}
+输出：
+("Acity","Bcity",1}
+("Acity","Ccity",2}
+补充一句，test case一共有6个。
+*/
+
+//每个edge有weight，每次放权重最小，只要father不是同一个，就Union起来
+class Connection{
+    String node1;
+    String node2;
+    int cost;
+    public Connection(String a, String b, int c){
+        node1 = a;
+        node2 = b;
+        cost = c;
+    }
+}
+
+class Codechef
+{   public static ArrayList<Connection> getLowCost(ArrayList<Connection> connections) {
+        ArrayList<Connection> result = new ArrayList<>();
+        //sort Connection first
+        if(connections == null || connections.size() == 0){
+            return result;
+        }
+        Collections.sort(connections, new Comparator<Connection>(){
+            public int compare(Connection c1, Connection c2){
+                return c1.cost - c2.cost;
+            }
+        });
+        // HashMap<String, String> father = new HashMao<>();
+        // //initial father
+        // for (Connection c:connections){
+        //     String A = c.node1;
+        //     String B = c.node2;
+        //     father.put(A, A);
+        //     father.put(B, B);
+        // }
+        HashMap<String, String> father = new HashMap<>();
+        //initial union find
+        for (Connection c : connections) {
+            String cityA = c.node1;
+            String cityB = c.node2;
+            father.put(cityA, cityA);
+            father.put(cityB, cityB);
+        }
+        //union
+        for(Connection c : connections){
+            if(union(c.node1, c.node2, father)){
+                result.add(c);
+            }
+        }
+        
+        //count union in father
+        HashSet<String> count = new HashSet<>();
+        for(String s:father.values()){
+            String fa = find(s, father);
+            count.add(fa);
+        }
+        if(count.size() > 1){
+            return null;
+        }
+        Collections.sort(result, new Comparator<Connection>(){
+            public int compare(Connection a, Connection b){
+                if (a.node1.equals(b.node1)){
+                    return a.node2.compareTo(b.node2);
+                }
+                return a.node1.compareTo(b.node1);
+            }});
+        return result;
+    }
+    
+    static boolean union(String A, String B, HashMap<String,String> father){
+        String fa_A = find(A,father);
+        String fa_B = find(B,father);
+        if(!fa_A.equals(fa_B)){
+            father.put(fa_A, fa_B);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    static String find(String x, HashMap<String, String> father){
+        String parent = father.get(x);
+        while(!parent.equals(father.get(parent))){
+            parent = father.get(parent);
+        }
+        String temp = "";
+        String fa = father.get(x);
+        while(!fa.equals(parent)){
+            temp = father.get(fa);
+            father.put(fa,parent);
+            fa = temp;
+        }
+        return parent;
+    }
+    
+    
+	public static void main (String[] args) throws java.lang.Exception
+	{
+    ArrayList<Connection> connections = new ArrayList<>();
+    //这里还是一个苯环形状，有化学出身的看到这里可以鼓掌了
+    connections.add(new Connection("A","B",6));
+    connections.add(new Connection("B","C",4));
+    connections.add(new Connection("C","D",5));
+    connections.add(new Connection("D","E",8));
+    connections.add(new Connection("E","F",1));
+    connections.add(new Connection("B","F",10));
+    connections.add(new Connection("E","C",9));
+    connections.add(new Connection("F","C",7));
+    connections.add(new Connection("B","E",3));
+    connections.add(new Connection("A","F",1));
+
+    ArrayList<Connection> res = getLowCost(connections);
+    for (Connection c : res){
+        System.out.println(c.node1 + " -> " + c.node2 + " need cost : " + c.cost);
+    }
+	}
+}
