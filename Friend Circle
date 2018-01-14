@@ -1,0 +1,77 @@
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+//Key is friend ID, value is superFather
+    static HashMap<Integer,Integer> father = new HashMap<>();
+
+    static int friendCircles(String[] friends) {
+        if (friends == null || friends.length == 0){
+            return 0;
+        }    
+        int n = friends.length;
+        //initial Father
+        for(int i = 0; i < n; i++){
+            father.put(i,i);
+        }
+        for(int i=0; i < n; i++){
+            for(int j = 0;j < n; j++){
+                if(friends[i].charAt(j) == 'Y' && i != j){
+                    union(i,j);
+                     //count--;
+                }    
+            }
+        }
+        //count union in father
+        HashSet<Integer> count = new HashSet<>();
+        for(int i:father.values()){
+            int fa = find(i);
+            count.add(fa);
+        }
+        return count.size();
+    }
+    static void union(int x,int y){
+        int fa_x = find(x); //father of x
+        int fa_y = find(y);
+        if(fa_x != fa_y){
+            father.put(fa_x, fa_y);
+        }
+    }    
+    static int find(int x){
+        int parent = father.get(x);
+        while (parent != father.get(parent)){
+            parent = father.get(parent);
+        }
+        //compress all path it go throw
+        int temp = -1;
+        int fa = father.get(x);
+        
+        while(fa != parent){
+            temp = father.get(fa);
+            father.put(fa, parent);
+            fa = temp;
+        }
+        return parent;
+    }
+   
+    
+	public static void main (String[] args) throws java.lang.Exception
+	{
+	    String[] friends = {"YnnnY",
+           "nYnnn",
+           "nnYYn","nnYYn",
+           "YnnnY"};
+        int res = friendCircles(friends);
+        System.out.println(res);
+		// your code goes here
+		//System.out.println(father.get(0));
+		//System.out.println(father.get(1));
+		//System.out.println(father.get(2));
+		//System.out.println(father.get(3));
+	}
+}
