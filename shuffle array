@@ -1,0 +1,94 @@
+谷歌真题
+/*
+问给一个数组A，再给一个shuffle A得到的数组B，再给个新数组C，求shuffle C得到的数组D。
+要求C到D的映射与A到B要一致。 假设所有数组都未排序。
+naive的解法很简单，建立一个散列表存A到B的映射关系搞定。但是时间复杂度是n平方，
+因为B中每个元素都要花线性时间在A中查找。
+Follow up: 1. 如果数组中有重复元素怎么办？2. 如何优化时间？
+*/
+
+import java.util.*;
+
+class MyCode {
+  
+  
+  public static void main (String[] args) {
+    int[] nums1 = {1, 1, 2};
+    int[] nums2 = {1, 2, 1};
+    int[] nums3 = {3, 3, 4};
+    //should return 3 4 3
+    System.out.println(Arrays.toString(mapArray(nums1, nums2, nums3)));
+  }
+  public static int[] mapArray(int[] A, int[] B, int[] C){
+      //value, index
+      Map<Integer, Set<Integer>> ValueIndexA = new HashMap<>();
+    Map<Integer, Set<Integer>> ValueIndexB = new HashMap<>();
+    
+    
+      // aindex,    bindex
+      Map<Integer, Integer> toShuffle = new HashMap<>();
+    int n = A.length;
+    int[] res = new int[n];
+    
+    for(int i = 0; i < n; i++){
+      int Avalue = A[i];
+      int Bvalue = B[i];
+      Set<Integer> Aset = ValueIndexA.get(Avalue);
+      if(Aset == null) {
+        Aset = new HashSet<>();
+        ValueIndexA.put(Avalue, Aset);
+      }
+      Aset.add(i);
+      
+      Set<Integer> Bset = ValueIndexB.get(Bvalue);
+      if(Bset == null) {
+        Bset = new HashSet<>();
+        ValueIndexB.put(Bvalue, Bset);
+      }
+      Bset.add(i);
+    }
+    
+    for(Integer value:ValueIndexA.keySet()){
+      System.out.println(value);
+       Set<Integer> Aset = ValueIndexA.get(value);
+       Set<Integer> Bset = ValueIndexB.get(value);
+      
+      Iterator <Integer> iteA = Aset.iterator();
+      Iterator <Integer> iteB = Bset.iterator();
+       while(iteA.hasNext()){
+         toShuffle.put(iteA.next(), iteB.next());
+       }
+    }
+    
+    for(int i = 0; i < n; i++) {
+      int toShuffleIndex = toShuffle.get(i);
+      res[toShuffleIndex] = C[i];
+    }
+    return res;
+    
+  }
+  
+ 优化解法，用queue来存index
+ public static int[] mapArray(int[] nums1, int[] nums2, int[] nums3){
+    //     value,     index ofA
+    HashMap<Integer, Queue<Integer>> map = new HashMap<>();
+  int n = nums1.length;
+  for(int i = 0; i < n; i++){
+    if(!map.containsKey(nums1[i])){
+      map.put(nums1[i], new LinkedList<>());
+    }
+    map.get(nums1[i]).add(i);
+  }
+    //     indexOfA, indexOfB
+  HashMap<Integer, Integer> shuffleTo = new HashMap<>();
+  for(int i = 0; i < n; i++){
+    Queue<Integer> q = map.get(nums2[i]);
+    int index = q.poll();
+    shuffleTo.put(i, index);
+  }
+  int[] res = new int[n];
+  for(int i = 0; i < n; i++){
+    res[i] = nums3[shuffleTo.get(i)];
+  }
+  return res;
+  }
