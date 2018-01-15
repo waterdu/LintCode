@@ -1,0 +1,90 @@
+/* 一道BFS题，感觉是面试官用来放水的。结果还是太紧张（毕竟是这半年第一次面试），
+非得用dfs做，结果最后时间都用完了，才写的差不多。最后结果自然是挂了。
+好了，不多说无用的了，直接说题。
+在一个二维矩阵上，矩阵里面有障碍物也有通道，然后给你start的那一点和end那一点，
+让你找出最短路径来
+可以上下左右走
+*/
+import java.util.*;
+class Solution{
+  private static final int[][] dirs = new int[][]{{1,0},{-1,0},{0,1},{0, -1}};
+    public static List<int[]> DFS(int[][] matrix,int[] start, int[] end){
+      List<List<int[]>> res = new ArrayList<>();
+      
+      List<int[]> path = new ArrayList<>();
+      path.add(start);
+      dfs(matrix, res, start, end, path);
+      int min = Integer.MAX_VALUE;
+      int index = 0;
+      if(res.size() == 0) {
+        return null;
+      }
+      //find shortest path
+      for(int i = 0; i< res.size(); i++){
+        if(res.get(i).size() < min) {
+          min = res.get(i).size();
+          index = i;
+        }
+      }
+      return res.get(index);
+    }
+  
+    private static void dfs(int[][] matrix, List<List<int[]>> res,
+        int[] start, int[] end, List<int[]> path) {
+      if(!isValid(matrix, start)){
+        return;
+      }
+      int x = start[0];
+      int y = start[1];
+      
+      if(x == end[0] && y == end[1]) {
+        ArrayList<int[]> copy = new ArrayList<>(path);
+        res.add(copy);
+        return;
+      }
+      matrix[x][y] = 1;
+      for(int[] dir:dirs) {
+        int newX = x + dir[0];
+        int newY = y + dir[1];
+        int[] newPoint = new int[]{newX, newY};
+        path.add(newPoint);
+        dfs(matrix, res, newPoint, end, path);
+        path.remove(path.size() - 1);
+        
+      }
+      matrix[x][y] = 0;
+    }
+  private static boolean isValid(int[][] matrix, int[] start) {
+    int m = matrix.length;
+    int n = matrix[0].length;
+    int x = start[0];
+    int y = start[1];
+    if(x >= m || x < 0 || y >= n || y < 0){
+      return false;
+    }
+    if(matrix[x][y] == 1) {
+      return false;
+    }
+    return true;
+  }
+  
+  public static void main(String[] args) {
+       
+       
+    int[][] matrix =  { {0, 0, 0, 0},
+                        {1, 0, 0, 1},
+                        {1, 0, 1, 0},
+                        {0, 0, 0, 0}};
+    int[] start = {0, 0}; 
+    int[] end = {3, 0};
+    
+     List<int[]> res= DFS(matrix, start, end);
+     for(int[] nums : res){
+       System.out.print(Arrays.toString(nums)  + ",");
+     }
+    
+  }
+}
+
+
+ 
