@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() == 0 && t.length() == 0){
+            return true;
+        }
+        if(s.length() != t.length()){
+            return false;
+        }
+        int[] map = new int[256];
+        for(char c:s.toCharArray()){
+            map[c]++;
+        }
+        for(char a:t.toCharArray()){
+            if(map[a] <= 0){
+                return false;
+            }
+            map[a]--;
+        }
+        return true;
+    }
+}
+
+public class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] word1=s.toCharArray();
+        char[] word2=t.toCharArray();
+        Arrays.sort(word1);
+        Arrays.sort(word2);
+        return Arrays.equals(word1,word2);
+    }
+}
