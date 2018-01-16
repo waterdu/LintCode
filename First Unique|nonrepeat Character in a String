@@ -1,0 +1,49 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        if(s == null || s.length() == 0) {
+            return -1;
+        }
+        int size = s.length();
+        if(size == 1) {
+            return 0;
+        }
+        int res = Integer.MAX_VALUE;
+        for(char c = 'a'; c <= 'z'; c++){
+            int i = s.indexOf(c);
+            if(i != -1 && i == s.lastIndexOf(c)){
+                res = Math.min(res, i);
+            }
+        }
+        if(res == Integer.MAX_VALUE) {
+            return -1;
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public int firstUniqChar(String s) {
+       Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(map.containsKey(c)){
+                map.put(c, -1);
+            } else {
+                map.put(c, i);
+            }
+        }
+        int min = Integer.MAX_VALUE;
+        for(char c:map.keySet()){
+            int count = map.get(c);
+            if(count >= 0 && count < min){
+                min = count;
+            }
+        }
+        if(min == Integer.MAX_VALUE) {
+            return -1;
+        } else {
+            return min;
+        }
+    }
+}
+
