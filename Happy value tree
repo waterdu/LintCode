@@ -1,0 +1,70 @@
+狗家面经
+
+/*
+    follow up，现在每一个员工都被assigned了一个幸福值，写一个方法返回所有员工的幸福值
+        幸福值 ＝ 员工本身的幸福值 ＋ 所有该员工下属的幸福值的平均值
+        （这里下属既可以是直属也可以是非直属，
+        在n叉树里表示的是什么应该都知道吧hhh）
+        同样用dfs，但是每次递归返回的时候要包含一些信息，比如，有多少个下属员工，
+        下属员工的幸福值总和是多少之类的
+*/
+import java.util.*;
+class TreeNode {
+     int val;
+     List<TreeNode> children;
+     TreeNode(int val) { 
+         this.val = val; 
+         children = new ArrayList<>();
+     }
+}
+class Result{
+    int count; 
+    int sum;
+    public Result(int count, int sum) {
+        this.count = count;
+        this.sum = sum;
+    }
+}
+class Solution {
+    public void getScoreNode(TreeNode root) {
+        helper(root);
+    }
+    public Result helper(TreeNode root){
+        if(root == null){
+            return new Result(0, 0);
+        } 
+        if(root.children.size() == 0){
+            return new Result(1, root.val);
+        } 
+        int sum = 0;
+        int count = 0;
+        for(TreeNode node : root.children){
+             Result r = helper(node);
+             count += r.count;
+             sum += r.sum;
+        }
+    root.val += sum / count;
+    return new Result(count + 1, root.val);
+    }
+    /*
+                 1
+              /  |  \
+             2   3   4
+            /    |
+           5     6
+    */
+  public static void main(String[] args) {
+      Solution s = new Solution();
+      TreeNode n1 = new TreeNode(1);
+      TreeNode n2 = new TreeNode(2);
+      TreeNode n3 = new TreeNode(3);
+      TreeNode n4 = new TreeNode(4);
+      TreeNode n5 = new TreeNode(5);
+      TreeNode n6 = new TreeNode(6);
+      n1.children.addAll(Arrays.asList(n2, n3, n4));
+      n2.children.add(n5);
+      n3.children.add(n6);
+      s.getScoreNode(n1);//7 + 9 + 4 = 20 / 5 = 4
+      System.out.println(n1.val);
+    }
+}
