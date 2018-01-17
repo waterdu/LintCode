@@ -1,0 +1,60 @@
+import java.util.*;
+/*
+第二题给一串多米诺骨牌，一个list表示作用力的方向和位置，
+求最后没倒下的骨牌数目，
+比如输入{. . . L . . R . . . L . .}应该返回 5。。
+一开始脑残想错方向了，后来纠正方向给出一个双指针O(n)的方法，
+写一会儿三哥说快到时间了剩下的你口述一下吧。。
+当时感觉凉了。。说完三哥说应该能work。。
+
+第二题是给的list代表一排多米诺骨牌，L，R代表施力位置和方向，
+所有力同时作用，
+双指针不断的判断两个相邻施力位置中间的牌倒不倒就行了，
+如果是左边L右边R，中间都不倒，如果是左边R右边L，看中间是不是奇数个牌，
+是的话最中间那个不倒，如果是RR或者LL就都倒。。
+然后头尾两个边界情况再处理一下就行了。
+*/
+class Solution {
+    public static int countOfStanding(String s){
+        int res = 0;
+        int count = 0;
+        boolean RonLeft = false;
+        int rightIndex = 0;
+        boolean LonLeft = false;
+        boolean edgeOnLeft = true;
+        int totalDot = 0;
+        for(int i = 0; i < s.length(); i++){
+          if(s.charAt(i) == '.'){
+            count++;
+            totalDot++;
+          } else if(s.charAt(i) == 'R'){
+            if(RonLeft) {
+               res = res + count;
+            }
+            count = 0;
+            RonLeft = true;
+            LonLeft = false;
+          } else if(s.charAt(i) == 'L'){ //L
+            if(RonLeft) {
+              res = res + count / 2 * 2;
+            } else {
+              res = res + count;
+            }
+            
+            count = 0;
+            RonLeft = false;
+          } else if(i == s.length() -1 && RonLeft) {
+             res = res + count;
+          }
+        }
+        return totalDot - res;
+    }
+     
+    public static void main(String args[]) {
+        String s = "...L..R...L..";
+        System.out.println(countOfStanding(s));
+        String s1 = "...";
+        System.out.println(countOfStanding(s1));
+         
+    }
+}
