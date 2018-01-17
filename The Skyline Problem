@@ -28,3 +28,79 @@ public class Solution {
         
     }
 }
+//下面解法的巧妙之处就是把Building封装起来，这样就能用TreeMap来处理duplicate
+class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        Building[] lefts = new Building[buildings.length];
+        Building[] rights = new Building[buildings.length];
+         
+        List<int[]> res = new ArrayList<>();
+        for(int i = 0; i < buildings.length; i++){
+            int[] b = buildings[i];
+            Building building = new Building(b[0], b[1], b[2]);
+            rights[i] = lefts[i] = building;
+        }
+        //sort lefts
+        Arrays.sort(lefts, (a, b) -> {
+            if(a.left != b.left) {
+                return Integer.compare(a.left, b.left);
+            }
+            return Integer.compare(b.height, a.height);
+        });
+        //sort rights
+        Arrays.sort(rights, (a, b) -> {
+            if(a.right != b.right) {
+                return Integer.compare(a.right, b.right);
+            }
+            return Integer.compare(a.height, b.height);
+        });
+        
+        TreeSet<Building> set = new TreeSet<>();
+        set.add(new Building(0, Integer.MAX_VALUE, 0));
+        int prev = 0;
+        //将地平线加入堆中
+        int r = 0;
+        for(int left = 0; left < lefts.length; left++){
+            Building b = lefts[left];
+            if(b.left < rights[r].right) { //means into the building
+                set.add(b);
+                int cur = set.last().height;//如果堆的新顶部和上个keypoint的高度不一样，则加入一个新的keyppint
+                if(prev != cur){
+                    res.add(new int[]{b.left, cur});
+                    prev = cur;
+                }
+            } else { // means leave building;
+                Building ri = rights[r];
+                set.remove(rights[r]);
+                r++;
+                int cur = set.last().height;//如果堆的新顶部和上个keypoint的高度不一样，则加入一个新的keyppint
+                if(prev != cur){
+                    res.add(new int[]{ri.right, cur});
+                    prev = cur;
+                }
+            }      
+        }
+        return res;
+    }
+    
+    class Building implements Comparable<Building> {
+        int left;
+        int right;
+        int height;
+        public Building(int left, int right, int height) {
+            this.left = left;
+            this.right = right;
+            this.height = height;
+        }
+        @Override
+        public int compareTo(Building o){
+            if(this.height != o.height) {
+                return Integer.compare(this.height, o.height);
+            }
+            if(this.left != o.left){
+                return Integer.compare(this.left, o.left);
+            }
+            return Integer.compare(this.right, o.right);
+        }
+    }
+}
