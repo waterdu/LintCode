@@ -1,0 +1,34 @@
+
+public class Solution {
+    private ListNode current;
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        current = head;
+        int size = getSize(head);
+        return sortedListToBSTHelper(size);
+    }
+    
+    private int getSize(ListNode head){
+        int size = 0;
+        while(head != null) {
+            size++;
+            head = head.next;
+        }
+        return size;
+    }
+    
+    private TreeNode sortedListToBSTHelper(int size){
+        if (size <= 0) {
+            return null;
+        }
+        TreeNode left = sortedListToBSTHelper(size / 2); //use in order traveral
+        TreeNode root = new TreeNode(current.val);
+        current = current.next;
+        TreeNode right = sortedListToBSTHelper(size - size / 2 - 1);
+        root.left = left;
+        root.right = right;
+        return root;
+    }    
+}
