@@ -28,3 +28,32 @@ public class Solution {
         return number.intValue();
     }
 }
+
+class Solution {
+    public int nthUglyNumber(int n) {
+        if(n<=0){
+            return -1;
+        }
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        int i2 = 1;
+        int i3 = 1;
+        int i5 = 1;
+        for(int i = 2; i <= n; i++){
+            int ftr2 = dp[i2] * 2;
+        	int ftr3 = dp[i3] * 3;
+        	int ftr5 = dp[i5] * 5;
+            dp[i] = Math.min(Math.min(ftr2, ftr3), ftr5);
+            if(dp[i] == ftr2) {
+                i2++;
+            }
+            if(dp[i] == ftr3) {
+                i3++;
+            }
+            if(dp[i] == ftr5) {
+                i5++;
+            }
+        }
+        return dp[n];
+    }
+}
