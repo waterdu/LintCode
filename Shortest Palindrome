@@ -1,0 +1,19 @@
+class Solution {
+    public String shortestPalindrome(String s) {
+        // "aacecaaa", return "aaacecaaa".
+        int left = 0;
+        for(int right = s.length() - 1; right >= 0; right--) {
+            if(s.charAt(left) == s.charAt(right)) {
+                left++;
+            }
+        }
+        if(left == s.length()){
+            return s;//it is palindrome
+        }
+        String suffix = s.substring(left);//a
+        String prefix = new StringBuilder(suffix).reverse().toString();//a
+        String mid = shortestPalindrome(s.substring(0, left));//aacecaa
+        String ans = prefix + mid + suffix;//aaacec aa cecaaa
+        return ans;
+    }
+}
