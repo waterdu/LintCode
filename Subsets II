@@ -1,0 +1,22 @@
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        //how to handle subset?,hashmap<List<Integer>>
+        List<List<Integer>> res=new ArrayList<>();
+        if (nums == null || nums.length == 0){
+            return res;
+        }
+        Arrays.sort(nums);
+        List<Integer> list = new ArrayList<>();
+        dfs(res, list, nums, 0);
+        return res;
+    }
+    private void dfs(List<List<Integer>> res, List<Integer> list, int[] nums, int pos){
+        res.add(new ArrayList<Integer>(list));
+        for (int i = pos; i < nums.length; i++){
+            if( i != pos && nums[i] == nums[i - 1]){
+                continue;
+            }
+            list.add(nums[i]);
+            dfs(res, list, nums, i + 1);
+            list.remove(list.size() - 1);
+        }
+    }
