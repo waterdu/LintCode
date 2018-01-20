@@ -1,0 +1,62 @@
+/*
+狗家真题
+给一个string， 叫order，比如abc，那么规定a在b前面，以此类推
+给第二个 string s，判断s是否符合order，返回boolean，
+如果aaa就是对
+如果cba就不对
+如果aaxyc就对，没出现过的字母跳过
+先来个string的
+*/
+import java.util.*;
+class Solution{
+  public static boolean isValid(String s, String order){
+    //    char,  order
+      Map<Character, Integer> map = new HashMap<>();
+    int orderI = 0;
+    for(int i = 0; i < order.length();i++){
+      char c = order.charAt(i);
+      if(!map.containsKey(c)){
+        map.put(c, orderI);
+        orderI++;
+      }
+    }
+
+    
+    if(s == null) {
+      return false; //this should return true also? 
+      //non point exception
+        
+    }
+    if(s.length() == 0){
+      return true;
+    }
+    int count = -1;
+    for(int i = 0; i < s.length(); i++){
+      char c = s.charAt(i);
+      Integer ord = map.get(c);
+      if(ord == null) {
+        continue;
+      } else {
+        if(count == -1){
+          count = ord;
+        } else {
+          if(ord < count){
+            return false;
+          } else {
+            count = ord;
+          }
+        }
+      }
+    }
+    return true;
+  }
+    public static void main(String[] args){
+        String order = "abc";
+        String s1 = "aaac";
+        String s2 = "cba";
+        String s3 = "zaaaaaaaaaabbbbbbbbcccccaaaaaaa";
+        System.out.println(isValid(s1, order));
+        System.out.println(isValid(s2, order));
+        System.out.println(isValid(s3, order));
+    }
+}
