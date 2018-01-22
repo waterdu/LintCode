@@ -1,0 +1,23 @@
+class Solution:
+    def dominantIndex(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if(len(nums) == 0):
+            return -1
+        largest = -sys.maxsize-1
+        second = -sys.maxsize-1
+        largestIndex = 0
+        
+        for i, n in enumerate(nums):
+            if n >= largest:
+                second = largest
+                largest = n
+                largestIndex = i
+            elif n > second:
+                second = n
+        
+        if largest >= second * 2:
+            return largestIndex
+        return -1
