@@ -11,3 +11,19 @@ class Solution {
         throw new IllegalArgumentException("No two sum solution");
     }
 }
+
+//python
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        map = {} # define diction, set
+        for i, num in enumerate(nums):
+            if target - num in map:
+                return (map[target - num], i)
+            else:
+                map[num] = i
+        
