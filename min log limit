@@ -1,0 +1,71 @@
+// package whatever; // don't place package name!
+
+import java.io.*;
+
+import java.util.*;
+
+class MyCode {
+  public static void main (String[] args) {
+    List<String> list = new ArrayList<>();
+    for(int i = 0; i < 100; i++){
+      list.add("log1");
+    }
+    for(int i = 0; i < 150; i++){
+      list.add("log2");
+    }
+    for(int i = 0; i < 400; i++){
+      list.add("log3");
+    }
+    System.out.println(getMaxLogLimit(list, 333));
+  }
+//List<Log>,
+
+// log1, log2,log3      maxLog 
+// 100    150  400        600
+// MaxlogLimit  = 350, return 350
+// 100,   150, 350,      max = 600
+  
+  
+  
+
+  public static int getMaxLogLimit(List<String> list, int maxLog){
+    HashMap<String, Integer> map = new HashMap<>();
+    for (String s : list) {
+      int count = map.getOrDefault(s, 0);
+      count++;
+      map.put(s, count);
+    }
+    int left = 0, right = 0;
+    for(String s : map.keySet()){
+      right = Math.max(map.get(s), right);
+    }
+    while(left+1<right) {
+      int mid =  left + (right - left) / 2;
+      int total = getTotal(map, mid);
+      if(total == maxLog){
+        return mid;
+      } else if(total < maxLog){
+        left = mid;
+      } else {
+        right = mid;
+      }
+    }
+    
+    if(getTotal(map, right) <= maxLog){
+      return right;
+    } 
+    return left;
+  }
+  
+  private static int getTotal(HashMap<String, Integer> map, int mid) {
+    int sum = 0;
+    for(String s : map.keySet()){
+      if(map.get(s) <= mid) {
+        sum += map.get(s);
+      } else {
+        sum += mid;
+      }
+    }
+    return sum;
+  }
+}  
