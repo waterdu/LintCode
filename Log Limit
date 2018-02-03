@@ -1,0 +1,89 @@
+// package whatever; // don't place package name!
+
+import java.io.*;
+import java.util.*;
+
+// n logs
+
+// m different kind of log
+
+// O(n) + O(mlogm) + O(m) ~ O(n) + O(mlogm)
+
+// n ~ millions, m ~ thousands
+
+// O(logm) ~ 64 * 9000 = 640000 < millions
+
+// O(m)
+
+class MyCode {
+  public static void main (String[] args) {
+    // String[] strs = new String[]{"log1","log1","log1","log1","log1", "log2", "log2", "log2", "log3"};    
+  }
+  public int getMinLimit(List<String> l, int k){
+    if(l == null || l.size() == 0){
+      return -1;
+    }
+    
+    Map<String, Integer> map = new HashMap<>();
+    
+    for(String str : l){
+      map.put(str, map.getOrDefault(str, 0) + 1);  
+    }
+    
+    List<Map.Entry<String, Integer>> list = map.getEntry();
+    
+    Collections.sort(list, new Comparator<Map.Entry<String, Integer>>(){  
+      public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2){
+        return Integer.cocmpare(e1.getValue(), e2.getValue());
+      } 
+    });
+    
+    // k = 100 150, 500
+    
+    int sum = 0;  
+    int limitation = 0;
+    int len = map.size(); 
+    int idx = 0;  
+      
+    for(Map.Entry<String, Integer> entry : list){
+      
+      limitation = entry.getValue();  // 150,100
+      int max = sum + num * (len - idx); // 450      
+      
+      if(max >= k){
+                       
+        limitation = (k - sum) / (len - idx);  // 33, 50
+        return limitation; // 33
+      }
+      
+      sum += limitation; 
+      idx++;
+    }
+    
+    return list.get(len - 1).getValue();
+    
+  }
+}
+
+// List<String>
+
+// List<String> -> Map<String, Integer> 
+// 
+// 
+
+
+//log1 log2 log3 ... log1 
+//  150   200  400
+ 
+/* 
+
+k = 100
+
+limitation 150  
+max = 450
+
+
+
+  
+*/ 
+    
