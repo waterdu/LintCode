@@ -1,0 +1,25 @@
+Xcode第九讲
+NoSQL:CAP theorem(Consistency, Availability and Partition toleration)
+
+业界流行的caching service,旧的叫memcacheD
+一般mysql上面放一层memcahed
+
+Redis也是memcache,但是它不是consistent
+
+缓存更新的套路:
+https://coolshell.cn/articles/17416.html
+
+Redis主要操作get,put
+TTL:time to live limite可以存活的时间
+设置缓存服务一般要设置time to live
+
+cassandra 和 mysql区别：
+1 性能cassandra最大的优势就是写，在noSQL里，cassandra的write的优势是非常明显
+2 cassandra是less reliable,因为没有transaction（没有distributed transaction）
+
+Shading是专门给mysql用的，是提高master-slave approach的relational database的常用手段
+可以多主多从的手段
+
+ leader election
+
+leader(master)死掉了怎么办？重启就行了
