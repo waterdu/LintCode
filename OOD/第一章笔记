@@ -1,0 +1,163 @@
+SQL vs NoSQL
+1最大区别 distributed, eventually consistent
+
+sql的优势是transaction
+
+OOD笔记：
+起手陷阱
+忌：自说自话，侃侃而谈。算法ood系统设计傻傻分不清楚。
+宜:先通过面试官交流有效信息，询问清楚题目要求。直接问你要问算法，还是系统设计处理traffic
+还是ood
+
+忌：思路混乱，反复修改
+宜：先给面试官呈现一个viable的成功，是不是最优无所谓。先想brute force.
+
+写好后要测试，看能不能测试edge case
+
+Can you design an elevator system
+5c解题法
+Clarify
+说人话:通过和面试官交流，去除题目中的歧义，确定答题范围
+What-针对题目中的关键字来提问，帮助自己更好的确定答题范围
+大多数的关键字为名词，通过名词的属性来考虑
+关键字1：Elevator
+属性？
+-可能需要考虑获取每辆电梯的目前重量
+-是否需要设计两种类，如果需要它们之间是什么关系？（比如货梯客梯）
+-客梯和货梯有什么区别
+针对本题：所有电梯厢均为相同规格
+
+关键字2：Building
+属性？
+是否有多处能搭乘的电梯口
+-当收到一个搭乘电梯的请求时，有多少电梯能够响应？
+针对本题：每层仅一处能搭乘，所有电梯均可响应
+How-
+针对问题主题的规则来提问，帮助自己明确解题方向。
+当按下按钮时，哪一台电梯会响应？
+-同方向>静止>反向
+-一般负责奇数楼层，一半负责偶数
+
+当电梯在运行时，哪些按键可以响应？
+-是否能按下反向的楼层
+-Who
+设计由人主导 VS 设计由系统主导？
+
+
+
+规则：
+对于本题：同向>静止>反向，当运行时不能按下反向的楼层
+信息：电梯至少需要三种状态，并且要知道当前在哪一层
+
+电梯系统如何获取每位乘客的重量？
+-Passenger class包含重量
+-电梯能够自动感应当前重量
+
+Core objects
+说人话：确定题目所涉及的类，以及类之间的映射关系
+
+如何定义Core Object?
+ElevatorSystem
+把想要设计的类，在白板上都写出来
+Request
+
+ElevatorSystem
+
+Elevator
+
+ElevatorButton
+
+在类图中，用'-'表示一个变量或者函数为private,+表示Public
+
+Cases:
+说人话：确定题目中所需要实现的场景和功能
+这是你和面试官达成的共识。
+帮助你在解题过程中，理清条例，一个一个case实现
+作为检查的标准
+
+怎么写use cases?
+每个use case用简单的话来描述
+ElevatorSystem
+-Handle request
+
+Request
+没啥use case
+
+Elevator
+-take external request
+-take internal request
+- Open gate
+-close gate
+-Check weight
+
+ElevatorButton
+-PressButton
+
+怎么画类图？
+-遍历你所列出的use cases
+-对于每一个use case，更加详细的描述这个use case在做什么事情。
+(例如:take external request->ElevatorSystem takes an external request, and decide to push this request to an appropriate elevator)
+-针对这个描述，在已有的Core object里填充进所需要的信息
+
+
+
+Classes:通过类图的方式，具体填充题目中涉及的类
+
+如何知道一个函数，是否成功完成任务？
+地下一层电梯关闭，这时有人在地下一层按了向上的按钮，会发生什么？
+- Use boolean instead of void
+成功的话返回true,否则返回false(这个方法不好的地方是不知道哪里出错)
+如何知道是什么地方出错？
+- 用InvalidExternalRequestException（工业界都这么用，而且保持方法是void）
+
+Use case:take external request
+An elevator takes an external request, inserts in its stop list
+
+ExternalRequest:
+-Direction d
+-int level
+
+Challenge:
+如果电梯目前在1L,有人按下了5L向上，之后又有人按了3L向上，电梯会怎么样行动
+stop will be 5,3
+Expected is 3,5
+Solution:use priority queue instead of list
+
+挑战2:如果电梯目前在1L,有人按下了5L向上，之后又有人按下了3L向上，紧接着这台电梯又被分配了一个2L向下的request。这台电梯会如何行动？
+stops will be 2, 3,5
+expected is 3,5,2
+Solution:keep 2 lists for different direction
+
+Use case:take internal request
+An elevator takes an internal request, determine if it's valid,inserts in it's stop list
+
+如何判断一个Internal request是否valid?
+Solution:
+if elevator going up
+	retuested evel lower than current level, invalid
+if elevator going down
+	requested level higher than current level, invalid
+
+Use case:open gate
+an elevator reaches the destinaton level, open gage
+
+Use case:Close gate
+An elevator
+checks if overweigt;
+close the door;
+then check stops correcponds to current status;
+if no stops left, check the reserve direction stops;
+change status to reserve direction or idle.
+
+Use case:check weight
+An elevator checks its current weight and compare with limit to see if overweight
+
+Use case:press button
+A button inside elevator is pressed, will generate an internal request and send to the elevator.
+
+Correctness:检查自己的设计，是否满足关键点
+如何检查？过一遍use case
+
+如果有电梯高峰时间，怎么设计？
+Solution 1：if-else在handleRequest里（违法了Solid原则）
+solution 2：strategy design pattern
