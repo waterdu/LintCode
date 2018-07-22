@@ -24,3 +24,19 @@ class Solution {
         return sb.toString();
     }
 }
+
+#python
+class Solution(object):
+    def largestNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: str
+        """
+        # change all int to string
+        strs = [str(x) for x in nums]
+        # the smaller put to front, x = 10, y = 2
+        # cmp sequence is the largest in the front
+        strs.sort(cmp=lambda x, y:cmp(y+x, x+y))
+        print(strs)
+        #lstrip mean remove leading 0
+        return ''.join(strs).lstrip('0') or '0'
