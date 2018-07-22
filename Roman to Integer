@@ -1,0 +1,17 @@
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        roman = {'M': 1000,'D': 500 ,'C': 100,'L': 50,'X': 10,'V': 5,'I': 1}
+        res = 0
+        for i in range(len(s)):
+            # VI = 5+1
+            res += roman[s[i]]
+            print(res)
+            # IV = 5 + 1 -1*2
+            if i > 0 and roman[s[i]] > roman[s[i - 1]]:
+                res = res - roman[s[i-1]]*2
+        return res
