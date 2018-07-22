@@ -15,3 +15,49 @@ class Solution(object):
             if i > 0 and roman[s[i]] > roman[s[i - 1]]:
                 res = res - roman[s[i-1]]*2
         return res
+
+//solution 2
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        roman = {'M': 1000,'D': 500 ,'C': 100,'L': 50,'X': 10,'V': 5,'I': 1}
+        res = 0
+        lastVal = 0
+        for i in reversed(s):
+            val = roman[i]
+            #IV -> VI  5 1
+            if val >= lastVal:
+                res += val
+            if val < lastVal:
+                # 1 < 5, so 5 - 1 
+                res -= val
+            
+            lastVal = val
+        return res
+
+//java
+public class Solution {
+    public int romanToInt(String s) {
+        if(s==null||s.length()==0) return 0;
+        Map<Character,Integer> map=new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int res=0; //凡是string转数字题，一定要定一个res的int，base是0
+        for(int i=0;i<s.length();i++){
+            res+=map.get(s.charAt(i));
+            if(i>0&&map.get(s.charAt(i-1))<map.get(s.charAt(i))){
+                res-=2*map.get(s.charAt(i-1));
+            }
+        }
+        return res;
+    }
+}
