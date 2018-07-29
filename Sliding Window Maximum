@@ -1,3 +1,25 @@
+class Solution(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        dq = collections.deque()
+        ans = []
+        for i in xrange(len(nums)):
+            #if the last one is smaller than current, delete them from window
+            while dq and nums[dq[-1]] <= nums[i]:
+                dq.pop() #pop from right
+            dq.append(i) # append to right, so left is always the max     
+            if i - dq[0] + 1 > k: # larger than window size, need to reduce the window
+                dq.popleft()
+            if i >= k-1: # reach the window size, we can start append answer
+                ans.append(nums[dq[0]])
+        return ans
+    #time complexity n2
+
+//java
 class Solution {
     //this question ask to get the maximum number till the sliding window
     public int[] maxSlidingWindow(int[] nums, int k) {
