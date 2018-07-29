@@ -17,7 +17,29 @@ class Solution(object):
             if i >= k-1: # reach the window size, we can start append answer
                 ans.append(nums[dq[0]])
         return ans
-    #time complexity n2
+    #time complexity n
+    
+class Solution(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        if len(nums) == 0:
+            return []
+        res = []
+        curMx = max(nums[:k]) #current max
+        res.append(curMx)
+        # i is the most left number in the window 
+        for i in range(1, len(nums)-k+1):
+            if curMx == nums[i-1]: # the window's outside left is the number, so the max is not the number anymore
+                curMx = max(nums[i:i+k])
+            else:
+                curMx = max(curMx, nums[i + k -1])
+            res.append(curMx)
+        return res
+    #time complexity n    
 
 //java
 class Solution {
