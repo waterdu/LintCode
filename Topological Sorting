@@ -7,6 +7,50 @@
  * };
  */
 
+"""
+Definition for a Directed graph node
+class DirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+
+
+class Solution:
+    """
+    @param: graph: A list of Directed graph node
+    @return: Any topological order for the given graph.
+    """
+    def topSort(self, graph):
+        # write your code here
+        indegree = {}
+        ans = []
+        for g in graph:
+            for n in g.neighbors:
+                if n not in indegree:
+                    indegree[n] = 1 #set one indegree
+                else:
+                    indegree[n] += 1
+        q = []
+        for g in graph:
+            if g not in indegree:
+                q.append(g)
+        
+        while q:
+            cur = q.pop(0);
+            ans.append(cur);
+            for n in cur.neighbors:
+                indegree[n] -= 1
+                if indegree[n] == 0:
+                    q.append(n)
+                    
+        #check if there's a cycle
+        if len(ans) == len(graph):
+            return ans
+        
+        return []
+        
+
 public class Solution {
     /*
      * @param graph: A list of Directed graph node
