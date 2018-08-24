@@ -7,6 +7,44 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ # Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        # edge case
+        if not root:
+            return []
+        
+        q = []
+        q.append(root)
+        res = []
+        
+        while q:
+            lvl = []
+            size = len(q)
+            for j in range(size):
+                curr = q.pop(0)
+                lvl.append(curr.val)
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+            
+            res.append(lvl)
+               
+            
+        return res
+ 
+ 
 public class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new LinkedList<List<Integer>>();
