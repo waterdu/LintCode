@@ -32,3 +32,11 @@ int bitCount(int n) {
     }
     return count;
 }
+//python
+    def hammingWeight(self, n):
+        # write your code here
+        count = 0
+        while n:
+            n &= n -1
+            count += 1
+        return count
