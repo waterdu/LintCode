@@ -1,3 +1,4 @@
+//indexOf, lastIndexOf解法
 public class Solution {
     public int firstUniqChar(String s) {
        int len=s.length();
@@ -22,3 +23,13 @@ public class Solution {
         return -1;
     }
 }
+//python
+    def firstUniqChar(self, str):
+        # Write your code here
+        count = {}
+        for c in str:
+            count[c] = count.get(c,0) + 1
+        for c in str:
+            if count[c] == 1:
+                return c
+        return -1
