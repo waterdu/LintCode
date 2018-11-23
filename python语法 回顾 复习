@@ -1,0 +1,18 @@
+创建value,index 对list
+letters = ['a','b','c']
+pairs = [(letter, index ) for index,letter in enumerate(letters)]
+//注意enumerate都是index在第一个，也就是(index,value)
+print(pairs)
+[('a', 0), ('b', 1), ('c', 2)]
+//也可以用
+pairs = list(zip(letters, range(letters)))
+
+
+//创建2维数组：
+b =[[1 for x in range(n)] for y in range(m)]
+
+创建一个0*0的二维列表：
+list = [ [0 for col in range(0)] for row in range(0)]
+
+创建一个5*5，每个数都初始化为0的二维列表：
+list = [ [0 for col in range(5)] for row in range(5)]
