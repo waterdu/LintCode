@@ -1,3 +1,6 @@
+//two solution, map
+//
+
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -13,6 +16,12 @@ class Solution {
 }
 
 //python
+//brute forth, n^2
+ l = len(nums)
+        for i in range(l-1):
+            for j in range(i+1,l):
+                if nums[i] + nums[j] == target:
+//map
 class Solution:
     def twoSum(self, nums, target):
         """
@@ -20,10 +29,35 @@ class Solution:
         :type target: int
         :rtype: List[int]
         """
-        map = {} # define diction, set
-        for i, num in enumerate(nums):
-            if target - num in map:
-                return (map[target - num], i)
+        map = {}
+        for i, num in enumerate(numbers):
+            res = target - num
+            if res in map:
+                return [map[res], i]
+            
+            map[numbers[i]] = i
+            
+        return [-1, -1]
+ 
+//sort, two pointer
+    def twoSum(self, numbers, target):
+        # write your code here
+        lenth = len(numbers)
+        array = list(zip(numbers, range(lenth)))
+        array.sort()
+        left = 0
+        right = lenth - 1
+        while left < right:
+            ans = array[left][0] + array[right][0]
+            if ans < target:
+                left = left + 1
+            elif ans > target:
+                right = right - 1
             else:
-                map[num] = i
+                if array[left][1] >  array[right][1]:
+                    return  [array[right][1],  array[left][1]]
+                return [array[left][1], array[right][1]]
+            
+        return [-1, -1]
+
         
