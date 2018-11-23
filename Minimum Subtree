@@ -1,0 +1,74 @@
+Given a binary tree, find the subtree with minimum sum. Return the root of the subtree.
+Given a binary tree:
+
+     1
+   /   \
+ -5     2
+ / \   /  \
+0   2 -4  -5 
+return the node 1.
+
+//看到tree和subtree，想到devide and concur, 要递归
+//java的递归，要用到resultType
+class Solution:
+    """
+    @param root: the root of binary tree
+    @return: the root of the minimum subtree
+    """
+    import sys
+    def findSubtree(self, root):
+        # write your code here
+        sum, minSum, node = self.findMinNode(root)
+        return node
+    
+    def findMinNode(self, root):
+        if root == None:
+            return 0, sys.maxint, None
+        
+        sumLeft, minSumLeft, minNodeLeft = self.findMinNode(root.left)
+        sumRight, minSumRight, minNodeRight = self.findMinNode(root.right)
+        
+        sumRoot = root.val + sumLeft + sumRight
+        minSumRoot = min(sumRoot, minSumRight, minSumLeft)
+        if minSumRoot == sumRoot:
+            minRoot = root
+        elif minSumRoot == minSumLeft:
+            minRoot = minNodeLeft
+        else:
+            minRoot = minNodeRight
+        
+        return sumRoot, minSumRoot, minRoot
+
+//ResultType式解法
+
+class ResultType:
+    def __init__(self,root,minSum,s):
+        self.root = root
+        self.minSum = minSum
+        self.s = s
+
+class Solution:
+    """
+    @param root: the root of binary tree
+    @return: the root of the minimum subtree
+    """
+    def findSubtree(self, root):
+        # write your code here
+        res = self.getResultType(root)
+        return res.root
+    
+    def getResultType(self, root):
+        if not root:
+            return ResultType(None, sys.maxint, 0)
+        
+        leftResult = self.getResultType(root.left)
+        rightResult = self.getResultType(root.right)
+        newSum = root.val + leftResult.s + rightResult.s
+        newResult = ResultType(root, newSum, newSum)
+        if leftResult.minSum < newResult.minSum:
+            newResult.minSum = leftResult.minSum
+            newResult.root = leftResult.root
+        if rightResult.minSum < newResult.minSum:
+            newResult.minSum = rightResult.minSum
+            newResult.root = rightResult.root
+        return newResult
