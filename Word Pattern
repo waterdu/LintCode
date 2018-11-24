@@ -14,3 +14,28 @@ class Solution {
         return true;
     }
 }
+
+// 双map解法, 如果用Java写，那就太恶心了, 推荐python写法
+class Solution(object):
+    def wordPattern(self, pattern, str):
+        """
+        :type pattern: str
+        :type str: str
+        :rtype: bool
+        """
+        t = str.split()
+        if len(pattern)!=len(t):
+            return False
+        patternMap = {} # key: p, value, t
+        targetMap = {}
+        # patterns map to str, and str maps to patter. If violate, return false
+        for i in range(len(pattern)):
+            if pattern[i] in patternMap and t[i] in targetMap:
+                if not (patternMap[pattern[i]] == t[i] and targetMap[t[i]] == pattern[i]):
+                    return False    
+            elif pattern[i] not in patternMap and t[i] not in targetMap:
+                patternMap[pattern[i]] = t[i]
+                targetMap[t[i]] = pattern[i]
+            else:
+                return False    
+        return True
