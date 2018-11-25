@@ -34,3 +34,36 @@ class Solution {
         return res;
     }
 }
+//python重点是去重
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        if nums is None or len(nums) == 0:
+            return res
+        
+        nums.sort()
+        for i in range(len(nums) -2): # because i is the first, there should be a place for second and third
+            if i!=0 and nums[i] == nums[i - 1]:
+                continue
+            second = i + 1
+            third = len(nums) - 1
+            while second < third:
+                sum = nums[i] + nums[second] + nums[third]
+                if sum == 0:
+                    res.append([nums[i], nums[second], nums[third]])
+                    second = second + 1
+                    third = third - 1
+                    while second < third and nums[second] == nums[second - 1]:
+                        second = second + 1
+                    while second < third and nums[third] == nums[third + 1]:
+                        third = third - 1
+                elif sum > 0:
+                    third = third - 1
+                else:
+                    second = second + 1
+        return res
+                    
