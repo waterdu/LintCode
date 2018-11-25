@@ -15,3 +15,14 @@ string idToShortURL(int id){
   while (short_url.length() < 6):
     short_url = "0" + short_url
 }
+
+以上是short存数据库产生id的方法
+下面问题是如何将longurl 转换成shortUrl
+1 hash function
+有点,根据Long url直接生成
+缺点，难以克服独立性冲突。克服方法，加上timestamp重试。但是冲突过多之后，效率会下降
+
+while(true):
+ short_url = hashfunc(long_url + current_timestamp())
+ if (!db.exists(short_url = short_url))
+     break:
