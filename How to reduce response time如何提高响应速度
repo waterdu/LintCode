@@ -1,0 +1,11 @@
+比如tiny url有啥可以优化的地方
+
+1 用缓存提速读的过程
+
+优化服务器访问速度
+ 1 不同的地区，使用不同的web服务器
+ 2 通过dns解析不同地区的用户到不同的服务器
+
+优化数据访问速度
+ 1 使用centralized mySql + distributed memcached
+ 2 一个mysql 配多个memcached, memcached 过地区分布
