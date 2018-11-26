@@ -39,3 +39,41 @@ class Solution {
         return res;
     }
 }
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param root: A Tree
+    @return: A list of lists of integer include the zigzag level order traversal of its nodes' values.
+    """
+    def zigzagLevelOrder(self, root):
+        # write your code here
+        if not root:
+            return []
+        res = []
+        q = [root]
+        isRightToleft = False
+        while q:
+            size = len(q)
+            level = []
+            for i in range(size):
+                cur = q.pop(0)
+                if isRightToleft:
+                    level.insert(0, cur.val)
+                else: 
+                    level.append(cur.val)
+                if cur.left:
+                    q.append(cur.left)
+                if cur.right:
+                    q.append(cur.right)
+            res.append(level)
+            isRightToleft = not isRightToleft
+        return res
+
