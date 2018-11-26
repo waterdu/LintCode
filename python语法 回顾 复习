@@ -16,3 +16,21 @@ list = [ [0 for col in range(0)] for row in range(0)]
 
 创建一个5*5，每个数都初始化为0的二维列表：
 list = [ [0 for col in range(5)] for row in range(5)]
+
+list用法：
+加元素到最后
+l.append(e)
+
+queue的pop写法
+l.pop(0) 一定要加index作为变量进去
+
+插入
+l.insert(index,e)
+
+Deque在python的写法
+import collections 
+  
+# initializing deque 
+de = collections.deque([1,2,3]) 
+它有append(), appendLeft()
+pop(), popLeft()
