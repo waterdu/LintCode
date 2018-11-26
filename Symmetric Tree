@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+//Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         if(root == null) {
@@ -26,3 +28,30 @@ class Solution {
         return isSymmetric(left.right, right.left) && isSymmetric(left.left, right.right);
     }
 }
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution:
+    """
+    @param root: root of the given tree
+    @return: whether it is a mirror of itself 
+    """
+    def isSymmetric(self, root):
+        # Write your code here
+        if not root:
+            return True
+        return self.checkSymmetric(root.left, root.right)
+    
+    def checkSymmetric(self, left, right):
+        if not left and not right:
+            return True
+        if not left or not right or left.val != right.val:
+            return False
+        
+        return self.checkSymmetric(left.right, right.left) and self.checkSymmetric(left.left, right.right)
