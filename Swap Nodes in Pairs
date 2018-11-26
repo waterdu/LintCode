@@ -1,0 +1,26 @@
+Given a linked list, swap every two adjacent nodes and return its head.
+
+Example
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+class Solution:
+    """
+    @param head: a ListNode
+    @return: a ListNode
+    """
+    def swapPairs(self, head):
+        # write your code here
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        cur = dummy
+        while cur.next and cur.next.next:
+            one = cur.next
+            two = cur.next.next
+            three = two.next
+            cur.next = two
+            two.next = one
+            one.next = three
+            cur = one
+        return dummy.next
