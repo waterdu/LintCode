@@ -1,0 +1,30 @@
+JVM内存分为三个区：堆（heap）、栈（stack）和方法区（method）
+
+
+
+heap
+all object and class
+存储的全部是对象，每个对象包含与之对应的类信息。
+
+JVM只有一个heap被所有线程共享，堆中不存放基本类型和对象引用，只存放对象本身。
+
+
+
+stack
+variable, and reference
+
+每个线程包含一个stack，只保存基础数据类型的对象和自定义对象的引用（指类的类型信息在方法区中的内存地址）。
+
+每个stack中的数据是私有的，其他栈不能访问。
+
+stack分为3个部分：基本类型变量区域、执行环境上下文、操作指令区。
+.NET中的堆由垃圾收集器自动管理。
+
+
+method
+shared by other threads
+static variable
+又叫静态区，与堆一样被所有线程共享，包含所有的class和static变量。
+
+方法区中包含的都是在整个程序中永远唯一的元素，如class，static变量。
+
