@@ -1,0 +1,6 @@
+dfs：一个元素要么放要么不放
+dp：只要是dfs基本可以换成dp
+
+看起来像hashmap的题，dfs也可以用memorized solution来做
+
+Tree题想到devide and concor, bfs,dfs
