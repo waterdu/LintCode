@@ -155,7 +155,7 @@ public class Solution {
         return 0
                 
                 
-#如果dict不是很长，从dict里找和当前distance为1的词，参考editDistance==1解法                
+#如果dict不是很长，从dict里找和当前distance为1的词，参考上面java的getOneEditWords解法                
                 
     def getNextWords(self, word):
         res = []
@@ -166,4 +166,20 @@ public class Solution {
                 if c == word[i]:
                     continue
                 res.append(left + c + right)
+        return res
+    
+    def isOneDistance(str1, str2):
+        count = 0
+        if len(str1) != len(str2):
+            return False
+        for i in range(len(str1)):
+            if str1[i] != str1[2]:
+                count += 1
+        return count == 1
+    
+    def getOneDistanceWords(dict, word):
+        res = {}
+        for i in dict:
+            if  isOneDistance(i, word):
+                res.add(i)
         return res
