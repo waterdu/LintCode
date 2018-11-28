@@ -1,10 +1,6 @@
 Count the number of prime numbers less than a non-negative number, n.
-
+//下面这个解法可能超时
 class Solution:
-    """
-    @param n: a integer
-    @return: return a integer
-    """
     def countPrimes(self, n):
         # write your code here
         if n <= 2:
@@ -12,22 +8,35 @@ class Solution:
         
         if n == 3:
             return 1
-        primes = [2,3]
+        primes = [2]
         
-        count = 0
+        count = 1
         
-        for i in range(4, n + 1, 1):
+        for i in range(3, n, 2):
             if self.isPrime(i, primes):
                 primes.append(i)
                 count += 1
         
         return count
-        
+
+//赛哆啦解法
     def isPrime(self, n, primes):
         for p in primes:
-            if p > math.sqrt(n):
-                return True
             if n % p == 0:
                 return False 
+            if p > math.sqrt(n):
+                break
+
         
         return True
+  
+     def countPrimes(self, n):
+        if n < 3:
+            return 0
+        primes = [True] * n
+        primes[0] = primes[1] = False
+        for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            #remove all number that is times of the prime
+            primes[i * i: n: i] = [False] * len(primes[i * i: n: i])
+        return sum(primes)
