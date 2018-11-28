@@ -1,3 +1,46 @@
+dir = [[1,0],[-1,0],[0,-1],[0, 1]]
+class Solution:
+    """
+    @param board: A list of lists of character
+    @param word: A string
+    @return: A boolean
+    """
+
+    def exist(self, board, word):
+        # write your code here
+        if not board or not board[0] or len(board[0]) == 0:
+            return False
+        if not word or len(word) == 0:
+            return True
+        
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if self.dfs(board,word,0, i, j):
+                    return True
+        
+        return False
+        
+    
+    def dfs(self, board, word, posInWord, i, j):
+        if posInWord == len(word):
+            return True
+        
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]):
+            return False
+        
+        old = word[posInWord]
+        if old != board[i][j]:
+            return False
+            
+        board[i][j] = "#"
+        
+        for d in range(4):
+            if self.dfs(board,word,posInWord + 1, i + dir[d][0], j + dir[d][1]):
+                board[i][j] = old
+                return True
+        board[i][j] = old # 重点在这个back track上
+        return False
+  
 //So the worst time complexity is O(n*m * 4^L).
 class Solution {
     public boolean exist(char[][] board, String word) {
