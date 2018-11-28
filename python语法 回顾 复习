@@ -34,3 +34,10 @@ import collections
 de = collections.deque([1,2,3]) 
 它有append(), appendLeft()
 pop(), popLeft()
+
+
+
+
+Queue/Dequeue用法：
+统一用q = collections.deque([start])来初始化
+有append, appendLeft, pop, popLeft 4种方法
