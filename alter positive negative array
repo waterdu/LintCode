@@ -1,0 +1,34 @@
+Rearrange positive and negative numbers
+list = [1,2,3,-1,-2,-3]
+output = [1,-1,2,-2,3,-3]
+
+//solution 1
+分成postive,negative两个List,然后再merge
+time,on, space on
+
+def altList(l):
+
+
+//solution two, in place, without space.
+//只能用remove, insert这种方法，其他不管怎么换都会打乱顺序, time, n^2, space 1
+def altList(l):
+  posCount = 0
+  size = len(l)
+  for i in range(size):
+    if l[i] > 0:
+      posCount += 1
+  if posCount > size - posCount:
+    initP = 0
+  else:
+    initP = 1
+  
+  
+  for i in range(size):
+    if l[i] > 0:
+       l.insert(initP, l[i])
+       l.remove(i+1）
+       initP+=2
+return l
+
+
+      
