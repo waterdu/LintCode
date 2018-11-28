@@ -1,0 +1,33 @@
+Count the number of prime numbers less than a non-negative number, n.
+
+class Solution:
+    """
+    @param n: a integer
+    @return: return a integer
+    """
+    def countPrimes(self, n):
+        # write your code here
+        if n <= 2:
+            return 0
+        
+        if n == 3:
+            return 1
+        primes = [2,3]
+        
+        count = 0
+        
+        for i in range(4, n + 1, 1):
+            if self.isPrime(i, primes):
+                primes.append(i)
+                count += 1
+        
+        return count
+        
+    def isPrime(self, n, primes):
+        for p in primes:
+            if p > math.sqrt(n):
+                return True
+            if n % p == 0:
+                return False 
+        
+        return True
