@@ -41,3 +41,7 @@ pop(), popLeft()
 Queue/Dequeue用法：
 统一用q = collections.deque([start])来初始化
 有append, appendLeft, pop, popLeft 4种方法
+
+数学：
+^符号用**表示
+开方用math.sqrt(x)
