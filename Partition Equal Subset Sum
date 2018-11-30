@@ -1,0 +1,30 @@
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        s = sum(nums) 
+        target = sum(nums) / 2
+        if target * 2 != s:
+            return False
+        
+        cache = {}
+        def dfs(tar, index):
+            if tar < 0: return False
+            elif tar == 0: return True
+            
+            if index >= len(nums):
+                return False
+            key = (tar, index)
+            if key in cache:
+                return cache.get(key)
+            print([tar, index])
+
+            notAdd = dfs(tar,index + 1)
+            add = dfs(tar - nums[index], index + 1)
+            res = notAdd or add
+            cache[key] = res
+            return res
+        
+        return dfs(0,0)
