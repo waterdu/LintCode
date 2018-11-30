@@ -6,7 +6,7 @@ dp：只要是dfs基本可以换成dp
 
 看起来像hashmap的题，实际上都是cache记忆化题，用cache = {}来做，dfs也可以用memorized solution来做
 
-Tree题想到devide and concor, bfs,dfs
+Tree题想到devide and concor, bfs,dfs,dfs不爆栈解法就用stack数据库
 
 dfs问题里的检查a + b = sum?类题，最好换成检查if target - sum <0 来减少计算量，每次把越来越小的数传进去
 因为cache(key)要保持越来越小，不要越来越大
