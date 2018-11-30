@@ -1,0 +1,62 @@
+先想dfs解法
+class Solution(object):
+    
+    def findTargetSumWays(self, nums, S):
+        if not nums:
+            return 0
+        def dfs(index, acc):
+            key = (index, acc)
+            if key in cache:
+                return cache.get(key)
+            if index == len(nums):
+                if acc == S:
+                    return 1
+                else:
+                    return 0
+                num = nums[index]
+            add = dfs(index + 1, acc + nums[index])
+            minus = dfs(index + 1, acc - nums[index])
+            return add + minus
+            
+        return dfs(0 ,0)
+
+//可能超时，然后想记忆化加，cache
+
+class Solution(object):
+    
+    def findTargetSumWays(self, nums, S):
+        if not nums:
+            return 0
+        cache = {}
+        def dfs(index, acc):
+            key = (index, acc)
+            if key in cache:
+                return cache.get(key)
+            if index == len(nums):
+                if acc == S:
+                    return 1
+                else:
+                    return 0
+                num = nums[index]
+            add = dfs(index + 1, acc + nums[index])
+            minus = dfs(index + 1, acc - nums[index])
+            cache[key] = add + minus
+            return add + minus
+            
+        return dfs(0 ,0)
+//可以接受，但是会用到stackoverflow
+再想dp, 下面那个最优看不懂，待分析
+class Solution(object):
+    
+    def findTargetSumWays(self, nums, S):
+        total = sum(nums)
+        if total < S or (total + S) % 2 > 0:
+            return 0
+        return self.subset(nums, (total + S)/2)
+
+    def subset(self, nums, t):
+        dp = [1] + [0] * t
+        for num in nums:
+            for i in range(t, num-1, -1):
+                dp[i] += dp[i-num]
+        return dp[t]
