@@ -8,23 +8,28 @@ class Solution(object):
         target = sum(nums) / 2
         if target * 2 != s:
             return False
+        visited = set()
         
-        cache = {}
         def dfs(tar, index):
             if tar < 0: return False
-            elif tar == 0: return True
-            
+                        
             if index >= len(nums):
                 return False
-            key = (tar, index)
-            if key in cache:
-                return cache.get(key)
-            print([tar, index])
+            if tar == 0:
+                return True
 
-            notAdd = dfs(tar,index + 1)
+            key = (tar, index)
+            if key in visited:
+                return False
+
+            
             add = dfs(tar - nums[index], index + 1)
-            res = notAdd or add
-            cache[key] = res
+            notAdd = dfs(tar,index + 1)
+            res = add or notAdd
+            if not res:
+                visited.add((tar, index))
             return res
-        
-        return dfs(0,0)
+    
+        return dfs(target, 0)
+但是这个超时了
+
