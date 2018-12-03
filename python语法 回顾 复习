@@ -3,6 +3,7 @@ https://www.w3schools.com/python/python_sets.asp
 
 py的string是immutable
 
+
 创建value,index 对list
 letters = ['a','b','c']
 pairs = [(letter, index ) for index,letter in enumerate(letters)]
@@ -12,6 +13,9 @@ print(pairs)
 //也可以用
 pairs = list(zip(letters, range(letters)))
 
+List/array:
+创建n size的list
+lst = [None] * n
 
 //创建2维数组：
 b =[[1 for x in range(n)] for y in range(m)]
