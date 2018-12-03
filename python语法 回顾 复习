@@ -1,3 +1,8 @@
+参考
+https://www.w3schools.com/python/python_sets.asp
+
+py的string是immutable
+
 创建value,index 对list
 letters = ['a','b','c']
 pairs = [(letter, index ) for index,letter in enumerate(letters)]
@@ -20,6 +25,14 @@ list = [ [0 for col in range(5)] for row in range(5)]
 list用法：
 加元素到最后
 l.append(e)
+
+拷贝一个元素,
+
+
+python in的复杂度
+Here is the summary for in:
+list - Average: O(n)
+set/dict - Average: O(1), Worst: O(n)
 
 queue的pop写法
 l.pop(0) 一定要加index作为变量进去
@@ -45,3 +58,19 @@ Queue/Dequeue用法：
 数学：
 ^符号用**表示
 开方用math.sqrt(x)
+
+Set:
+thisset = {"apple", "banana", "cherry"}
+thisset.discard("banana")
+Note: If the item to remove does not exist, discard() will NOT raise an error.
+thisset.remove("banana")
+Note: If the item to remove does not exist, remove() will raise an error.
+
+
+dict:
+thisdict =	{
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict)
