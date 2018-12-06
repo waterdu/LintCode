@@ -65,6 +65,8 @@ Queue/Dequeue用法：
 
 Set:
 thisset = {"apple", "banana", "cherry"}
+or myset = set(),//注意{}是定义dict，它没有add method
+
 thisset.discard("banana")
 Note: If the item to remove does not exist, discard() will NOT raise an error.
 thisset.remove("banana")
@@ -72,6 +74,7 @@ Note: If the item to remove does not exist, remove() will raise an error.
 
 
 dict:
+mydict = {}
 thisdict =	{
   "brand": "Ford",
   "model": "Mustang",
