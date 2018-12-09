@@ -1,0 +1,47 @@
+In the following, every capital letter represents some hexadecimal digit from 0 to f.
+
+The red-green-blue color "#AABBCC" can be written as "#ABC" in shorthand.  For example, "#15c" is shorthand for the color "#1155cc".
+
+Now, say the similarity between two colors "#ABCDEF" and "#UVWXYZ" is -(AB - UV)^2 - (CD - WX)^2 - (EF - YZ)^2.
+
+Given the color "#ABCDEF", return a 7 character color that is most similar to #ABCDEF, and has a shorthand (that is, it can be represented as some "#XYZ"
+
+Example 1:
+Input: color = "#09f166"
+Output: "#11ee66"
+Explanation:  
+The similarity is -(0x09 - 0x11)^2 -(0xf1 - 0xee)^2 - (0x66 - 0x66)^2 = -64 -9 -0 = -73.
+This is the highest among any shorthand color.
+Note:
+
+color is a string of length 7.
+color is a valid RGB color: for i > 0, color[i] is a hexadecimal digit from 0 to f
+Any answer which has the same (highest) similarity as the best answer will be accepted.
+All inputs and outputs should use lowercase letters, and the output is 7 characters.
+那么通过分析题目中给的例子, 我们知道可以将给定的字符串拆成三个部分，每个部分分别来进行处理，比如对于字符串"#09f166"来说，
+我们就分别处理"09"，"f1"，"66"即可。我们的目标是要将每部分的两个字符变为相同，并且跟原来的距离最小，那么实际上我们并不需要遍历所有的组合，
+因为比较有参考价值的就是十位上的数字，因为如果十位上的数字不变，或者只是增减1，而让个位上的数字变动大一些，这样距离会最小，
+因为个位上的数字权重最小。就拿"09"来举例，这个数字可以变成"11"或者"00"，十六进制数"11"对应的十进制数是17，跟"09"相差了8，
+而十六进制数"00"对应的十进制数是0，跟"09"相差了9，显然我们选择"11"会好一些。所以我们的临界点是"8"，如果个位上的数字大于"8"，那么十位上的数就加1。
+
+下面来看如何确定十位上的数字，比如拿"e1"来举例，其十进制数为225，其可能的选择有"ff"，"ee"，和"dd"，其十进制数分别为255，238，和221，(gap is 17)
+我们目测很容易看出来是跟"dd"离得最近，但是怎么确定十位上的数字呢。我们发现"11"，"22"，"33"，"44"... 这些数字之间相差了一个"11"，
+十进制数为17，所以我们只要将原十六进制数除以一个"11"，就知道其能到达的位置，比如"e1"除以"11"，就只能到达"d"，那么十进制上就是"d"，
+至于个位数的处理情况跟上面一段讲解相同，我们对"11"取余，然后跟临界点"8"比较，如果个位上的数字大于"8"，那么十位上的数就加1。
+这样就可以确定正确的数字了，那么组成正确的十六进制字符串即可
+for python:
+int(hexString, 16) does the trick, and works with and without the 0x prefix:
+int("ee", 16) = 238
+
+ hex(255) =  '0xff'
+
+def solution:
+  def similarRGB(color):
+    return "#" + getSimilar(color[1:3]) + getSimilar(color[3:5])+ getSimilar(color[5:7])
+  def getSimilar(str):
+    num = int("str", 16)
+    dividNumber, remander = divmod(int(color, 16), 17)
+    if remander > 8:
+      dividNumber = dividNumber + 1
+    return hex(dividNumber*17)[2:]
+ 
