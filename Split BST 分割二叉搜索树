@@ -27,6 +27,7 @@ while the diagrams for the outputs are:
             / \           /
            5   7         1
 --------------------- 
+递归（Recursion), 儿子的最右边也不会大于父母bst的性质
 def splitBST(root, v):
   res = [None, None]
   if not root:
