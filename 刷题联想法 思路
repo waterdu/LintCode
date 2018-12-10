@@ -10,3 +10,5 @@ Tree题想到devide and concor, bfs,dfs,dfs不爆栈解法就用stack数据库
 
 dfs问题里的检查a + b = sum?类题，最好换成检查if target - sum <0 来减少计算量，每次把越来越小的数传进去
 因为cache(key)要保持越来越小，不要越来越大
+
+如果一道题给出了范围和最小值，很有可能是用二分法做
