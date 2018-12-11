@@ -1,0 +1,6 @@
+不要聊其他app已有的功能，比如user, payment，这些待过一次。问面试官说不重要
+
+先讨论场景senario
+再讨论scale，多少qps
+再讨论scale
+再讨论优化，如果减少request,或者只看高峰值
