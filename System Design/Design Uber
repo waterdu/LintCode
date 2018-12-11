@@ -5,3 +5,36 @@ senario
 Service
 记录车的位置：GeoService, 每4秒报告一次
 匹配打车请求DispatchSercice
+
+车-》报告位置和状态 Dispatch Service ->
+  《-返回订单有否
+  
+用户->要求打车，报告位置Dispatch Service
+     <-返回匹配车辆
+     
+Dispatch Service里面有行程tripTable，读比较多
+
+GeoService里面有locationTable，读少写多
+
+Trip{
+  tripId
+  driverId
+  位置Latitude,Longitude
+  status
+  time
+}
+
+Location{
+  driverId
+  latitude, longtitude
+  time
+}
+
+难点：
+1乘客查询周围5公里内的司机 where longtitude <, latitude < 什么查，效率不高
+有二个解法：GoogleS2：将地址空间映射到2的64方整数
+  特性：如果平面上比较接近的两个点，对应的整数也比较接近
+  更精准，库函数api丰富
+GeoHash:公共前缀越长，两个点越接近。 这个比较简单，准确度差一些
+原理就是把方块分割成几块用数字和字母标号，比如5*5或者6*6
+相关作业
