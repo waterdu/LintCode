@@ -1,0 +1,7 @@
+senario
+司机报位置
+用户打车
+
+Service
+记录车的位置：GeoService, 每4秒报告一次
+匹配打车请求DispatchSercice
