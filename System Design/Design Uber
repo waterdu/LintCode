@@ -38,3 +38,48 @@ Location{
 GeoHash:公共前缀越长，两个点越接近。 这个比较简单，准确度差一些
 原理就是把方块分割成几块用数字和字母标号，比如5*5或者6*6
 相关作业
+比如Google HQ是9q9hvu7wbq2s
+找到位置以9q9hv开头的所有车辆
+
+存储：
+sql数据库
+  首先用GeoHash建立索引
+  使用LikeQuery:select from locaiton where geoHash like"9q9hv%
+nosql数据库：
+  将geohash设为colmn key
+    使用range query(9q9hv0,9q9hvz)
+Nosql Redis/Memcached
+  Driver的位置分级存储
+    如果果位置是9q9hvt，则存储在9q9hvt,9q9hv,9q9h这3个key中
+    6位的geohash进度在一公里以内，对uber这类应用足够了
+  value = set of drivers in this location
+
+比较起来Redis最好，原生支持list, set等结构，读写速度接近内存访问速度100k qps
+
+用户发出打车请求，车给定位置周围司机
+  先查6位的geohash
+  如果没有，找5位的，查2.4公里以内的
+  如果没有，找4位的，查20公里以内的
+匹配司机成功，用户查询司机所在位置
+
+可行work solution
+1 乘客发出打车请求，服务器创建一次trip
+  将tripId返回给用户
+   乘客每几秒询问一次服务器是否匹配成功
+2 服务器找到匹配司机，写入trip，状态为等待司机慧音
+  同时修改Driver table中的司机状态为不可用，并存入对应的 trip id
+3 司机汇报自己的位置
+  顺便在Driver Table中发现有分配给自己的TripId
+    去TripTable查询对应的Trip，返回给司机
+ 4 司机接受打车请求
+    修改Driver Table, Trip中的状态信息
+    乘客发现自己匹配成功，获得司机信息
+  5 司机拒绝打车请求
+    修改DriverTable，Trip中的状态信息，标记该司机已经拒绝了该Trip
+     重新匹配一个司机，重复第二部
+     
+挑战，一台Redis挂了怎么办
+Redis并不distributed,所以谷歌还是用nosql的数据库
+解法Sharding,分摊流量
+Avoid Single Point Failure
+我们怎么Sharding(对于没有distributed的模型)
