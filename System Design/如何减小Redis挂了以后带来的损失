@@ -1,0 +1,13 @@
+1 Replica by Redis
+  master - slave
+2 Replica bu yourself
+  sharding key 从123扩展为
+    123-0
+    123-1
+    123-2
+  读取的时候，从任意一份replica读取数据
+    读不到的时候，就从其他的replica读
+  三分replica极有可能存在3个不同的机器上，同事挂掉的概率很小很小
+3 让更强大的nosql数据库帮你处理
+  既然一定需要用多台机器了，那么每台的流量也就没有150k qps那么高了
+  用Nosql数据库，能够更好的帮你处理replica以及机器挂掉之后恢复的问题
