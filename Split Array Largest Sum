@@ -1,0 +1,30 @@
+二分法
+class Solution(object):
+    def splitArray(self, nums, m):
+        """
+        :type nums: List[int]
+        :type m: int
+        :rtype: int
+        """
+        def valid(mid):
+            count = 0
+            current = 0
+            for n in nums:
+                current += n
+                if current > mid:
+                    count += 1
+                    if count >= m:
+                        return False
+                    current = n
+            return True
+        left = max(nums)
+        right = sum(nums)
+        
+        
+        while left < right:
+            mid = left + (right - left) / 2
+            if valid(mid): # to minimus largest sum, so mid can be smaller
+                right = mid
+            else:
+                left = mid + 1
+        return left
