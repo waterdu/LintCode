@@ -18,6 +18,7 @@ stations[i] will be an integer in range [0, 10^8].
 K will be an integer in range [1, 10^6].
 Answers within 10^-6 of the true value will be accepted as correct.
 
+二分法
 其实是用来查找那个最小的任意两个加油站间的最大距离。这其实跟之前那道Kth Smallest Element in a Sorted Matrix非常的类似，
 那道题的二分搜索也是直接去折半定位所求的数，然后再来验证其是否真的符合题意。这道题也是类似的思路，题目中给了数字的范围[0, 10^8]，
 那么二分查找的左右边界值就有了，又给了误差范围10^-6，那么只要right和left差值大于这个阈值，就继续循环。
@@ -29,24 +30,18 @@ Answers within 10^-6 of the true value will be accepted as correct.
 def minmaxGasDist(stations, k):
   n = len(stations)
   left = 0
-  right = stations[n - 1] - stations[0]
-  
-
-    double minmaxGasDist(vector<int>& stations, int K) {
-        int count, N = stations.size();
-        double left = 0, right = stations[N - 1] - stations[0], mid;
-        while (left + 1e-6 < right) {
-            mid = (left + right) / 2;
-            count = 0;
-            for (int i = 0; i < N - 1; ++i) {
-                count += ceil((stations[i + 1] - stations[i]) / mid) - 1;
-            }
-            if (count > K) {
-                left = mid;
-            }
-            else {
-                right = mid;
-            }
-        }
-        return right;
-
+  right = stations[n - 1] - stations[0]]
+  eps = 1e-7
+  n = len(stations);
+  while left + eps < right:
+    mid = (left + right) / 2
+    # if mid is the minMax
+    count = 0
+    for x in range (n - 1):
+      # maybe count += (stations[x + 1] - stations[x]) / mid
+      count += floor((stations[x + 1] - stations[x]) / mid)
+    if count <= k:
+      mid = right
+    else:
+      mid = left
+ return left
