@@ -1,0 +1,12 @@
+
+the query will only return all result by prefix. 
+20181003 to 20181214
+should use query
+[20181003...20181004...20181031,201811,20181201...20181202..20181214]
+there's total 3+1+14 = 18 times we need to query, so return 18
+
+prequery意识就是只能从前往后写query key。比如2018就会得到整个2018年的数据
+201812会得到整个201812月的数据
+
+queryByTimerange (start, end)：
+  
