@@ -1,0 +1,37 @@
+核心思想是二分确定一个中间数，然后找到所有小于等于这个中间数的距离个数，用其跟k比较来确定折半的方向。
+具体的操作是，我们首先要给数组排序，二分搜索的起始left为0，结束位置right为最大距离，即排序后的数字最后一个元素减去首元素。
+然后进入while循环，算出中间值mid，此外我们还需要两个变量cnt和start，其中cnt是记录小于等于mid的距离个数，start是较小数字的位置，均初始化为0，
+然后我们遍历整个数组，先进行while循环，如果start未越界，并且当前数字减去start指向的数组之差大于mid，说明此时距离太大了，我们增加减数大小，
+通过将start右移一个，那么while循环退出后，就有i - start个距离小于等于mid，将其加入cnt中，
+
+如何求的 count 的值， nums 已经是一个有序的数组，从 i 位置出发，用 j >= i，不断查找满足条件的数，并且记录下来。
+
+for (int i = 0, j = 0; i < n; i++) {
+    while (j < n && nums[j]-nums[i] <= mid) j++;
+    cnt += j-i-1;
+}
+
+class Solution(object):
+    def smallestDistancePair(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        nums.sort()
+        n = len(nums)
+        low = 0
+        high = nums[n-1] - nums[0]
+        while low < high:
+            count = 0
+            mid = low +  (high - low) / 2
+            j = 0
+            for i in range(n):
+                while j < n and abs(nums[j] - nums[i]) <= mid:
+                    j += 1
+                count += j - i - 1 # -1 means remove the duplicate
+            if count < k:
+                low = mid + 1
+            else:
+                high = mid
+        return low
