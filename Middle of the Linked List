@@ -1,0 +1,15 @@
+    def middleNode(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        slow = head
+        fast = head
+        #  s   f
+        #1,2,3,4
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
