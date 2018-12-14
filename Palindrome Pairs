@@ -1,3 +1,33 @@
+class Solution:
+    def palindromePairs(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[List[int]]
+        """
+        def isPalindrome(s):
+            reverse = "".join(reversed(s))
+            return s == reverse
+        
+        lookup = {w:index for index, w in enumerate(words)}
+        res = []
+        for i, w in enumerate(words):
+            for j in range(len(w) + 1):
+                left = w[:j]
+                right = w[j:]
+                leftReverse = left[::-1]
+                rightReverse = right[::-1]
+                if rightReverse in lookup and isPalindrome(left):
+                    if lookup[rightReverse] != i:
+                        res.append([lookup[rightReverse], i])
+                #重点这里要检查是否空
+                if len(right) != 0 and leftReverse in lookup and isPalindrome(right):
+                    if lookup[leftReverse] != i:
+                        res.append([i, lookup[leftReverse]])
+
+        return res
+        
+
+
 class Solution {
       // From naive O(nnk) to O(nkk) time.
     public List<List<Integer>> palindromePairs(String[] words) {
