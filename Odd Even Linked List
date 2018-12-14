@@ -1,0 +1,62 @@
+class Solution(object):
+    def oddEvenList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        oddDummy = ListNode(0)
+        odd = oddDummy
+        
+        evenDummy = ListNode(0)
+        even = evenDummy
+        cur = head
+        isOdd = True
+        while cur:
+            if isOdd:
+                odd.next = cur
+                odd = odd.next
+            else:
+                even.next = cur
+                even = even.next
+            isOdd = not isOdd
+            cur = cur.next
+        odd.next = evenDummy.next
+        even.next = None
+        return oddDummy.next
+        
+
+class Solution(object):
+    def oddEvenList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        odd = []
+        even = []
+        cur = head
+        isOdd = True
+
+        while cur:
+            if isOdd:
+                odd.append(cur)
+            else:
+                even.append(cur)
+            isOdd = not isOdd
+            cur = cur.next
+        
+        dummy = ListNode(0)
+        res = dummy
+        for i in range(len(odd)):
+            res.next = odd[i]
+            res = res.next
+        for i in range(len(even)):
+            res.next = even[i]
+            res = res.next
+        res.next = None
+        return dummy.next
+        
+       
