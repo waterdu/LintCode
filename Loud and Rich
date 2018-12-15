@@ -1,0 +1,75 @@
+If you draw a graph, you would find
+5 6 4
+\ | /
+3
+|
+7
+But quiet[7]=0, whoever richer than or equal to him is louder than him.
+Hope I explained.
+
+class Solution(object):
+    def loudAndRich(self, richer, quiet):
+        """
+        :type richer: List[List[int]]
+        :type quiet: List[int]
+        :rtype: List[int]
+        """
+        # index, list of index richer than i
+        cache = {}
+        for i in richer:
+            poor = i[1]
+            r = i[0]
+            if poor not in cache:
+                cache[poor] = [r]
+            else:
+                cache[poor].append(r)
+                
+        n = len(quiet)
+        res = [-1] * n
+        def dfs(i):
+            if res[i] >= 0:
+                return res[i]
+            res[i] = i
+            if i in cache:
+                for j in cache[i]:
+                    if quiet[res[i]] > quiet[dfs(j)]:
+                        res[i] = res[j]
+            return res[i]
+
+        for i in range(n):
+            dfs(i)
+        return res
+ 再加速
+ class Solution(object):
+    def loudAndRich(self, richer, quiet):
+        """
+        :type richer: List[List[int]]
+        :type quiet: List[int]
+        :rtype: List[int]
+        """
+        graph = {}
+        for rich, poor in richer:
+            if poor in graph:
+                graph[poor].append(rich)
+            else:
+                graph[poor] = [rich]
+                
+        answered = [False] * len(quiet) 
+        answer = range(len(quiet))
+        def dfs(i,answer):
+            if i not in graph:
+                answered[i] = True
+                return
+            else:
+                for e in graph[i]:
+                    if not answered[e]:
+                        dfs(e,answer)
+                    if quiet[answer[e]]< quiet[answer[i]]:
+                        answer[i] = answer[e]
+                answered[i] = True
+
+        for i in range(len(answer)):
+            if not answered[i]:
+                dfs(i,answer)
+
+        return answer
