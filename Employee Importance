@@ -1,0 +1,15 @@
+class Solution(object):
+    def getImportance(self, employees, id):
+        """
+        :type employees: Employee
+        :type id: int
+        :rtype: int
+        """
+        dic={e.id:e for e in employees}
+        return self.dfs(dic,id)
+    
+    def dfs(self,dic,id):
+        ans=dic[id].importance
+        for i in dic[id].subordinates:
+            ans+=self.dfs(dic,i)
+        return ans
