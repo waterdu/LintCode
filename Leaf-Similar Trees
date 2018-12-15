@@ -1,0 +1,36 @@
+class Solution(object):
+    def leafSimilar(self, root1, root2):
+        """
+        :type root1: TreeNode
+        :type root2: TreeNode
+        :rtype: bool
+        """
+        def getLeaf(root):
+            if not root:
+                return []
+            if not root.left and not root.right:
+                return [root.val]
+            leftlist = getLeaf(root.left)
+            rightList = getLeaf(root.right)
+            res = [] 
+            #实际上没必要用extend,用+就行
+            res.extend(leftlist)
+            res.extend(rightList)
+            return res
+        print(getLeaf(root1))
+        print(getLeaf(root2))
+        return getLeaf(root1) == getLeaf(root2)
+ 类似解法
+ class Solution(object):
+    def leafSimilar(self, root1, root2):
+        """
+        :type root1: TreeNode
+        :type root2: TreeNode
+        :rtype: bool
+        """
+        return self.findleaf(root1) == self.findleaf(root2)
+        
+    def findleaf(self, root):
+        if not root: return []
+        if not (root.left or root.right): return [root.val]
+        return self.findleaf(root.left) + self.findleaf(root.right)
