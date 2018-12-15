@@ -33,6 +33,12 @@ list = [ [0 for col in range(5)] for row in range(5)]
 list用法：
 加元素到最后
 l.append(e)
+把list2并到list1里，改动的是list1
+list1.extend(list2)
+如果要写recursion的答案
+用res=[]
+res.extend(list1)
+res.extend(list2)
 
 拷贝一个元素,
 
