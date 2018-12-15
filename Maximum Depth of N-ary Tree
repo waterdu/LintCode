@@ -1,0 +1,12 @@
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: Node
+        :rtype: int
+        """
+        if not root:
+            return 0
+        childDepth = 0
+        for c in root.children:
+            childDepth = max(childDepth, self.maxDepth(c))
+        return childDepth + 1
