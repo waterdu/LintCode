@@ -1,0 +1,58 @@
+为了节省时间，完全没必要压缩，只定义一个find就够了
+class Solution(object):
+    def find(self, x, father):
+        while father[x] != -1:
+            x= father[x]
+        return x
+        
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        father = {}
+        for i in range(1, len(edges) + 1, 1):
+            father[i] = -1
+                
+        for u, v in edges:
+            x = self.find(u, father)
+            y = self.find(v, father)
+            
+            if x == y:
+                return [u,v]
+            father[x] = y 
+        return None
+//压缩解法
+class Solution(object):
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        father = {}
+        for i in range(1, len(edges) + 1, 1):
+            father[i] = i
+            
+        def find(x):
+            parent = father[x]
+            while parent != father[parent]:
+                parent = father[parent]
+            fa = father[x]
+            while fa!= parent:
+                temp = father[fa]
+                father[fa] = parent
+                fa = temp
+            return parent
+        
+        def union(i , j):
+            fa_i = find(i)
+            fa_j = find(j)
+            if fa_i != fa_j:
+                father[fa_j] = fa_i
+
+                
+        for u, v in edges:
+            if find(u) == find(v):
+                return [u,v]
+            union(u,v)
+        return []
