@@ -1,0 +1,33 @@
+class Solution(object):
+    def increasingBST(self, root, tail = None):
+        if not root: 
+            return tail
+        # root is the last tail
+        res = self.increasingBST(root.left, root)
+        
+        root.left = None
+
+        root.right = self.increasingBST(root.right, tail)
+        return res
+ I pass a tail part to the function, so it can link it to the last node.
+This operation takes O(1), instead of O(N).
+Otherwise the whole time complexity will be O(N^2).
+
+Also, remember to set root.left = null.
+Otherwise it will be TLE for Leetcode to traverse your tree.
+
+Should arrange the old tree, not create a new tree.
+The judgement won't take it as wrong answer, but it is.
+
+//java解法
+    public TreeNode increasingBST(TreeNode root) {
+        return increasingBST(root, null);
+    }
+
+    public TreeNode increasingBST(TreeNode root, TreeNode tail) {
+        if (root == null) return tail;
+        TreeNode res = increasingBST(root.left, root);
+        root.left = null;
+        root.right = increasingBST(root.right, tail);
+        return res;
+    }
