@@ -1,0 +1,43 @@
+用dfs做，不要老想dp
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        coins.sort()
+        res = self.dfs(coins, amount, len(coins) - 1, sys.maxint, 0)
+        if res == sys.maxint:
+            return -1
+        return res
+    
+    def dfs(self, coins, amount, index, minCount, curCount):
+        if amount == 0:
+            return min(minCount, curCount)
+        elif amount < 0 or index < 0 or amount / coins[index] + curCount >= minCount:
+            return minCount
+        for i in range(amount/coins[index],-1, -1):
+            minCount = self.dfs(coins, amount - coins[index] * i, index - 1, minCount, curCount + i)
+        return minCount
+
+//java解法
+    class Solution {
+    public int coinChange(int[] coins, int amount) {
+        Arrays.sort(coins);
+        int min = coinChange(coins, amount, coins.length - 1, Integer.MAX_VALUE, 0);
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+    
+    private int coinChange(int[] coins, int amount, int index, int minCount, int curCount) {
+        if (amount == 0) {
+            return Math.min(minCount, curCount);
+        } else if (amount < 0 || index < 0 || amount / coins[index] + curCount >= minCount) {
+            return minCount;
+        }
+        for (int i = amount / coins[index]; i >= 0; i--) {
+            minCount = coinChange(coins, amount - i * coins[index], index - 1, minCount, curCount + i);
+        }
+        return minCount;
+    }
+}
