@@ -1,0 +1,12 @@
+dfs太难写
+建议用dp
+class Solution(object):
+    def change(self, amount, coins):
+        dp = [0] * (amount + 1)
+        #钱多少的时候有几种解法
+        dp[0] = 1
+        for coin in coins:
+            for money in range(coin, amount+1, 1):
+                if money >= coin:
+                    dp[money] = dp[money] + dp[money - coin]
+        return dp[amount]
