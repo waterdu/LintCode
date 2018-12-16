@@ -1,0 +1,63 @@
+
+class Solution(object):
+    def findCircleNum(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: int
+        """
+        if not M or len(M) == 0:
+            return 0
+        n = len(M)
+        father = {}
+        def union(i, j):
+            fa_i = find(i)
+            fa_j = find(j)
+            if fa_i != fa_j:
+                father[fa_i] = fa_j
+        
+        def find(x):
+            parent = father[x]
+            while parent != father[parent]:
+                parent = father[parent]
+            fa = father[x]
+            while fa!= parent:
+                temp = father[fa]
+                father[fa] = parent
+                fa = temp
+            return parent
+            
+        for i in range(n):
+            father[i] = i
+        for i in range(n):
+            for j in range(n):
+                if M[i][j] == 1 and i != j:
+                    union(i,j)
+        count = set()
+        for i in range(n):
+            fa = find(i)
+            count.add(fa)
+        return len(count)
+  //类似于island的dfs解法：
+  class Solution(object):
+    def findCircleNum(self, M):
+        if not M:
+            return 0
+        n = len(M)
+        def dfs(M, i):
+            if M[i][i] != 1:
+                return
+            M[i][i] = -1
+            for j in range(n):
+                if M[i][j] == 1:
+                    dfs(M, j)
+
+        connected = 0
+        for i in range(n):
+                if M[i][i] == 1:
+                    dfs(M, i)
+                    connected += 1
+        return connected
+        
+                    
+                    
+        
