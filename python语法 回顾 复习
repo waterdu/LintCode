@@ -1,6 +1,8 @@
 参考
 https://www.w3schools.com/python/python_sets.asp
 
+字节，用ord('A') = 65
+
 py的string是immutable
 如果要用java里stringbuilder的方法
 那就用“”.join(list)来操作
