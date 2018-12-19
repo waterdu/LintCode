@@ -91,3 +91,8 @@ thisdict =	{
   "year": 1964
 }
 print(thisdict)
+
+counter是字典的子类
+import collections
+a = [1,1,1,1,2,2,2,2,3,3,4,5,5]
+counter=collections.Counter(a)
