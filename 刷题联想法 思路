@@ -12,3 +12,6 @@ dfs问题里的检查a + b = sum?类题，最好换成检查if target - sum <0 �
 因为cache(key)要保持越来越小，不要越来越大
 
 如果一道题给出了范围和最小值，很有可能是用二分法做
+
+Sliding Window问题集：
+https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.
