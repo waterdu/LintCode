@@ -1,3 +1,22 @@
+def lengthOfLongestSubstringTwoDistinct(s):
+    if not s:
+        return 0
+    index = {}
+    left = 0
+    right = 0
+    res = 0
+    while right < len(s):
+        c = s[right]
+        index[c] = right
+        right+= 1
+        while len(index) > 2:
+            leftMost = min(index.values())
+            index.pop(leftMost)
+            left= leftMost+ 1
+        
+        res = max(res, right - left + 1)
+    return res
+
 //very generic method, must remember
 class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
@@ -21,7 +40,7 @@ class Solution {
                 indexes.remove(c);
                 left = leftMost + 1;
             }
-            res = Math.max(res, right - left);
+            res = Math.max(res, right - left + 1);
         }
         return res;
     }
