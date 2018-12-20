@@ -1,0 +1,30 @@
+from collections import Counter
+class Solution(object):
+    def findAnagrams(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: List[int]
+        """
+        #0 1 2 , 3 -2 
+        if not s or len(s)==0:
+            return []
+        n = len(p)
+        pDic = Counter(p)
+        sDic = Counter(s[:n - 1])
+        res = []
+
+        right = len(p) - 1
+        left = 0
+        
+        for right in range(len(p)-1,len(s)):
+            left = right - n + 1
+            rightC = s[right]
+            sDic[rightC] += 1
+            if pDic == sDic:
+                res.append(left)
+            leftC = s[left]
+            sDic[leftC] -= 1
+            if sDic[leftC] == 0:
+                sDic.pop(leftC)
+        return res
