@@ -32,3 +32,24 @@ class Solution(object):
             flatChild[1].next = flatNext[0]
             flatNext[0].prev = flatChild[1]
             return [head, flatNext[1]]
+//递归解法，记得stack倒着顺序赛就行，先要处理的最后赛
+class Solution(object):
+    def flatten(self, head):
+        if not head:
+            return head
+        dummy = Node(0, None, head,None)
+        stack = [head]
+        prev = dummy
+        while stack:
+            cur = stack.pop()
+            cur.prev = prev
+            prev.next = cur
+            if cur.next:
+                stack.append(cur.next)
+                cur.next = None
+            if cur.child:
+                stack.append(cur.child)
+                cur.child = None
+            prev = cur
+        dummy.next.prev = None
+        return dummy.next
