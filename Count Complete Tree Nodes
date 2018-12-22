@@ -1,0 +1,35 @@
+不能用 +1一个个算，会超时
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        def getHeight(root):
+            if not root:
+                return 0
+            h = 0
+            while root:
+                h += 1
+                root= root.left
+            return h
+        if not root:
+            return 0
+        count = 0
+        leftH = getHeight(root.left)
+        rightH = getHeight(root.right)
+        if leftH == rightH:
+            count = 2 ** leftH + self.countNodes(root.right)
+        else:
+            count = 2 ** rightH + self.countNodes(root.left)
+        return count
+        
+    
