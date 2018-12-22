@@ -1,0 +1,34 @@
+class Solution(object):
+    def flatten(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        flat = self.dfs(head)
+        if flat:
+            return flat[0]
+        return None
+    # will return [head, tail]
+    def dfs(self, head):
+        if not head:
+            return None
+        elif not head.child and not head.next:
+            return [head, head]
+        elif not head.child:
+            flatNext = self.dfs(head.next)
+            return [head, flatNext[1]]
+        elif not head.next:
+            flatChild = self.dfs(head.child)
+            head.child = None
+            head.next = flatChild[0]
+            flatChild[0].prev = head
+            return [head, flatChild[1]]
+        else:
+            flatChild = self.dfs(head.child)
+            flatNext = self.dfs(head.next)
+            head.child = None
+            head.next = flatChild[0]
+            flatChild[0].prev = head
+            flatChild[1].next = flatNext[0]
+            flatNext[0].prev = flatChild[1]
+            return [head, flatNext[1]]
