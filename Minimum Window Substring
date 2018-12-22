@@ -1,0 +1,29 @@
+class Solution(object):
+    def minWindow(self, s, t):
+        count = collections.Counter(t)
+        needFind = len(t)
+        left = 0
+        right = 0
+        resLeft = 0
+        minSize = sys.maxint
+        for right in range(len(s)):
+            c = s[right]
+            if count[c] > 0:
+                needFind -= 1
+            count[c] -= 1
+                
+            while needFind == 0:
+                if right - left + 1 < minSize:
+                    minSize = right - left + 1
+                    resLeft = left
+                    print(resLeft)
+                leftC = s[left]
+                count[leftC] += 1
+                if count[leftC] > 0: # if not in t, must be < 0
+                    needFind += 1
+                    
+                left += 1
+        if minSize == sys.maxint:
+            return ""
+        else:
+            return s[resLeft:resLeft + minSize]
