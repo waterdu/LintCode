@@ -1,0 +1,14 @@
+class Solution(object):
+    def numComponents(self, head, G):
+        """
+        :type head: ListNode
+        :type G: List[int]
+        :rtype: int
+        """
+        setG = set(G)
+        res = 0
+        while head:
+            if head.val in setG and (not head.next or head.next.val not in setG):
+                res+=1
+            head = head.next
+        return res
