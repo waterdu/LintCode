@@ -17,6 +17,31 @@
  * is (# of stack frames)*(space per stack frame).
  */
 
+class Solution(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+
+        if not root:
+            return res
+        stack = [root]
+        self.dfs(stack, res)
+
+        return res
+    
+    def dfs(self, stack, res):
+        while stack:
+            cur = stack.pop()
+            res.append(cur.val)
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
+        return 
+
 //Travelsal method
 public class Solution {
     /*
@@ -40,22 +65,6 @@ public class Solution {
     }
 }
 
-//devide and conquer method
-    public List<Integer> preorderTraversal(TreeNode root) {
-        // write your code here
-        List<Integer> result = new ArrayList<Integer>();
-        if (root == null) {
-            return result;
-        }
-        
-        List<Integer> left = preorderTraversal(root.left);
-        List<Integer> right = preorderTraversal(root.right);
-        
-        result.add(root.val);
-        result.addAll(left);
-        result.addAll(right);
-        return result;
-    }
  * 要把recursion想成不递归，就必须得用stack来存recursion的stack
      */
     public List<Integer> preorderTraversal(TreeNode root) {
