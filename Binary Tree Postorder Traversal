@@ -24,7 +24,35 @@ class Solution(object):
         self.dfs(root.right, res)
         res.append(root.val)
   
-  //把递归题翻译成stack很好做,stack加入顺序要通过实例来演示清楚[1,2,3]
+  //把递归题翻译成stack很好做,stack加入顺序要通过实例来演示清楚[1,2,3], 0代表node, 1代表值
+  class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+         # 0 means node , 1 means value
+        stack = [(root, 0)]
+        self.dfs(stack, res)
+        return res
+    
+    def dfs(self, stack, res):
+        while stack:
+            cur = stack.pop()
+            if cur[1] == 0:
+                node = cur[0]
+                stack.append((node.val, 1))
+                if node.right:
+                    stack.append((node.right, 0))
+                if node.left:
+                    stack.append((node.left, 0))
+            else:
+                res.append(cur[0])
+//也可以用insert来做，不过也得分清楚
+  
   class Solution(object):
     def postorderTraversal(self, root):
         """
