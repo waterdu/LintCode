@@ -7,50 +7,55 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
- class Solution(object):
-    def preorderTraversal(self, root):
+class Solution(object):
+    def inorderTraversal(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
         """
         res = []
-        if not root:
-            return res
-        self.dfs(root, res)
-
+        self.dfs(root,res)
         return res
-    
     def dfs(self, root, res):
         if not root:
             return
+        if root.left:
+            self.dfs(root.left,res)
         res.append(root.val)
-        self.dfs(root.left, res)
-        self.dfs(root.right, res)
- //递归法换成stack法很容易，记得加入stack的顺序反着来就行
- class Solution(object):
-    def preorderTraversal(self, root):
+        if root.right:
+            self.dfs(root.right,res)
+            
+//翻译成stack解法, 巧妙点在于啥时候加value，啥时候加node
+class Solution(object):
+    def inorderTraversal(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
         """
-        res = []
 
+        res = []
         if not root:
             return res
-        stack = [root]
-        self.dfs(stack, res)
-
+        # 0 means node, 1 means value
+        stack = [[root, 0]]
+        self.dfs(stack,res)
         return res
-    
+    #[1,2,3] [3,1,2]
     def dfs(self, stack, res):
         while stack:
             cur = stack.pop()
-            res.append(cur.val)
-            if cur.right:
-                stack.append(cur.right)
-            if cur.left:
-                stack.append(cur.left)
-        return 
+            node = cur[0]
+            if cur[1] == 0:
+                if node.right:
+                    stack.append((node.right, 0))
+                stack.append((node.val, 1))
+                if node.left:
+                    stack.append((node.left, 0))
+            # cur is a value
+            else:
+                res.append(cur[0])
+
+            
 //java解法
  
 class Solution {
