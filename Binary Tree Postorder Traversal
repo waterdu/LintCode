@@ -1,0 +1,48 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+        self.dfs(root, res)
+        return res
+    
+    def dfs(self, root, res):
+        if not root:
+            return
+        self.dfs(root.left, res)
+        self.dfs(root.right, res)
+        res.append(root.val)
+  
+  //把递归题翻译成stack很好做,stack加入顺序要通过实例来演示清楚[1,2,3]
+  class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+        stack = [root]
+        self.dfs(stack, res)
+        return res
+    
+    def dfs(self, stack, res):
+        while stack:
+            cur = stack.pop()
+            if cur.left:
+                stack.append(cur.left)
+            if cur.right:
+                stack.append(cur.right)
+            res.insert(0,cur.val)
