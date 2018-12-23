@@ -1,3 +1,21 @@
+
+class Solution(object):
+    def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        
+        def hammingWeight(n):
+        # write your code here
+            count = 0
+            while n:
+                n &= n -1
+                count += 1
+            return count
+        return hammingWeight(x ^ y)
+ // java解法
 public class Solution {
     public int hammingDistance(int x, int y) {
         return Integer.bitCount(x ^ y);
