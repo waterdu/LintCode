@@ -26,7 +26,31 @@
         res.append(root.val)
         self.dfs(root.left, res)
         self.dfs(root.right, res)
-        
+ //递归法换成stack法很容易，记得加入stack的顺序反着来就行
+ class Solution(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+
+        if not root:
+            return res
+        stack = [root]
+        self.dfs(stack, res)
+
+        return res
+    
+    def dfs(self, stack, res):
+        while stack:
+            cur = stack.pop()
+            res.append(cur.val)
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
+        return 
 //java解法
  
 class Solution {
