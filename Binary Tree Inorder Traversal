@@ -7,6 +7,28 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ class Solution(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+        self.dfs(root, res)
+
+        return res
+    
+    def dfs(self, root, res):
+        if not root:
+            return
+        res.append(root.val)
+        self.dfs(root.left, res)
+        self.dfs(root.right, res)
+        
+//java解法
+ 
 class Solution {
     //inorder means left root right
     public List<Integer> inorderTraversal(TreeNode root) {
