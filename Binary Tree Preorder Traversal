@@ -17,7 +17,27 @@
  * is (# of stack frames)*(space per stack frame).
  */
 
-class Solution(object):
+ class Solution(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+        self.dfs(root, res)
+
+        return res
+    
+    def dfs(self, root, res):
+        if not root:
+            return
+        res.append(root.val)
+        self.dfs(root.left, res)
+        self.dfs(root.right, res)
+ //递归法换成stack法很容易，记得加入stack的顺序反着来就行
+ class Solution(object):
     def preorderTraversal(self, root):
         """
         :type root: TreeNode
@@ -41,7 +61,6 @@ class Solution(object):
             if cur.left:
                 stack.append(cur.left)
         return 
-
 //Travelsal method
 public class Solution {
     /*
