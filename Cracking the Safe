@@ -1,0 +1,58 @@
+There is a box protected by a password. The password is n digits, where each letter can be one of the first k digits 0, 1, ..., k-1.
+You can keep inputting the password, the password will automatically be matched against the last n digits entered.
+For example, assuming the password is "345", I can open it when I type "012345", but I enter a total of 6 digits.
+Please return any string of minimum length that is guaranteed to open the box after the entire string is inputted.
+k代表每个位置可以有K个数，所以总共有K**n个密码
+
+Example 1:
+Input: n = 1, k = 2
+Output: "01"
+Note: "10" will be accepted too.
+Example 2:
+Input: n = 2, k = 2
+Output: "00110"
+Note: "01100", "10011", "11001" will be accepted too.
+Note:
+n will be in the range [1, 4].
+k will be in the range [1, 10].
+k^n will be at most 4096.
+
+也就是 N是3的话有001,010,100,111,100,101,000 6种组合，要给出一个万能钥匙包含所有6种组合
+解法就是穷举法
+
+class Solution(object):
+    def crackSafe(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
+        res = ["0"] * n
+        size = k ** n
+        visited = set()
+        visited.add("".join(res))
+        for i in range(pow(k, n)):
+            pre = "".join(res[len(res) - n + 1:])
+            for j in range(k-1, -1 ,-1):
+                cur = pre + str(j)
+                if cur not in visited:
+                    visited.add(cur)
+                    res.append(str(j))
+                    break
+        return "".join(res)
+//解法2
+class Solution(object):
+    def crackSafe(self, n, k):
+        ans = "0" * (n - 1)
+        visits = set()
+        for x in range(k ** n):
+            if n > 1:
+                current = ans[-n+1:]
+            else:
+                current = ""
+            for y in range(k - 1, -1, -1):
+                if current + str(y) not in visits:
+                    visits.add(current + str(y))
+                    ans += str(y)
+                    break
+        return ans
