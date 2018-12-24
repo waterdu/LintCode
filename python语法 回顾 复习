@@ -61,8 +61,8 @@ import collections
   
 # initializing deque 
 de = collections.deque([1,2,3]) 
-它有append(), appendLeft()
-pop(), popLeft()
+它有append(), appendleft()
+pop(), popleft()
 
 
 
