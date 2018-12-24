@@ -1,3 +1,45 @@
+Given two strings s and t, determine if they are isomorphic.
+Two strings are isomorphic if the characters in s can be replaced to get t
+All occurrences of a character must be replaced with another character while preserving the order of characters.
+No two characters may map to the same character but a character may map to itself.
+
+Example 1:
+
+Input: s = "egg", t = "add"
+Output: true
+Example 2:
+
+Input: s = "foo", t = "bar"
+Output: false
+
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if s == t:
+            return True
+        ns = len(s)
+        nt = len(t)
+        if ns != nt:
+            return False
+        sMap = {}
+        tMap = {}
+        for i in range(ns):
+            cS = s[i]
+            cT = t[i]
+            if cS not in sMap and cT not in tMap:
+                sMap[cS] = i
+                tMap[cT] = i
+            elif cS in sMap and cT in tMap:
+                if sMap[cS] != tMap[cT]:
+                    return False
+            else:
+                return False
+        return True
+
 class Solution {
     public boolean isIsomorphic(String s, String t) {
         if (s == null) {
