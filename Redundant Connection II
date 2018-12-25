@@ -1,0 +1,41 @@
+class Solution(object):
+      def findRedundantDirectedConnection(self, edges):
+# case 1: Cycle occurs, but no node has more than 1 parent.
+        # case 2: No cycle, but a node has 2 parents.
+        # case 3: Cycle occurs, and a node within the cycle has 2 parents.
+        def detectCycle(edge):
+            u, v = edge
+            while u != v and u in parent:
+                u = parent[u]
+            return u == v
+        
+        parent = {}
+        candidates = []
+        for u, v in edges:
+            if not v in parent:
+                parent[v] = u
+            # it has two parent
+            else:
+                candidates.append((parent[v], v))
+                candidates.append((u, v))
+        
+        if candidates: # case 3 and case 2
+            if detectCycle(candidates[0]):
+                return candidates[0]  
+            else:
+                return candidates[1]
+        
+        # case 1: same as normal redundant connection
+        def find(u):
+            if p[u] != u:
+                p[u] = find(p[u])
+            return p[u]
+        
+        # p = range(len(edges) + 1)
+        # p is traditional union find parent
+        p = {i: i for i in xrange(1, len(edges)+1)}
+        for u, v in edges:
+            rootU, rootV = find(u), find(v)
+            if rootU == rootV:
+                return [u, v]
+            p[v] = u
