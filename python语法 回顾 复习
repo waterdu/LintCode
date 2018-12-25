@@ -8,6 +8,9 @@ py的string是immutable
 那就用“”.join(list)来操作
 比如"".join(reversed("apple"))
 reversed得到的是一个iterate list，所以操作过一次以后里面是空。不能操作第二次
+可以用format功能：
+s = "({})".format("a") 得到
+s = '(aaa)'
 
 
 创建value,index 对list
