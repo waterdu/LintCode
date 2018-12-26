@@ -1,0 +1,3 @@
+fan out就是把tweet写到各个flowwer 要查的timeline上，100个follower就是要写100次
+
+如果follower过多，就用传统的query方法
