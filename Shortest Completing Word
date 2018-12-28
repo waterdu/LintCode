@@ -1,0 +1,86 @@
+Find the minimum length word from a given dictionary words, which has all the letters from the string licensePlate. 
+Such a word is said to complete the given string licensePlate
+
+Here, for letters we ignore case. For example, “P” on the licensePlate still matches “p” on the word.
+It is guaranteed an answer exists. If there are multiple answers, return the one that occurs first in the array.
+The license plate might have the same letter occurring multiple times.
+For example, given a licensePlate of “PP”, the word “pair” does not complete the licensePlate, but the word “supper” does.
+
+Example 1:
+Input: licensePlate = "1s3 PSt", words = ["step", "steps", "stripe", "stepple"]
+Output: "steps"
+Explanation: The smallest length word that contains the letters "S", "P", "S", and "T".
+Note that the answer is not "step", because the letter "s" must occur in the word twice.
+Also note that we ignored case for the purposes of comparing whether a letter exists in the word.
+Example 2:
+Input: licensePlate = "1s3 456", words = ["looks", "pest", "stew", "show"]
+Output: "pest"
+Explanation: There are 3 smallest length words that contains the letters "s".
+We return the one that occurred first.
+
+Note:
+
+licensePlate will be a string with length in range [1, 7].
+licensePlate will contain digits, spaces, or letters (uppercase or lowercase).
+words will have a length in the range [10, 1000].
+Every words[i] will consist of lowercase letters, and have length in range [1, 15].
+
+licensePlate原则其实特别简单，就是去除掉licensePlate里面的空格和数字，只保留英文字符，并转化为小写。然后再找words中包含这些字符的最短的字符串。
+
+class Solution(object):
+    def shortestCompletingWord(self, licensePlate, words):
+        count = {}
+        need = 0
+        for c in licensePlate:
+            if c.isalpha():
+                low = c.lower()
+                if low in count:
+                    count[low] += 1
+                else:
+                    count[low] = 1
+                need += 1
+        res = ""
+        minLen = sys.maxint
+        def isMatch(word, count):
+            counter = collections.Counter(word.lower())
+            for k,v in count.items():
+                if v > counter[k]:
+                    return False
+            return True
+
+        for w in words:
+            if isMatch(w, count):
+                if len(w) < minLen:
+                    minLen = len(w)
+                    res = w
+        return res
+ //isMatch改良的解法2：
+ class Solution(object):
+    def shortestCompletingWord(self, licensePlate, words):
+        count = {}
+        need = 0
+        for c in licensePlate:
+            if c.isalpha():
+                low = c.lower()
+                if low in count:
+                    count[low] += 1
+                else:
+                    count[low] = 1
+                need += 1
+        res = ""
+        minLen = sys.maxint
+        def isMatch(word, count):
+            w = word.lower()
+            for c in count:
+                if c not in w:
+                    return False
+                if w.count(c) < count[c]:
+                    return False
+            return True
+
+        for w in words:
+            if isMatch(w, count):
+                if len(w) < minLen:
+                    minLen = len(w)
+                    res = w
+        return res
