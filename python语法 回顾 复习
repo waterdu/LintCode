@@ -116,3 +116,9 @@ Transform list x into a heap, in-place, in linear time.
 heapq.nlargest(n, iterable[, key])
 heapq.nsmallest(n, iterable[, key])
 
+Python里没有Treemap
+可以用sorted(dic.keys())来获得类似的效果
+
+排序：
+r = sorted(l, key = lambda lis:lis[1], reverse=True)
+Key = lambda背下来就行
