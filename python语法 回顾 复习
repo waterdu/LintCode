@@ -101,3 +101,18 @@ counter是字典的子类
 import collections
 a = [1,1,1,1,2,2,2,2,3,3,4,5,5]
 counter=collections.Counter(a)
+
+PriorityQueue/Heap的写法
+heapq.heappush(heap, item)
+Push the value item onto the heap, maintaining the heap invariant.
+
+heapq.heappop(heap)
+Pop and return the smallest item from the heap, maintaining the heap invariant. 
+If the heap is empty, IndexError is raised. To access the smallest item without popping it, use heap[0].
+
+heapq.heapify(x)
+Transform list x into a heap, in-place, in linear time.
+
+heapq.nlargest(n, iterable[, key])
+heapq.nsmallest(n, iterable[, key])
+
