@@ -122,6 +122,12 @@ Transform list x into a heap, in-place, in linear time.
 
 heapq.nlargest(n, iterable[, key])
 heapq.nsmallest(n, iterable[, key])
+想自定义比较,传统的解决方案是存储( 优先级，任务) 元组在堆上
+pq = [ ]
+heappush(pq, (10, task1))
+heappush(pq, (5, task2))
+heappush(pq, (15, task3))
+priority, task = heappop(pq)
 
 Python里没有Treemap
 可以用sorted(dic.keys())来获得类似的效果
