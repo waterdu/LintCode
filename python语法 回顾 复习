@@ -102,6 +102,13 @@ import collections
 a = [1,1,1,1,2,2,2,2,3,3,4,5,5]
 counter=collections.Counter(a)
 
+Merge dic：
+>>> x = {'a':1, 'b': 2}
+>>> y = {'b':10, 'c': 11}
+>>> z = dict(x.items() + y.items())
+>>> z
+{'a': 1, 'c': 11, 'b': 10}
+
 PriorityQueue/Heap的写法
 heapq.heappush(heap, item)
 Push the value item onto the heap, maintaining the heap invariant.
