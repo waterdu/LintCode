@@ -11,6 +11,12 @@ reversed得到的是一个iterate list，所以操作过一次以后里面是空
 可以用format功能：
 s = "({})".format("a") 得到
 s = '(aaa)'
+python有replace()方程
+但如果想replace all，要用正则方程
+>>> l = "apple"
+>>> c = re.sub(r'[aeiou]', '#', l) c
+>>> c
+'#ppl#'
 
 
 创建value,index 对list
