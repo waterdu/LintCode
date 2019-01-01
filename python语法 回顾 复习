@@ -17,6 +17,13 @@ python有replace()方程
 >>> c = re.sub(r'[aeiou]', '#', l) c
 >>> c
 '#ppl#'
+也可以用findall来做
+words = re.findall(r'\w+', paragraph.lower())
+
+py的正则表达看https://zhuanlan.zhihu.com/p/37545071
+\w表示单词字符
+\W表示非单词字符
++表示匹配前一个字符1次货无限次
 
 
 创建value,index 对list
