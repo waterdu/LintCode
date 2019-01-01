@@ -109,6 +109,15 @@ thisdict =	{
   "year": 1964
 }
 print(thisdict)
+defaultdict也是很好用的东西，比如
+>>> s = [('red', 1), ('blue', 2), ('red', 3), ('blue', 4), ('red', 1), ('blue', 4)]
+>>> d = defaultdict(set)
+>>> for k, v in s:
+...     d[k].add(v)
+...
+>>> d.items()
+[('blue', set([2, 4])), ('red', set([1, 3]))]
+
 
 counter是字典的子类
 import collections
