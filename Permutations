@@ -1,0 +1,59 @@
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        left = list(nums)
+        self.dfs(res,[],left)
+        return res
+    
+    def dfs(self, res, l, left):
+        if not left:
+            res.append(list(l))
+            return
+        for i,n in enumerate(left):
+            l.append(n)
+            left.pop(i)
+            self.dfs(res,l,left)
+            l.pop()
+            left.insert(i,n)
+            
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.dfs(res,[],nums)
+        return res
+    
+    def dfs(self, res, l, nums):
+        if len(l) == len(nums):
+            res.append(list(l))
+            return
+        for i in nums:
+            if i in l:
+                continue
+            l.append(i)
+            self.dfs(res,l,nums)
+            l.pop()
+            
