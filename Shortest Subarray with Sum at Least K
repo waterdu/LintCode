@@ -1,0 +1,73 @@
+Return the length of the shortest, non-empty, contiguous subarray of A with sum at least K.
+
+If there is no non-empty subarray with sum at least K, return -1.
+
+ 
+
+Example 1:
+
+Input: A = [1], K = 1
+Output: 1
+Example 2:
+
+Input: A = [1,2], K = 4
+Output: -1
+Example 3:
+
+Input: A = [2,-1,2], K = 3
+Output: 3
+ 
+
+Note:
+
+1 <= A.length <= 50000
+-10 ^ 5 <= A[i] <= 10 ^ 5
+1 <= K <= 10 ^ 9
+
+class Solution(object):
+    def shortestSubarray(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        n = len(A)
+        presum = [0] * (n+1)
+        for i in range(n):
+            presum[i + 1] = A[i] + presum[i]
+        #min to max
+        d = collections.deque()
+        res = sys.maxint
+        for i in range(n+1):
+            while d and presum[i] - presum[d[0]]>=K:
+                res = min(res, i - d.popleft())
+            #only append greater value
+            while d and presum[i] <= presum[d[-1]]:
+                d.pop()
+            d.append(i)
+        if res< sys.maxint:
+            return res
+        return - 1
+  // 以下暴力解会超时
+  class Solution(object):
+    def shortestSubarray(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        n = len(A)
+        presum = {}
+        suM = 0
+        for i,n in enumerate(A):
+            suM += n
+            presum[i] = suM
+        
+        res = sys.maxint
+        for i in range(1, len(A), 1):
+            for j in range(i - 1):
+                if presum[i] - presum[j]>= K:
+                    res = min(res, i-j)
+        if res == sys.maxint:
+            return -1
+        return res
