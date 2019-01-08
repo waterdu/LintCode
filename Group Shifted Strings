@@ -1,0 +1,33 @@
+Given a string, we can "shift" each of its letter to its successive letter, for example: "abc" -> "bcd".
+We can keep "shifting" which forms the sequence:
+
+"abc" -> "bcd" -> ... -> "xyz"
+Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
+
+For example, given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
+Return:
+
+[
+  ["abc","bcd","xyz"],
+  ["az","ba"],
+  ["acef"],
+  ["a","z"]
+]
+Note: For the return value, each inner list's elements must follow the lexicographic order.
+#所有的字符都有一个距离差
+
+class Solution(object):
+    def groupStrings(self, strings):
+        dic = {}
+        for s in strings:
+            hash = self.shiftHash(s):
+            if hash in dic:
+                dic[hash].append(s)
+            else:
+                dic[hash] = [s]
+        for value in dic.values():
+            value.sort()
+        return dic.values()
+   def shiftHash(self, s):
+        hashList = [(ord(i) - ord(s[0]) % 26 for i in s]
+        return tuple(hashList)
