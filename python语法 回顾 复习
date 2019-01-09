@@ -151,6 +151,24 @@ heappush(pq, (5, task2))
 heappush(pq, (15, task3))
 priority, task = heappop(pq)
 
+maxheap的用法：
+listForTree = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]    
+heapq.heapify(listForTree)             # for a min heap
+heapq._heapify_max(listForTree)        # for a maxheap!!
+如果您想要弹出元素，请使用：
+heapq.heappop(minheap)      # pop from minheap
+heapq._heappop_max(maxheap) # pop from maxheap
+也可以自己定一个maxheap
+import heapq
+class MaxHeap(object):
+    def __init__(self, x):
+        self.heap = [-e for e in x]
+        heapq.heapify(self.heap)
+    def push(self, value):
+        heapq.heappush(self.heap, -value)
+    def pop(self):
+        return -heapq.heappop(self.heap)
+
 Python里没有Treemap
 可以用sorted(dic.keys())来获得类似的效果
 
