@@ -1,0 +1,64 @@
+Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
+
+Note:
+
+Given target value is a floating point.
+You may assume k is always valid, that is: k ≤ total nodes.
+You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
+ 
+
+Follow up:
+Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
+
+Hint:
+
+1. Consider implement these two helper functions:
+　　i. getPredecessor(N), which returns the next smaller node to N.
+　　ii. getSuccessor(N), which returns the next larger node to N.
+2. Try to assume that each node has a parent pointer, it makes the problem much easier.
+3. Without parent pointer we just need to keep track of the path from the root to the current node using a stack.
+4. You would need two stacks to track the path in finding predecessor and successor node separately.
+
+二叉搜索树的中序遍历就是顺序输出二叉搜索树，所以我们只要中序遍历二叉搜索树，同时维护一个大小为K的队列，前K个数直接加入队列，
+之后每来一个新的数（较大的数），如果该数和目标的差，相比于队头的数离目标的差来说，更小，则将队头拿出来，将新数加入队列。
+如果该数的差更大，则直接退出并返回这个队列，因为后面的数更大，差值也只会更大。
+pre和suc，其中pre存小于目标值的数，suc存大于目标值的数，开始初始化pre和suc的时候，
+要分别将最接近目标值的稍小值和稍大值压入pre和suc，然后我们循环k次，每次比较pre和suc的栈顶元素，看谁更接近目标值，
+将其存入结果res中，然后更新取出元素的栈，依次类推直至取完k个数返回即可，参见代码如下：
+
+
+class Solution(object):
+    def closestKValues(self, root, target, k):
+
+        incr, decr = [], []
+        #从小到大
+        self.inOrder(root, target, False, incr)
+        #从大到小
+        self.inOrder(root, target, True, decr)
+        results = []
+        while len(results) < k:
+            #一个地方没东西了，加另一个数列
+            if len(incr) == 0:
+                results.append(decr.pop())
+            elif len(decr) == 0:
+                results.append(incr.pop())
+            elif abs(incr[-1] - target) < abs(decr[-1] - target):
+                results.append(incr.pop())
+            else:
+                results.append(decr.pop())
+        return results
+    #not reverse存小于目标的数，is reverse存大于目标的数
+    def inOrder(self, root, target, reverse, order):
+        if root == None:
+            return
+        if reverse:
+            self.inOrder(root.right, target, reverse, order)
+        else:
+            self.inOrder(root.left, target, reverse, order)
+        if (reverse and root.val < target) or (not reverse and root.val >= target):
+            return
+        order.append(root.val)
+        if reverse:
+            self.inOrder(root.left, target, reverse, order)
+        else:
+            self.inOrder(root.right, target, reverse, order)
