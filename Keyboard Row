@@ -22,6 +22,31 @@ class Solution(object):
         line1 = set('qwertyuiop')
         line2 = set('asdfghjkl')
         line3 = set('zxcvbnm')
+        res = []
+        for w in words:
+            level = set()
+            for c in w.lower():
+                if c in line1:
+                    level.add(1)
+                elif c in line2:
+                    level.add(2)
+                elif c in line3:
+                    level.add(3)
+                if len(level)> 1:
+                    continue
+            if len(level) == 1:
+                res.append(w)
+        return res
+                
+class Solution(object):
+    def findWords(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        line1 = set('qwertyuiop')
+        line2 = set('asdfghjkl')
+        line3 = set('zxcvbnm')
         key = [line1,line2,line3]
         res = []
         for row in key:
