@@ -1,0 +1,10 @@
+● Since we’ll be storing a huge amount of data, how should we partition our
+● data to distribute it to multiple databases? 
+● Should we try to store all the data of a user on the same database? What issue can it cause?
+● How would we handle hot users, who tweet a lot or follow lots of people?
+● Since user’s timeline will contain most recent (and relevant) tweets, should
+we try to store our data in such a way that is optimized to scan latest
+tweets?
+● How much and at which layer should we introduce cache to speed things
+up?
+● What components need better load balancing?
