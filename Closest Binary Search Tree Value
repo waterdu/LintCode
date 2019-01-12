@@ -1,12 +1,29 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
+
+Note:
+
+Given target value is a floating point.
+You are guaranteed to have only one unique value in the BST that is closest to the target.
+
+def closestValue(root, target):
+    if not root:
+        return 0
+    self.res = root.val
+    def dfs(root, target):
+        if not root:
+            return 0
+        if abs(target - self.res) > abs(target - root.val):
+            self.res = root.val
+        if target > root.val:
+            dfs(root.right, target)
+        elif target < root.val
+            dfs(root.left, target)
+        else:
+            return root.val
+    dfs(root, target)
+    return self.res
+
+//java解法
 class Solution {
     public int closestValue(TreeNode root, double target) {
         int result = root.val;
