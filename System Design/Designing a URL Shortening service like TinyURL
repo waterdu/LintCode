@@ -1,0 +1,56 @@
+Our URL shortener system should meet the following requirements:
+Functional Requirements:
+1. Given a URL, our service should generate a shorter and unique alias of it.
+2. When users access a shorter URL, our service should redirect them to the
+original link.
+3. Users should optionally be able to pick a custom alias for their URL.
+4. Links will expire after a specific timespan automatically; users should also
+be able to specify expiration time.
+
+Non-Functional Requirements:
+1. The system should be highly available. This is required because if our
+service is down, all the URL redirections will start failing.
+2. URL redirection should happen in real-time with minimum latency.
+3. Shortened links should not be guessable (not predictable).
+
+Extended Requirements:
+1. Analytics, e.g., how many times a redirection happened?
+2. Our service should also be accessible through REST APIs by other services.
+
+3. Capacity Estimation and Constraints
+Our system would be read-heavy; there would be lots of redirection requests
+compared to new URL shortenings. Let’s assume 100:1 ratio between read and
+write.
+Traffic estimates: If we assume that we would have 500M new URLs
+shortenings per month, we can expect (100 * 500M => 50B) redirections during
+the same time. What would be Queries Per Second (QPS) for our system?
+New URLs shortenings per second:
+500 million / (30 days * 24 hours * 3600 seconds) ~= 200 URLs/s
+URLs redirections per second:
+50 billion / (30 days * 24 hours * 3600 sec) ~= 19K/s
+Storage estimates: Since we expect to have 500M new URLs every month and if
+we would be keeping these objects for five years; total number of objects we will
+be storing would be 30 billion.
+500 million * 5 years * 12 months = 30 billion
+Let’s assume that each object we are storing can be of 500 bytes (just a ballpark,
+we will dig into it later); we would need 15TB of total storage:
+30 billion * 500 bytes = 15 TB
+
+
+Bandwidth estimates: For write requests, since every second we expect 200 new
+URLs, total incoming data for our service would be 100KB per second.
+200 * 500 bytes = 100 KB/s
+For read requests, since every second we expect ~19K URLs redirections, total
+outgoing data for our service would be 9MB per second.
+19K * 500 bytes ~= 9 MB/s
+
+
+Memory estimates: If we want to cache some of the hot URLs that are frequently
+accessed, how much memory would we need to store them? If we follow the
+80-20 rule, meaning 20% of URLs generating 80% of traffic, we would like to
+cache these 20% hot URLs.
+Since we have 19K requests per second, we would be getting 1.7billion requests
+per day.
+19K * 3600 seconds * 24 hours ~= 1.7 billion
+To cache 20% of these requests, we would need 170GB of memory.
+0.2 * 1.7 billion * 500 bytes ~= 170GB
