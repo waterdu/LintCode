@@ -1,0 +1,48 @@
+Given an array arr that is a permutation of [0, 1, ..., arr.length - 1], 
+we split the array into some number of "chunks" (partitions), and individually sort each chunk.  
+After concatenating them, the result equals the sorted array.
+
+What is the most number of chunks we could have made?
+
+Example 1:
+
+Input: arr = [4,3,2,1,0]
+Output: 1
+Explanation:
+Splitting into two or more chunks will not return the required result.
+For example, splitting into [4, 3], [2, 1, 0] will result in [3, 4, 0, 1, 2], which isn't sorted.
+Example 2:
+
+Input: arr = [1,0,2,3,4]
+Output: 4
+Explanation:
+We can split into two chunks, such as [1, 0], [2, 3, 4].
+However, splitting into [1, 0], [2], [3], [4] is the highest number of chunks possible.
+Note:
+
+arr will have length in range [1, 10].
+arr[i] will be a permutation of [0, 1, ..., arr.length - 1].
+我们要把它进行划分成若干chunks，使得每个chunks进行排序并拼接之后得到的总数组是有序的。求最多多少个chunks.
+因为所有数字是[0, 1, ..., arr.length - 1]的一个排列，很容易想到，一个区间内的最大的数字，不应该大于这个区间最右的index。
+对于：[1,0,2,3,4]
+从左到右遍历：
+1       目前最大值1，index = 0， 不可划分
+0       目前最大值1，index = 1， 可划分
+2       目前最大值2，index = 2， 可划分
+3       目前最大值3，index = 3， 可划分
+4       目前最大值3，index = 4， 可划分
+
+class Solution(object):
+    def maxChunksToSorted(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: int
+        """
+        chunks = 0
+        premax = 0 #见到的最大数
+        for i,num in enumerate(arr):
+            if num > premax:
+                premax = num
+            if premax == i:
+                chunks+=1
+        return chunks
