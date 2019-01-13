@@ -1,0 +1,82 @@
+Given a grid where each entry is only 0 or 1, find the number of corner rectangles.
+A corner rectangle is 4 distinct 1s on the grid that form an axis-aligned rectangle. 
+Note that only the corners need to have the value 1. Also, all four 1s used must be distinct.
+
+Example 1:
+
+Input: grid = 
+[[1, 0, 0, 1, 0],
+ [0, 0, 1, 0, 1],
+ [0, 0, 0, 1, 0],
+ [1, 0, 1, 0, 1]]
+Output: 1
+Explanation: There is only one corner rectangle, with corners grid[1][2], grid[1][4], grid[3][2], grid[3][4].
+Example 2:
+
+Input: grid = 
+[[1, 1, 1],
+ [1, 1, 1],
+ [1, 1, 1]]
+Output: 9
+Explanation: There are four 2x2 rectangles, four 2x3 and 3x2 rectangles, and one 3x3 rectangle.
+Example 3:
+
+Input: grid = 
+[[1, 1, 1, 1]]
+Output: 0
+Explanation: Rectangles must have four distinct corners.
+Note:
+
+The number of rows and columns of grid will each be in the range [1, 200].
+Each grid[i][j] will be either 0 or 1.
+The number of 1s in the grid will be at most 6000.
+求矩阵grid中所有四角为1的子矩阵的个数（四个角坐标必须互不相同）
+//暴力解
+def countCornerRectangles(grid) {
+  m = len(grid)
+  n = len(grid[0])
+  count = 0
+  for i in range(m):
+    for j in range(n):
+      leftTop = grid[i][j]
+      if not leftTop:
+        continue
+      for i2 in range(i+1, m, 1):
+        for j2 in range(j+1, n, 1):
+          rightBottom = grid[i2][j2]:
+          rightTop = grid[i][j2]:
+          leftBottom = grid[i2][j]:
+            if rightBottom == 1 and rightTop == 1 and leftBottom == 1:
+              count +=1
+  return count
+//组合（Combination）时间复杂度 O(m^2 * n)
+枚举起始行x，终止行y：
+    遍历各列z，统计满足grid[x][z] == 1并且grid[y][z] == 1条件的列数，记为cnt
+    根据组合公式，C(cnt, 2) = cnt * (cnt - 1) / 2，累加至答案。
+1  1
+1  1
+
+有两行，count = 2， 一共 1个矩形
+1 1 1
+1 1 1 有3行，一共3个矩形，3*2/2
+1 1 1 1  有4行，一共4*3/2个矩形
+1 1 1 1
+def countCornerRectangles(grid) {
+  m = len(grid)
+  n = len(grid[0])
+  res = 0
+  for i in range(m-1):
+    ones = []
+    for k in range(n):
+      if grid[i][k] == 1:
+        ones.append(k)
+    for i2 in range(i+1, m, 1):
+      count = 0
+      for k2 in ones:
+        if grid[i2][k2] == 1:
+          count+=1
+      res += count*(count-1) /2
+      
+  return res
+
+  
