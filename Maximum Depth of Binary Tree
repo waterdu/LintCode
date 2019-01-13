@@ -1,14 +1,31 @@
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Have you met this question in a real interview?  
+Example
+Given a binary tree as follow:
+
+  1
+ / \ 
+2   3
+   / \
+  4   5  
+The maximum depth is 3.
+
+class Solution:
+    """
+    @param root: The root of binary tree.
+    @return: An integer
+    """
+    def maxDepth(self, root):
+        # write your code here
+        if not root:
+            return 0
+        leftDepth = self.maxDepth(root.left)
+        rightDepth = self.maxDepth(root.right)
+        return max(leftDepth, rightDepth) + 1
+
 public class Solution {
     /**
      * @param root: The root of binary tree.
