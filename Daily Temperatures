@@ -1,0 +1,49 @@
+Given a list of daily temperatures T, return a list such that, 
+for each day in the input, tells you how many days you would have to wait until a warmer temperature. 
+If there is no future day for which this is possible, put 0 instead.
+
+For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
+
+Note: The length of temperatures will be in the range [1, 30000]. Each temperature will be an integer in the range [30, 100].
+
+class Solution(object):
+    def dailyTemperatures(self, T):
+        """
+        :type T: List[int]
+        :rtype: List[int]
+        """
+ //暴力解
+ class Solution(object):
+    def dailyTemperatures(self, T):
+        """
+        :type T: List[int]
+        :rtype: List[int]
+        """
+        res = []
+        n = len(T)
+        for i,t in enumerate(T):
+            for j in range(i+1, n, 1):
+                if T[j] > t:
+                    res.append(j - i)
+                    break
+                if j == n - 1:
+                    res.append(0)
+        res.append(0)
+        return res
+ //stack优化解
+class Solution:
+    def dailyTemperatures(self, T):
+        """
+        :type T: List[int]
+        :rtype: List[int]
+        """
+        n = len(T)
+        res = [0] * n
+        stack = []
+        for i,t in enumerate(T):
+            #stack里存的都是最新的要处理的
+            while stack and T[stack[-1]] < t:
+                cur = stack.pop() #cur既为最靠近自己比自己小的点
+                res[cur] = i - cur
+            stack.append(i)
+        return res
