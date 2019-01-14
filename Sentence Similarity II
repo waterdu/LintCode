@@ -1,0 +1,78 @@
+Given two sentences words1, words2 
+(each represented as an array of strings), 
+and a list of similar word pairs pairs, determine if two sentences are similar.
+
+For example, 
+words1 = ["great", "acting", "skills"] and 
+words2 = ["fine", "drama", "talent"] are similar, 
+if the similar word pairs are pairs = [["great", "good"], ["fine", "good"], ["acting","drama"], ["skills","talent"]].
+
+Note that the similarity relation is transitive.
+For example, if "great" and "good" are similar, 
+and "fine" and "good" are similar, then "great" and "fine" are similar.
+
+Similarity is also symmetric. 
+For example, "great" and "fine" being similar is the same as "fine" and "great" being similar.
+Also, a word is always similar with itself. For example,
+the sentences words1 = ["great"], words2 = ["great"], pairs = [] are similar, even though there are no specified similar word pairs.
+Finally, sentences can only be similar
+if they have the same number of words. So a sentence like words1 = ["great"] can never be similar to words2 = ["doubleplus","good"].
+
+Note:
+
+The length of words1 and words2 will not exceed 1000.
+The length of pairs will not exceed 2000.
+The length of each pairs[i] will be 2.
+The length of each words[i] and pairs[i][j] will be in the range [1, 20].
+给定两组单词words1和words2，以及一组相似单词对pairs，相似性可以传递，判断words1与words2中的单词是否两两相似。
+字典 / 哈希表 + DFS / BFS
+利用字典similars存储相似单词对，然后遍历words1和words2，通过DFS/BFS判断是否相似
+
+def areSentencesSimilarTwo(self, words1, words2, pairs):
+  if len(words1) != len(words2):
+    return False
+  similar = collections.default(set)
+  for w1, w2 in pairs:
+    similar[w1].add(w2)
+    similar[w2].add(w1)
+  # whether word1 and word2 are similar
+  def dfs(word1, word2, visited):
+    for s in similar[word2]:
+      if s == word1:
+        return True
+      elif s not in visited:
+        visited.add(s)
+        if dfs(word1, s, visited):
+            return True
+    return False
+  
+  for w1,w2 in zip(words1, words2):
+    if w1 != w2 and not dfs(w1,w2,set(w2))"
+        return False
+    return True
+
+//union find解法
+def areSentencesSimilarTwo(self, words1, words2, pairs):
+    if len(words1) != len(words2):
+        return False
+
+    father = {}
+    
+    for w1, w2 in paris:
+        f1 = find(w1)
+        f2 = find(w2)
+        if f1 ！= f2:
+            fa[f2] = f1
+    
+    def find(w):
+       if w not in father:
+          father[w] = w
+          return w
+       if father[w] != w:
+          father[w] = find(father[w])
+       return father[w]
+    for w1,w2 in zip(words1, words2):
+        if find(w1) != find(w2):
+            return False
+    return True
+    
