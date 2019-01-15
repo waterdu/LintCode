@@ -1,0 +1,85 @@
+Given an array of integers nums and a positive integer k, 
+find whether it's possible to divide this array into k non-empty subsets whose sums are all equal.
+
+ 
+
+Example 1:
+
+Input: nums = [4, 3, 2, 3, 5, 2, 1], k = 4
+Output: True
+Explanation: It's possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.
+ 
+
+Note:
+
+1 <= k <= len(nums) <= 16.
+0 < nums[i] < 10000.
+//更好理解的解法：
+class Solution(object):
+    def canPartitionKSubsets(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        
+        total = sum(nums)
+        if total % k != 0:
+            return False
+        target = total / k
+        nums.sort()
+        if nums[-1] > target:
+            return False
+        
+        while nums and nums[-1] == target:
+            nums.pop()
+            k-=1
+        
+        def search(groups):
+            if not nums:
+                return True
+            v = nums.pop()
+            for i, group in enumerate(groups):
+                if group + v <= target:
+                    groups[i]+=v
+                    if search(groups):
+                        return True
+                    groups[i]-=v
+                if not group: break
+            nums.append(v)
+            return False
+
+  
+        return search([0] * k)
+ //另一个解法
+
+
+class Solution(object):
+    def canPartitionKSubsets(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        n = len(nums)
+        if n < k:
+            return False
+        s = sum(nums)
+        nums.sort(reverse=True)
+        if s % k != 0:
+            return False
+        target = s / k
+        subsets = [0] * k
+        
+        def dfs(pos):
+            if pos == n:
+                return True
+            for i in range(k):
+                subsets[i]+= nums[pos]
+                if subsets[i] <= target and dfs(pos + 1):
+                    return True
+                subsets[i]-= nums[pos]
+                if subsets[i] == 0:
+                    break
+            return False
+        return dfs(0)
