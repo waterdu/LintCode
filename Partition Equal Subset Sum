@@ -1,35 +1,49 @@
+Given a non-empty array containing only positive integers, 
+find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+
+Note:
+Each of the array element will not exceed 100.
+The array size will not exceed 200.
+Example 1:
+
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+Example 2:
+
+Input: [1, 2, 3, 5]
+
+Output: false
+
+Explanation: The array cannot be partitioned into equal sum subsets.
+//暴力解超时，加上cache就变快，要把握好cache的内容
 class Solution(object):
     def canPartition(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: bool
-        """
-        s = sum(nums) 
-        target = sum(nums) / 2
-        if target * 2 != s:
+        if not nums:
             return False
-        visited = set()
+        _sum = sum(nums)
+        if _sum % 2 != 0:
+            return False
+        target = _sum/2
+        nums.sort(reverse = True)
+        cache = {}
+        n = len(nums)
+        def dfs(cur, startIndex):
+            if cur >= target:
+                return cur == target
+            if cur not in cache:
+                for i in range(startIndex + 1, len(nums)):
+                    if dfs(cur + nums[i], i):
+                        cache[cur] = True
+                        return True
+                cache[cur] = False
+                return False
+            return cache[cur]
         
-        def dfs(tar, index):
-            if tar < 0: return False
-                        
-            if index >= len(nums):
-                return False
-            if tar == 0:
+        # index指从哪开始
+        for i in range(n):
+            if dfs(nums[i], i):
                 return True
-
-            key = (tar, index)
-            if key in visited:
-                return False
-
-            
-            add = dfs(tar - nums[index], index + 1)
-            notAdd = dfs(tar,index + 1)
-            res = add or notAdd
-            if not res:
-                visited.add((tar, index))
-            return res
-    
-        return dfs(target, 0)
-但是这个超时了
-
+        return False
