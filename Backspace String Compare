@@ -28,3 +28,27 @@ S and T only contain lowercase letters and '#' characters.
 Follow up:
 
 Can you solve it in O(N) time and O(1) space?
+
+class Solution(object):
+    def backspaceCompare(self, S, T):
+        """
+        :type S: str
+        :type T: str
+        :rtype: bool
+        """
+
+        def getstring(s):
+            back = 0
+            l = []
+            for c in reversed(range(len(s))):
+                if s[c] == '#':
+                    back+=1
+                else:
+                    if back > 0:
+                        back-=1
+                        continue
+                    else:
+                        l.append(s[c])
+            return "".join(l)
+        
+        return getstring(S) == getstring(T)
