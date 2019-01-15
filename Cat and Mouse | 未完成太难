@@ -32,3 +32,65 @@ Note:
 3 <= graph.length <= 50
 It is guaranteed that graph[1] is non-empty.
 It is guaranteed that graph[2] contains a non-zero element. 
+
+class Solution(object):
+    def catMouseGame(self, graph):
+        """
+        :type graph: List[List[int]]
+        :rtype: int
+        """
+        # Mouse starts at node 1 and goes first, 
+        # Cat starts at node 2 and goes second, and there is a Hole at node 0.
+        # [[2,5],[3],[0,4,5],[1,4,5],[2,3],[0,2,3]]的意思是0 index和2,5相邻，index1和3相邻
+        N = len(graph)
+        MOUSE, CAT = 1, 2
+        # mouse, cat, turn
+        color = [[[0] * 3 for i in range(N)] for j in range(N)]
+        q = collections.deque()
+        for i in range(1, N):
+            for t in range(1, 3):
+                color[0][i][t] = 1
+                q.append((0, i, t))
+                color[i][i][t] = 2
+                q.append((i, i, t))
+        while q:
+            curStatus = q.popleft()
+            cat, mouse, turn = curStatus
+            for preStatus in self.findAllPrevStatus(graph, curStatus):
+                preCat, preMouse, preTurn = preStatus
+                if color[preCat][preMouse][preTurn] != 0:
+                    continue
+                if color[cat][mouse][turn] == 3 - turn:
+                    color[preCat][preMouse][preTurn] = preTurn
+                    q.append(preStatus)
+                elif self.allNeighboursWin(color, graph, preStatus):
+                    color[preCat][preMouse][preTurn] = 3 - preTurn
+                    q.append(preStatus)
+        return color[1][2][1]
+    
+    def findAllPrevStatus(self, graph, curStatus):
+        ret = []
+        mouse, cat, turn = curStatus
+        if turn == 1:
+            for preCat in graph[cat]:
+                if preCat == 0:
+                    continue
+                ret.append((mouse, preCat, 2))
+        else:
+            for preMouse in graph[mouse]:
+                ret.append((preMouse, cat, 1))
+        return ret
+    
+    def allNeighboursWin(self, color, graph, status):
+        mouse, cat, turn = status
+        if turn == 1:
+            for nextMouse in graph[mouse]:
+                if color[nextMouse][cat][2] != 2:
+                    return False
+        elif turn == 2:
+            for nextCat in graph[cat]:
+                if nextCat == 0:
+                    continue
+                if color[mouse][nextCat][1] != 1:
+                    return False
+        return True
