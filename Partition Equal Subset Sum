@@ -18,6 +18,36 @@ Input: [1, 2, 3, 5]
 Output: false
 
 Explanation: The array cannot be partitioned into equal sum subsets.
+//不用cache的解法：
+class Solution(object):
+    def canPartition(self, nums):
+        n = len(nums)
+        def dfs(curSum, start):
+            if start >= n:
+                return True
+            for i in range(2):
+                if curSum[i] + nums[start] <= half:
+                    curSum[i] += nums[start]
+                    if dfs(curSum, start+1):
+                        return True
+                    curSum[i] -= nums[start]
+            return False
+            
+        if not nums:
+            return False
+        total = sum(nums)
+        if total % 2 != 0:
+            return False
+        half = total/2
+        nums.sort(reverse = True)
+        if nums[0] > half:
+            return False
+        if nums[0] == half:
+            return True
+        #左边是放，右边是不放
+        return dfs([0,0], 0)
+
+
 //暴力解超时，加上cache就变快，要把握好cache的内容
 class Solution(object):
     def canPartition(self, nums):
