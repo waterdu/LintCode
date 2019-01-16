@@ -1,0 +1,64 @@
+Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
+
+Example 1:
+Input:
+
+"bbbab"
+Output:
+4
+One possible longest palindromic subsequence is "bbbb".
+Example 2:
+Input:
+
+"cbbd"
+Output:
+2
+One possible longest palindromic subsequence is "bb".
+
+class Solution(object):
+    def longestPalindromeSubseq(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        n = len(s)
+        if s == s[::-1]:
+            return n
+        cache = {}
+        def dfs(left, right):
+            if (left, right) in cache:
+                return cache[(left, right)]
+            if left == right:
+                cache[(left, right)] = 1
+                return 1
+            if left > right:
+                cache[(left, right)] = 1
+                return 0
+            if s[left] == s[right]:
+                cache[(left, right)] = 2 + dfs(left+ 1, right- 1)
+            else:
+                cache[(left, right)] = max(dfs(left+ 1, right), dfs(left, right- 1))
+            return cache[(left, right)]
+        return dfs(0, n - 1)
+ 
+ //dp解法
+ class Solution(object):
+    def longestPalindromeSubseq(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        n = len(s)
+        if s == s[::-1]:
+            return n
+        
+        dp = [ [0 for col in range(n)] for row in range(n)]
+        for left in range(n - 1, -1, -1):
+            dp[left][left] = 1
+            for right in range(left+1, n):
+                if s[left] == s[right]:
+                    dp[left][right] = dp[left+1][right-1] + 2
+                else:
+                    dp[left][right] = max(dp[left+1][right],
+                                         dp[left][right - 1])
+        return dp[0][n - 1]
