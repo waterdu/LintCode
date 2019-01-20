@@ -37,3 +37,22 @@ class Solution(object):
         """
         points.sort(key = lambda p:(p[0]*p[0] + p[1] * p[1]))
         return points[:K]
+//解法
+class Solution(object):
+    def kClosest(self, points, K):
+        return heapq.nsmallest(K, points, lambda (x, y): x * x + y * y)
+//标准pq解法
+class Solution(object):
+    def kClosest(self, points, K):
+        """
+        :type points: List[List[int]]
+        :type K: int
+        :rtype: List[List[int]]
+        """
+        heap = []
+        for a,b in points:
+            heapq.heappush(heap,(-a*a - b*b, [a,b]))
+            if len(heap)>K:
+                heapq.heappop(heap)
+        return [p for d,p in heap]
+    
