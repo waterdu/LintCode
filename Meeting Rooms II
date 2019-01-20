@@ -1,37 +1,34 @@
-/**
- * Definition for an interval.
- * public class Interval {
- *     int start;
- *     int end;
- *     Interval() { start = 0; end = 0; }
- *     Interval(int s, int e) { start = s; end = e; }
- * }
- */
-class Solution {
-    //the minimum number of conference rooms required. means minimum conflict can we have
-    public int minMeetingRooms(Interval[] intervals) {
-        //this is swipe line solution, like bucket sort
-        int n = intervals.length;
-        int max = 0;
-        for(Interval i : intervals){
-            max = Math.max(max, i.end);
-        }
-        int[] count = new int[max + 1];
-        for(Interval i : intervals){
-            count[i.start]++;
-            count[i.end]--;
-        }
-        //maxRoom means maxConflict
-        int maxRoom = 0;
-        int roomInUse = 0;
-        for(int num : count){
-            roomInUse += num;
-            maxRoom = Math.max(maxRoom, roomInUse);
-        }
-        return maxRoom;
-    }
-}
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
+find the minimum number of conference rooms required.
 
+For example, Given [[0, 30],[5, 10],[15, 20]], return 2.
+意思就是找最少conflict
+
+Definition of Interval.
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+//扫描线解法
+class Solution:
+    """
+    @param intervals: an array of meeting time intervals
+    @return: the minimum number of conference rooms required
+    """
+    def minMeetingRooms(self, intervals):
+        # Write your code here
+        points = []
+        for i in intervals:
+            #1 means add meeting, -1 remove meeting
+            points.append((i.start, 1))
+            points.append((i.end, -1))
+        ongoingMeetings = 0
+        room = 0
+        for time, meeting in sorted(points):
+            ongoingMeetings+= meeting
+            room = max(room, ongoingMeetings)
+        return room
 //减少不必要空间的更快解法
     public int minMeetingRooms(Interval[] intervals) {
         if(intervals == null || intervals.length == 0) {
