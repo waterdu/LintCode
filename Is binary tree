@@ -1,0 +1,68 @@
+input是 array of tree node，问这些nodes 是否可以形成一个binary tree， return true or false
+这里要注意TreeNode 的 child node 有可能不在 input 的 nodes 里，这时候就是false
+用topologic解法，不停减枝叶,把所有儿子都减了，如果剩下的parent不是1个那么就不是一个binary tree
+
+
+class TreeNode {
+    TreeNode left;
+    TreeNode right;
+    int val;
+}
+
+def isBinaryTree(nodes):
+    s =set()
+    
+    for node in nodes:
+      s.add(node)
+    n = len(s)
+    edge = 0
+    for node in nodes:
+      if node.left:
+        edge+=1
+        #这里要注意TreeNode 的 child node 有可能不在 input 的 nodes 里，这时候就是false
+        #如果已经被减掉的还在里面，就说明有环
+        if node.left not in s:
+          return False
+        s.remove(node.left)
+      if node.right:
+        edge+=1
+        if node.right not in s:
+          return False
+        s.remove(node.right)
+     # edge数应该是node数-1
+     if edges != n - 1：
+        return False
+     #只有一个root，就是对的
+     return len(s) == 1
+     
+        
+
+	public boolean isBinaryTree(TreeNode[] nodes) {
+		Set<TreeNode> s = new HashSet<>();
+		for (TreeNode node : nodes) {
+			s.add(node);
+		}
+    n=s.size()
+		int edges = 0;
+		for (TreeNode node : nodes) {
+			if (node.left != null) {
+				edges++;
+				if (!s.contains(node.left)) {
+					return false;
+				}
+				s.remove(node.left);
+			}
+			if (node.right != null) {
+				edges++;
+				if (!s.contains(node.right)) {
+					return false;
+				}
+				s.remove(node.right);
+			}
+		}
+
+		if (edges != n - 1) {
+			return false;
+		}
+		return s.size() == 1;
+	}
