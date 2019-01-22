@@ -18,6 +18,22 @@ class Solution:
         :type root: TreeNode
         :rtype: bool
         """
+
+        def isValue(node):
+            if not node:
+                return True
+            if root.val != node.val:
+                return False
+            return isValue(node.left) and isValue(node.right)
+        
+        return isValue(root)
+//我的解法
+class Solution:
+    def isUnivalTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
         if not root:
             return True
         
