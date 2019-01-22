@@ -171,3 +171,18 @@ Python里没有Treemap
 排序：
 r = sorted(l, key = lambda lis:lis[1], reverse=True)
 Key = lambda背下来就行
+
+
+二分查找的方法，要求list是sorted：
+例子参考：lc34. Find First and Last Position of Element in Sorted Array
+bisect.bisect_left(a, x, lo=0, hi=len(a))
+bisect.bisect_right(a, x, lo=0, hi=len(a))
+bisect.bisect(a, x, lo=0, hi=len(a))
+Similar to bisect_left(), but returns an insertion point which comes after (to the right of) any existing entries of x in a.
+
+bisect.insort_left(a, x, lo=0, hi=len(a))
+Insert x in a in sorted order. This is equivalent to a.insert(bisect.bisect_left(a, x, lo, hi), x) assuming that a is already sorted. 
+
+bisect.insort_right(a, x, lo=0, hi=len(a))
+bisect.insort(a, x, lo=0, hi=len(a))
+Similar to insort_left(), but inserting x in a after any existing entries of x.
