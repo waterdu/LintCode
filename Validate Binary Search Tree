@@ -15,12 +15,29 @@ An example:
    / \
   3   5
 The above binary tree is serialized as {2,1,4,#,#,3,5} (in level order).
+//inorder traveral才是最优解
+class Solution(object):
+    def isValidBST(self, root):        
+        self.prev = None
+        return self.validate(root)
+    
+    def validate(self, node):
+        if node == None:
+            return True
+        if not self.validate(node.left):
+            return False
+        if self.prev and self.prev.val >= node.val:
+            return False
+        self.prev = node
+        return self.validate(node.right)
 
 class Solution:
     """
     @param root: The root of binary tree.
     @return: True if the binary tree is BST, or false
     """
+    
+    //这个解法实际上有bug， maxvalue和minvalue不能处理好
     def isValidBST(self, root):
         # write your code here
         #
