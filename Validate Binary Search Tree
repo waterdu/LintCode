@@ -31,6 +31,23 @@ class Solution(object):
         self.prev = node
         return self.validate(node.right)
 
+class Solution(object):
+    def isValidBST(self, root):        
+        self.prev = None
+        return self.validate(root)
+    
+    def validate(self, node):
+        if not node:
+            return True
+        if not self.validate(node.left):
+            return False
+        
+        #这里要小心,python默认0是False
+        if self.prev is not None and self.prev >= node.val:
+            return False
+        self.prev = node.val
+        return self.validate(node.right)
+
 class Solution:
     """
     @param root: The root of binary tree.
