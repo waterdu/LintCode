@@ -1,0 +1,22 @@
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # use presum and surfix sum
+        if not nums:
+            return 0
+        n = len(nums)
+        maxpre = nums[0]
+        minpre = nums[0]
+        maxsofar =  nums[0]
+        curmax = nums[0]
+        curmin = nums[0]
+        for i in range(1,n):
+            curmax = max(maxpre * nums[i], nums[i], minpre * nums[i])
+            curmin = min(maxpre * nums[i], nums[i], minpre * nums[i])
+            maxsofar = max(curmax, maxsofar)
+            maxpre = curmax
+            minpre = curmin
+        return maxsofar
