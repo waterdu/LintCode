@@ -1,0 +1,96 @@
+Equations are given in the format A / B = k, 
+where A and B are variables represented as strings, 
+and k is a real number (floating point number). 
+Given some queries, return the answers. If the answer does not exist, return -1.0.
+
+Example:
+Given a / b = 2.0, b / c = 3.0. 
+queries are: a / c = ?, b / a = ?, a / e = ?, a / a = ?, x / x = ? . 
+return [6.0, 0.5, -1.0, 1.0, -1.0 ].
+
+The input is: vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries , where equations.size() == values.size(), and the values are positive. This represents the equations. Return vector<double>.
+
+According to the example above:
+
+equations = [ ["a", "b"], ["b", "c"] ],
+values = [2.0, 3.0],
+queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ]. 
+The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
+
+图题 dfs或者union find，和merge account是一个类
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        dic = collections.defaultdict(dict)
+        for (x,y), value in zip(equations, values):
+            dic[x][y] = value
+            dic[y][x] = 1.0 / value
+        
+        res = []
+        for x,y in queries:
+            if x not in dic or y not in dic:
+                res.append(-1.0)
+                continue
+            res.append(self.dfs(x,y,dic,set()))
+        
+        return res
+    
+    def dfs(self, x, y, dic, visited):
+        if x == y:
+            return 1.0
+        visited.add(x)
+        for n in dic[x]:
+            if n in visited: continue
+            visited.add(n)
+            d = self.dfs(n,y,dic,visited)
+            if d > 0:
+                return d * dic[x][n]
+        return -1.0
+        
+ //union find解法，巨男写，还容易出错，强烈建议用dfs
+ class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        fa = {}
+        for (x,y), v in zip(equations, values):
+            if x not in fa and y not in fa:
+                fa[x] = (y, v)
+                fa[y] = (y, 1.0)
+            elif x not in fa:
+                fa[x] = (y, v)
+            elif y not in fa:
+                fa[y] = (x, 1.0 / v)
+            else:
+                rx, vx = self.find(x,fa)
+                ry, vy = self.find(y,fa)
+                fa[rx] = (ry, v / vx * vy)
+        res = []
+        
+        for x,y in queries:
+            if x not in fa or y not in fa:
+                res.append(-1.0)
+                continue
+            pa, av = self.find(x,fa)
+            pb, bv = self.find(y,fa)
+            if pa[0] != pb[0]:
+                res.append(-1.0)
+            else:
+                res.append(av / bv)
+        return res
+    
+    def find(self, x, fa):
+        f, val  = fa[x]
+        if x != f:
+            parent = self.find(f, fa)
+            fa[x] = (parent[0], val * parent[1])
+        return fa[x]
