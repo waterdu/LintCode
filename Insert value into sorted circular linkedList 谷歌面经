@@ -1,0 +1,31 @@
+Write a C function to insert a new value in a sorted Circular Linked List (CLL).
+
+比如3->7->9->11->3, insert 8
+head是最小值. 最大的Node.next = head.  返回head, 如果插的值比head小，返回插入的node.
+
+def insert(head, newnode)
+    if not head:
+        return newnode
+    cur = head
+    # after the head
+    if cur.val >= newnode.val:
+        while cur.next != head:
+            cur = cur.next
+        cur.next = newnode
+        newnode.next = head
+        return newnode
+    # just before the head, means val is smaller
+    else:
+        while cur.next != head and cur.next.val < newnode.val:
+            cur = cur.next
+        newnode.next = cur.next
+        cur.next = newnode
+        return head
+        
+Follow up: 假如while loop里面的 curNode = curNode.next 完全没有消耗应该如何优化。
+
+illa123 发表于 2018-12-25 02:17
+面试官假设只有比较大小的计算有消耗， 查找过程可能有什么技巧把。。他最后也没说让我回去自己想。。
+就是不需要用on的复杂度了，可以用binary search
+用while loop 找到尾端 并且计算整个list的长度，这里不要比较大小 因为只用判断    if cur.next  == head 就知道是不是尾巴。  
+然后知道整个长度后 继续找中点 cur == cur.next。 然后比较大小。 每次可以drop 一半 这样比较大小次数 是 log(N)。
