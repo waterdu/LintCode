@@ -15,6 +15,9 @@ Explanation: "mee" matches the pattern because there is a permutation {a -> m, b
 "ccc" does not match the pattern because {a -> c, b -> c, ...} is not a permutation,
 since a and b map to the same letter.
 #把patern转化为自己的数字pattern
+#第一个出现的字母为0
+比如abb就是011,dkd就是010
+
 class Solution(object):
     def findAndReplacePattern(self, words, pattern):
         """
