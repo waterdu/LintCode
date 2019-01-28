@@ -46,6 +46,9 @@ Because the wordlist will reduce at minimum as possible.
 #        :type word: str
 #        :rtype int
 #        """
+#解法是每次猜词筛选掉match数不一样的结果
+# guessword = random.choice(wordlist)这个语法要会
+
 
 class Solution(object):
     def findSecretWord(self, wordlist, master):
