@@ -1,0 +1,43 @@
+Given a set of points in the xy-plane, 
+determine the minimum area of any rectangle formed from these points,
+with sides not necessarily parallel to the x and y axes.
+
+If there isn't any rectangle, return 0.
+
+Example 1:
+
+Input: [[1,2],[2,1],[1,0],[0,1]]
+Output: 2.00000
+Explanation: The minimum area rectangle occurs at [1,2],[2,1],[1,0],[0,1], with an area of 2.
+Example 2:
+
+Input: [[0,1],[2,1],[1,1],[1,0],[2,0]]
+Output: 1.00000
+Explanation: The minimum area rectangle occurs at [1,0],[1,1],[2,1],[2,0], with an area of 1.
+Example 3:
+
+Input: [[0,3],[1,2],[3,1],[1,3],[2,1]]
+Output: 0
+Explanation: There is no possible rectangle to form from these points.
+Example 4:
+
+Input: [[3,1],[1,1],[0,1],[2,1],[3,3],[3,2],[0,2],[2,3]]
+Output: 2.00000
+Explanation: The minimum area rectangle occurs at [2,1],[2,3],[3,3],[3,1], with an area of 2.
+ 
+Note:
+
+1 <= points.length <= 50
+0 <= points[i][0] <= 40000
+0 <= points[i][1] <= 40000
+All points are distinct.
+Answers within 10^-5 of the actual value will be accepted as correct.
+长方形的两条对角线长度相等；
+长方形的两条对角线互相平分（中点重合）
+用上了这两个性质之后，题目从点的处理直接变成了线段的处理，时间复杂度降到了O(N^2).
+具体做法是，我们求出任意两个点构成的线段的长度（的平方）、线段的中心坐标，
+然后用字典保存成（长度，中心点x，中心点y）：[(线段1起点，线段1终点)，
+(线段2起点，线段2终点)……]。把这个字典弄好了之后，我们需要对字典做一次遍历，
+依次遍历相同长度和中心点的两个线段构成的长方形的面积，保留最小值就好了。
+
+知道两条对角线坐标，求长方形的面积，方法是找两条临边，然后相乘即可。
