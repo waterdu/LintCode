@@ -1,0 +1,73 @@
+In an exam room, there are N seats in a single row, numbered 0, 1, 2, ..., N-1.
+When a student enters the room, they must sit in the seat that maximizes the distance to the closest person.  
+If there are multiple such seats, they sit in the seat with the lowest number. 
+(Also, if no one is in the room, then the student sits at seat number 0.)
+
+Return a class ExamRoom(int N) that exposes two functions: 
+ExamRoom.seat() returning an int representing what seat the student sat in, 
+and ExamRoom.leave(int p) representing that the student in seat number p now leaves the room.  
+It is guaranteed that any calls to ExamRoom.leave(p) have a student sitting in seat p.
+
+ 
+
+Example 1:
+
+Input: ["ExamRoom","seat","seat","seat","seat","leave","seat"], [[10],[],[],[],[],[4],[]]
+Output: [null,0,9,4,2,null,5]
+Explanation:
+ExamRoom(10) -> null
+seat() -> 0, no one is in the room, then the student sits at seat number 0.
+seat() -> 9, the student sits at the last seat number 9.
+seat() -> 4, the student sits at the last seat number 4.
+seat() -> 2, the student sits at the last seat number 2.
+leave(4) -> null
+seat() -> 5, the student sits at the last seat number 5.
+​​​​​​​
+
+Note:
+
+1 <= N <= 10^9
+ExamRoom.seat() and ExamRoom.leave() will be called at most 10^4 times across all test cases.
+Calls to ExamRoom.leave(p) are guaranteed to have a student currently sitting in seat number p.
+有一个考场里面有N个座位排成一条线，现在每次有个学生进来需要给他安排座位，要求是他的座位和左右两个人的间隔最远。
+如果有多个满足要求的座位，需要安排在满足要求且序号最小的位置上。第一个进来的人会坐在第一个位置上。
+
+class ExamRoom:
+    def dist(self, x, y):  # heapq is a minheap, so we negate the priority to make it maxheap
+        if x == -1:
+            return -y
+        elif y == self.N:
+            return -(self.N - 1 - x)
+        else:
+            return -(abs(x - y) // 2) #//表示结果向负无穷方向取整后的数
+
+    def __init__(self, N):
+        self.N = N
+        self.pq = [(self.dist(-1, N), -1, N)] #加入边界
+
+    def seat(self):
+        d, lneibor, rneibor = heapq.heappop(self.pq)
+        if lneibor == -1:
+            seat = 0
+        elif rneibor == self.N:
+            seat = self.N - 1
+        else:
+            seat = (lneibor + rneibor) // 2
+        heapq.heappush(self.pq, (self.dist(lneibor, seat), lneibor, seat))
+        heapq.heappush(self.pq, (self.dist(seat, rneibor), seat, rneibor))
+        return seat
+
+    def leave(self, p):
+        head = tail = None
+        # 因为每次增减左右邻居都会变化，所以不适合用map来存需要的东西
+        for interval in self.pq:
+            if interval[1] == p:
+                tail = interval
+            if interval[2] == p:
+                head = interval
+            if head and tail:
+                break
+        self.pq.remove(head)
+        self.pq.remove(tail)  # different from Java as I can see, you have to manually 
+        heapq.heapify(self.pq)  # call heapify again after removal otherwise it will lose the heap property
+        heapq.heappush(self.pq, (self.dist(head[1], tail[2]), head[1], tail[2]))
