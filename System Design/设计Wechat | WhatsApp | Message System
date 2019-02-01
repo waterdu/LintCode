@@ -79,3 +79,46 @@ Socket
   Socket链接与HTTP链接的最主要区别是：
     HTTP链接下，只能客户端问服务器要数据
     Socket连接下，服务器可以主动推送数据给客户端
+ 只要打开手机，就会和push server进行长连接，所以是实时的
+ 
+ 为什么Push Service一台机器是不够的？
+ 因为端口有限。Whatsup 有那么多用户，但是不一定同时有那么多手机在线
+ Push Service是sharding by userId
+ 
+ 问题
+    假如一个群有500人
+    如果不做任何优化，需要给这500人一个个发消息
+    但实际上500人里只有很少的一些人在线（比如10人）
+    但Message Service任然会尝试给他们发消息
+        Message Service(web server)无法知道用户和Push Server的socket连接是否已经断开
+        至于Push Server自己才知道
+    消息到了Push Server才发现490个人根本没连上
+    Message Service与Push Server之间白浪费490次消息传递
+
+ 解决：
+    增加一个Channel Service(频道服务)
+    为每个聊天的Thread增加一个Channel信息
+    对于较大群，在线用户先需要订阅到对应的Channel上
+        用户上线时，Web Server（message service）找到用户所属的频道，并通知Cannel Service
+        
+    Channel Service放在内存里就行，数据重要性不高，挂了就重启
+
+How to check online status
+Update online status包含两个部分
+    服务器需要知道谁在线谁不在线
+    用户需要知道我的哪些好友在线
+    
+告诉服务器我来了 / 我走了
+• 用户上线之后，每隔3-5秒向服务器heart beat一次
+服务器告诉好友我来了 / 我走了
+• 在线的好友，每隔3-5秒钟问服务器要一次大家的在线状态
+综合上述
+• 每隔10秒告诉服务器我还在，并要一下自己好友的在线状态
+• 服务器超过1分钟没有收到信息，就认为已经下线
+可以打开你的 Facebook Messenger 验证一下
+• 打开 console 点击 network
+• 大概每隔3-5秒会pull一次服务器
+Facebook用的是pull，pull稳定性更高
+
+Push可以加速，但是不稳定
+在线信息不需要非常准确
