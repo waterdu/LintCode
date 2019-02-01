@@ -29,3 +29,38 @@ Service服务
       负责信息管理
     RealTime Service
       负责实时信息推送给接受者
+
+
+Storage 这2个是聊天系统中最重要的两条表
+  Message Table(NoSQL)
+    数据量很大，不需要修改，一条聊天信息就像一条Log一样
+    MessageId
+    ThreadId
+    UserId
+    content
+    createdAt
+    
+  THread Table(SQL)   对话表 
+    需要同时 index by
+      Owner User Id
+      Thread Id
+      Participants hash
+      Updated time
+    
+      UserId
+      ThreadId   createUserId+timestamp 为啥不用递增id，因为我要sharding
+      ParticipantId
+      ParticipantHash  avoid duplicate thread
+      createdAt
+      updatedAt
+    NoSql对multi indexes的支持并不是很好
+    
+ Work Solution 可行解
+ 用户如何发送消息？
+    Client把消息和接受者信息发送给Server
+    Server为每个接受者（包括发送者自己）创建一条Thread(如果没有的话)
+    创建一条Message(with threadId)
+用户如何接收消息？
+    可以每隔10秒钟问服务器要一下最新的Inbox
+    如果有新消息就提示用户
+    
