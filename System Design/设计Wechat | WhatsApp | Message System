@@ -1,0 +1,31 @@
+Design WhatsApp
+
+1 Senario
+基本功能：
+  用户登录注册
+   通讯录
+   两个用户互发消息
+   群聊
+   用户在线状态
+其他功能：
+    历史消息
+    多机登录 Mutli Devices
+
+2 设计多大数据量的系统
+ 1B月活跃用户
+ 75%日活跃/月活跃
+ 约750M日活跃用户
+为了计算方便起见，我们来设计一个100M日活跃的WhatsApp
+QPS:
+  假设平均一个用户每天发20条信息
+  Average QPS = 100M * 20 / 86400 ~ 20k
+  Peak QPS = 20k * 5 = 100k
+存储：
+  假设平均一个用户每天发10条信息
+  一天需要发1B,每条记录约30bytes的话，大概需要30G的存储
+  
+Service服务
+    Message Service
+      负责信息管理
+    RealTime Service
+      负责实时信息推送给接受者
