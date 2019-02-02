@@ -2,24 +2,38 @@ Design WhatsApp
 
 1 Senario
 基本功能：
-  用户登录注册
-   通讯录
-   两个用户互发消息
-   群聊
+  用户登录注册 
+   通讯录 Contacts
+   两个用户互发消息 One to one conversation
+   群聊 Group chat
    用户在线状态
 其他功能：
     历史消息
     多机登录 Mutli Devices
 
-2 设计多大数据量的系统
+2 设计多大数据量的系统 scope, 
  1B月活跃用户
  75%日活跃/月活跃
  约750M日活跃用户
 为了计算方便起见，我们来设计一个100M日活跃的WhatsApp
+
+
 QPS:
-  假设平均一个用户每天发20条信息
-  Average QPS = 100M * 20 / 86400 ~ 20k
+  假设平均一个用户每天发20条信息，每个信息50Bytes，每天发1k bytes
+  每个message * 100 bytes
+  DailyActiveUser is 500m
+  500m*20message*100bytes/10000 =~ 20m
+  每天硬盘增长2TB/day
+  1000bytes = k
+  1000k = 1G
+  1000G = T
+  2Tb/day * 356 * 5 = 3500 TB  
+            350
+  
+  对数据库来说 Average QPS = 100M * 20 / 86400 ~= 20k
   Peak QPS = 20k * 5 = 100k
+  
+  
 存储：
   假设平均一个用户每天发10条信息
   一天需要发1B,每条记录约30bytes的话，大概需要30G的存储
@@ -38,7 +52,7 @@ Storage 这2个是聊天系统中最重要的两条表
     ThreadId
     UserId
     content
-    createdAt
+    createdTime
     
   THread Table(SQL)   对话表 
     需要同时 index by
@@ -122,3 +136,5 @@ Facebook用的是pull，pull稳定性更高
 
 Push可以加速，但是不稳定
 在线信息不需要非常准确
+
+刚上线，怎么从Pull mordern 转移到Push Modern
