@@ -1,0 +1,16 @@
+1 Clerify/Senario
+
+Functional Requirement:
+1 Share Video
+2 User upload video/view/search
+3 leave commends, rate the video, like/dislike, viewCount - total number of views
+4 User should be able to add and view comments on videos
+
+Nonfunctional/Sub Features
+1 The system is hight reliable, any video uploarded shoul not be lost
+2 Real time Stream.直播
+3 channel, 
+
+2 Scope, 多少人使用, Capacity
+1 billion per month, so daily user 750m 
+
