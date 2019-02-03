@@ -1,0 +1,30 @@
+问题：设计一个只读的lookup service
+  10 billion key-value pair
+  (not updated every day)
+  Key: Geolocation; Value; image and building name
+  
+  Senario 比较明确 lookup
+   How big is the data? how big is the key, and value?
+      key(Latitude)
+        each key size<20B
+        Total key size = 200GB
+      value(pic and all the building name on this pic)
+          Each Value size = 100kb
+          total value size = 1PB
+
+Service: App client + web service + storage service
+
+Storage:
+    可选的有HashMap
+    Databse
+    GFS
+    
+怎么sharding?
+Horizontal Sharding
+
+How to solve big size problem?
+把所有数据放在GFS里
+
+For given key, how do we know which chunk we should 
+答：chunk index
+    
