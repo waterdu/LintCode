@@ -1,0 +1,67 @@
+Solve a given equation and return the value of x in the form of string "x=#value". 
+The equation contains only '+', '-' operation, the variable x and its coefficient.
+
+If there is no solution for the equation, return "No solution".
+If there are infinite solutions for the equation, return "Infinite solutions".
+If there is exactly one solution for the equation, we ensure that the value of x is an integer.
+
+Example 1:
+Input: "x+5-3+x=6+x-2"
+Output: "x=2"
+Example 2:
+Input: "x=x"
+Output: "Infinite solutions"
+Example 3:
+Input: "2x=x"
+Output: "x=0"
+Example 4:
+Input: "2x+3x-6x=x+2"
+Output: "x=-1"
+Example 5:
+Input: "x=x+2"
+Output: "No solution"
+//我的解法
+class Solution(object):
+    def solveEquation(self, equation):
+    #这里加个符号是为了最后计算数字
+        equation = equation+"+"
+        needReverse = 1
+        co = 0
+        val = 0
+        sign = 1
+        num = 0
+        isNum = False
+        for c in equation:
+            if c.isdigit():
+                isNum = True
+                num = num * 10 + int(c)
+            elif c == 'x':
+                if not isNum:
+                    num = 1
+                co += needReverse*num*sign
+                num = 0
+                sign = 1
+                isNum = False
+            else:
+                val += needReverse*sign*num
+                print("val")
+                print(val)
+                num = 0
+                sign = 1
+                if c == '=':
+                    needReverse = -1
+                elif c == '+' or c == '-':
+                    if c == "+":
+                        sign = 1
+                    else:
+                        sign = -1
+                isNum = False
+
+        print(co)
+        print(val)
+        if co == 0 and val == 0:
+            return "Infinite solutions"
+        elif co == 0:
+            return "No solution"
+        else:
+            return "x=" + str(-val/co)
