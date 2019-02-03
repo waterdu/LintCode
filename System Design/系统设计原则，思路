@@ -2,5 +2,7 @@
 
 先讨论场景senario
 再讨论scale，多少qps
-再讨论scale
+Service然后给出可行解，要什么service
 再讨论优化，如果减少request,或者只看高峰值
+
+思考数据流
