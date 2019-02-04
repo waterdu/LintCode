@@ -1,0 +1,31 @@
+给一个国王家的family tree （n-ary tree），王位继承是先传国王最年长的儿子，假如最年长儿子死了，
+就传给死儿子最年长的儿子。。。如果这些人都不存在，再考虑国王次年长的儿子，以此类推。要求设计这样一棵树，
+死掉的人不要求删除，实现birth（）和输出王位继承顺序的method（死掉的人不在继承顺序结果里）。（及其变种）
+
+题目不太清楚，貌似就是传给最年长的儿子才行
+
+递归写
+
+class TreeNode{
+    int val;
+    boolean isDead;
+    List<TreeNode> children;
+    public TreeNode(int val){
+        this.val = val;
+        children = new ArrayList<>();
+    }
+}
+
+def nextKing(king):
+  if not getFirstSon(king):
+      return None
+  first = getFirstSon(king)
+  if first.dead:
+      hisFirstSon = getFirstSon(first):
+  
+  
+def getFirstSon(k):
+    if not k.sons:
+      return None
+    return k.sons[0]
+  
