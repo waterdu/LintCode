@@ -12,3 +12,52 @@ T = 6
 Output: 2
 Explanation: 
 The best strategy is take the first bus to the bus stop 7, then take the second bus to the bus stop 6.
+
+求最短需要几个公交，就是bfs的写法
+class Solution(object):
+    def numBusesToDestination(self, routes, S, T):
+        toRoutes = collections.defaultdict(set)
+        for i, route in enumerate(routes):
+            for j in route:
+                toRoutes[j].add(i) # i is bus number
+                #  1,(0,1)
+                #  2, (0,1)
+        q = [(S,0)] 
+        visited = set([S])
+        
+        for stop, bus in q:
+            if stop == T:
+                return bus
+            for b in toRoutes[stop]:
+                for nextStop in routes[b]:
+                    if nextStop not in visited:
+                        q.append((nextStop, bus + 1))
+                        visited.add(nextStop)
+                routes[b] = []
+        return -1
+ 
+ class Solution(object):
+    def numBusesToDestination(self, routes, S, T):
+        toRoutes = collections.defaultdict(set)
+        for i, route in enumerate(routes):
+            for j in route:
+                toRoutes[j].add(i) # i is bus number
+                #  1,(0,1)
+                #  2, (0,1)
+        q = collections.deque()
+        q.append((S, 0))
+        visited = set([S])
+        
+        while q:
+            stop, bus = q.popleft()
+            if stop == T:
+                return bus
+            for b in toRoutes[stop]:
+                for nextStop in routes[b]:
+                    if nextStop not in visited:
+                        q.append((nextStop, bus + 1))
+                        visited.add(nextStop)
+                routes[b] = []
+
+        return -1
+
