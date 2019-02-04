@@ -16,16 +16,33 @@ class TreeNode{
     }
 }
 
-def nextKing(king):
-  if not getFirstSon(king):
-      return None
-  first = getFirstSon(king)
-  if first.dead:
-      hisFirstSon = getFirstSon(first):
-  
-  
-def getFirstSon(k):
-    if not k.sons:
-      return None
-    return k.sons[0]
-  
+这个解法没验证过
+def nextKing(k):
+    if not k.children:
+        return None
+    
+    for c in children:
+        if getFirstSon(c) and not getFirstSon(c).dead:
+            return getFirstSon(c)
+    return None
+    
+def getFirstSon(s):
+    if not s.dead:
+        return s
+    return nextKing(s)
+       
+    
+    for c in children:
+        if not getFirstSon(c).dead:
+            return getFirstSon(c)
+    return None
+    
+    
+    
+   public void birth(TreeNode root, TreeNode child){
+      root.children.add(child)
+   }
+   public void dead(TreeNode root){
+       root.isDead = true
+   }
+    
