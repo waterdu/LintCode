@@ -1,0 +1,21 @@
+场景
+必要功能：
+Average latency < 100ms
+95% < 50ms
+所以延迟很重要
+
+用什么算法？
+
+m = average length of word
+n = number of words
+可以binary search tree或者 trie
+  in
+be  of 
+复杂度lgn + k
+
+Trie:
+时间复杂度：O(length(word) + k)
+空间复杂度O(m*n*26)
+
+数据库怎么写前缀匹配：
+可以针对前缀做索引，用
