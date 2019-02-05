@@ -1,0 +1,16 @@
+ Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number.
+ The time complexity must be in O(n).
+ Note that the third maximum here means the third maximum distinct number.
+ 
+ class Solution(object):
+    def thirdMax(self, nums):
+        v = [float('-inf'), float('-inf'), float('-inf')]
+        for n in nums:
+            if n not in v: #这一步很重要，可以查重 
+                if n > v[0]: v = [n, v[0], v[1]]
+                elif n > v[1]: v = [v[0], n, v[1]]
+                elif n > v[2]: v = [v[0], v[1], n]
+        if v[2] == float('-inf'):
+            return max(nums)
+        else:
+            return v[2]
