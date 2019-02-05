@@ -1,7 +1,7 @@
 不要聊其他app已有的功能，比如user, payment，这些待过一次。问面试官说不重要
 
 先讨论场景senario
-再讨论scale，多少qps
+再讨论scale，多少qps 为什么这么问？因为如果使用量很小的话，就不需要分布式系统，不需要很多服务器了
 Service然后给出可行解，要什么service
 再讨论优化，如果减少request,或者只看高峰值
 
