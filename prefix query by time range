@@ -7,6 +7,50 @@ there's total 3+1+14 = 18 times we need to query, so return 18
 
 prequery意识就是只能从前往后写query key。比如2018就会得到整个2018年的数据
 201812会得到整个201812月的数据
-
+//拗口解法
 queryByTimerange (start, end)：
   
+   struct Date {
+      int y;
+      int m;
+      int d;
+
+      bool operator<=(const Date b)const {
+         if (y == b.y)  return m == b.m ? d <= b.d : m < b.m;
+         else return y < b.y;
+      }
+
+      Date nextMonth() const {
+         Date res{ y, m + 1, 1 };
+         if (res.m == 13) {
+            res.y ++;
+            res.m = 1;
+         }
+         return res;
+      }
+
+      Date NextYear() const{ return Date{ y + 1, 1,1 }; }
+      bool isFirstDayOfYear() const{ return d == 1 && m == 1;}
+   };
+
+   int preQuary(const Date begin, const Date end) {
+      if (!(begin <= end)) return 0;
+      int numOfQueries = 0;
+      if (begin.NextYear() <= end && begin.isFirstDayOfYear()) {
+         numOfQueries++;
+         return numOfQueries + preQuary(begin.NextYear(), end);
+      }
+
+      // now begin and end are in the same year; deal with month
+      if (begin.nextMonth() <= end) {
+         if (begin.d == 1) numOfQueries++;
+         else numOfQueries += dayPerMonth.at(begin.m) - begin.d + 1;
+         return numOfQueries + preQuary(begin.nextMonth(), end);
+      }
+
+      // now begin and end are in the same month
+      return numOfQueries + end.d - begin.d;
+   }
+
+   const map<int, int> dayPerMonth = { {1,31},{2,28},{3,31},{4,30},{5,31},{6,30},{7,31},{8,31},{9,30},{10,31},{11,30},{12,31} };
+};
