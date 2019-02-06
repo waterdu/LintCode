@@ -1,3 +1,20 @@
+Given a nested list of integers, implement an iterator to flatten it.
+Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+
+Example 1:
+
+Input: [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false, 
+             the order of elements returned by next should be: [1,1,2,1,1].
+Example 2:
+
+Input: [1,[4,[6]]]
+Output: [1,4,6]
+Explanation: By calling next repeatedly until hasNext returns false, 
+             the order of elements returned by next should be: [1,4,6].
+
+
 /**
  * // This is the interface that allows for creating nested lists.
  * // You should not implement it, or speculate about its implementation
@@ -18,6 +35,40 @@
  *     public List<NestedInteger> getList();
  * }
  */
+class NestedIterator(object):
+
+    def __init__(self, nestedList):
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.queue = collections.deque()
+        def getAll(nests):
+            for n in nests:
+                if n.isInteger():
+                    self.queue.append(n.getInteger())
+                else:
+                    getAll(n.getList())
+        getAll(nestedList)
+
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        return self.queue.popleft()
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        if self.queue:
+            return True
+        return False
+        
+        
+ 
+ 
 import java.util.Iterator;
 
 public class NestedIterator implements Iterator<Integer> {
