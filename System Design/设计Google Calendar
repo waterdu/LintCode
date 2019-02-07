@@ -1,0 +1,18 @@
+OOD问题
+
+1 交流requirement
+ Use case/Senario
+ 
+ AttendeeStatus enum:
+    Accept
+    Reject
+    Pending
+
+Meeting:
+    attendees
+    id
+    interval
+    name
+    room
+    
+把一天24个小时换成96个slots
