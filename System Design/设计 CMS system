@@ -17,3 +17,22 @@ localization(language)
 Rich video: multiple resolutions/streaming/audio-tracks/transcripts/closed captions
 
 Rich image:resize/ chop, face detection
+
+
+设计模式：
+Command Query pattern
+
+Command: CRUT
+
+Query:
+  read, query, search
+  
+  Command​
+
+Create/Update/Delete documents
+Set up system (typing, RBAC, etc.)
+
+Query Pre(We can check history version)
+Read and Search similarly to Query
+Authentication required
+Any version of the document
