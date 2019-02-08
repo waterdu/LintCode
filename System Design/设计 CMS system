@@ -1,0 +1,19 @@
+Content Management System
+Provide
+Storage of documents and binary assets (Videos, Images, etc.)
+Replication to multiple data centers across the global center
+Internal caching
+
+Indexing and full text search​
+
+Document lifecycle (check-in/check-out/publish/delete/undelete)​
+Scheduled publish and expiration​
+Modification history and audit​
+Asset and document versioning​
+Role Based Access Control (RBAC) per document and versioning
+Multi-tenant
+localization(language)
+
+Rich video: multiple resolutions/streaming/audio-tracks/transcripts/closed captions
+
+Rich image:resize/ chop, face detection
