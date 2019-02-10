@@ -1,0 +1,35 @@
+Given postorder traversal of a binary search tree, construct the BST.
+
+For example, if the given traversal is {1, 7, 5, 50, 40, 10}, then following tree should be constructed and root
+of the tree should be returned.
+
+     10
+   /   \
+  5     40
+ /  \      \
+1    7      50
+//我们知道最后一个数就是parent,然后找到第一个比它大的数，它之前就是left
+
+def construcTree(post)
+    if not post:
+        return None
+    rootVal = post[-1]
+    root = TreeNode(rootVal)
+    firstLargerIndex = None
+    for i,v in enumerate(post):
+        if v > rootVal:
+            firstLargerIndex = i
+            break
+    left = None
+    right = None
+    if firstLargerIndex:
+        right = construcTree(post[firstLargerIndex: -2])
+        left = construcTree(post[:firstLargerIndex])
+    else:
+        left = construcTree(post[:-1])
+    
+    root.left = left
+    root.right = right
+    return root
+    
+    最坏n^2，平均nlgn
