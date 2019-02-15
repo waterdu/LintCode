@@ -1,0 +1,55 @@
+Return any binary tree that matches the given preorder and postorder traversals.
+
+Values in the traversals pre and post are distinct positive integers.
+
+Example 1:
+
+Input: pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]
+Output: [1,2,3,4,5,6,7]
+
+解法
+We see it as preorder : 1 (2 4 5) (3 6); postorder: (4 5 2) (6 3) 1
+所以找到和一样的点就行
+
+class Solution(object):
+    def constructFromPrePost(self, pre, post):
+        """
+        :type pre: List[int]
+        :type post: List[int]
+        :rtype: TreeNode
+        """
+        if not pre or not post:
+            return None
+        if(len(post) == 1):
+            return TreeNode(pre[0])
+        
+        idx = pre.index(post[-2]) # number 3 idx -1就是pre在2的位置
+        
+        root = TreeNode(pre[0])
+        root.left = self.constructFromPrePost(pre[1:idx], post[:idx - 1])
+        root.right = self.constructFromPrePost(pre[idx:], post[idx - 1: -1])
+        
+        return root
+        
+ //递归解法       
+ class Solution(object):
+    def constructFromPrePost(self, pre, post):
+        """
+        :type pre: List[int]
+        :type post: List[int]
+        :rtype: TreeNode
+        """
+        pre_array = [TreeNode(pre[0])]
+        root_node = pre_array[0]
+        post_index = 0
+        for node in pre[1:]:
+            curr_node = TreeNode(node)
+            while pre_array[-1].val == post[post_index]:
+                pre_array.pop()
+                post_index +=1
+            if not pre_array[-1].left:
+                pre_array[-1].left = curr_node
+            else:
+                pre_array[-1].right = curr_node
+            pre_array.append(curr_node) 
+        return root_node
