@@ -14,7 +14,7 @@ return its zigzag level order traversal as:
   [15,7]
 ]
 
-
+核心是反向加的时候可以用 insert(0, val)
 
 /**
  * Definition for a binary tree node.
@@ -59,6 +59,33 @@ class Solution(object):
             leftToRight =  not leftToRight
             res.append(level)
         return res
+        
+dfs 解法：
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        res = []
+        if not root:
+            return []
+        self.dfs(root, res, 0)
+        return res
+    
+    def dfs(self, cur, res, level):
+        if not cur:
+            return
+        if len(res) <= level:
+            res.append([])
+        collection = res[level]
+        if level%2 == 0:
+            collection.append(cur.val)
+        else:
+            collection.insert(0, cur.val)
+        
+        self.dfs(cur.left,res,level+1)
+        self.dfs(cur.right,res,level+1)
         
 //java解法
 class Solution {
