@@ -1,12 +1,53 @@
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
+Given preorder and inorder traversal of a tree, construct the binary tree.
 
+Note:
+You may assume that duplicates do not exist in the tree.
 
+For example, given
+
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        #preorder = [3,(9)(20,15,7)]
+        #inorder = [(9),3(15,20,7)]
+        if not preorder or not inorder:
+            return None
+        if len(preorder) == 1:
+            return TreeNode(preorder[0])
+        index = inorder.index(preorder[0])
+        root = TreeNode(preorder[0])
+        root.left = self.buildTree(preorder[1:index + 1], inorder[:index])
+        root.right = self.buildTree(preorder[index + 1:], inorder[index+1:])
+        return root
+
+//或者：
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        def helper(preorder, inorder):
+            if not inorder:
+                return None
+            
+            root_val = preorder.popleft()
+            root = TreeNode(root_val)
+            index = inorder.index(root_val)
+            
+            root.left = helper(preorder, inorder[:index])
+            root.right = helper(preorder, inorder[index+1:])
+            return root
+        return helper(deque(preorder), inorder)
+        
 class Solution:
     """
     @param preorder : A list of integers that preorder traversal of a tree
