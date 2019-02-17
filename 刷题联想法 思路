@@ -3,6 +3,10 @@ dfs：只要是有关一个元素要么放要么不放
 然后用cache来加速，可以转换成dp题型
 
 dp：只要是dfs基本可以换成dp
+1 问是否存在
+2 问最大种类
+3 
+
 
 看起来像hashmap的题，实际上都是cache记忆化题，用cache = {}来做，dfs也可以用memorized solution来做
 
