@@ -1,0 +1,32 @@
+Given two strings, find the longest common subsequence (LCS).
+
+Your code should return the length of LCS.
+
+Example
+Example 1:
+	Input:  "ABCD" and "EDCA"
+	Output:  1
+	
+	Explanation:
+	LCS is 'A' or  'D' or 'C'
+
+
+class Solution:
+    """
+    @param A: A string
+    @param B: A string
+    @return: The length of longest common subsequence of A and B
+    """
+    def longestCommonSubsequence(self, A, B):
+        # write your code here
+        l1 = len(A)
+        l2 = len(B)
+        dp = [[0] * (l2 + 1) for i in range(l1 + 1)]
+        #就是求最长公共子序列
+        for i in range(1, l1 + 1):
+            for j in range(1, l2 + 1):
+                if A[i - 1] == B[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        return dp[-1][-1]
