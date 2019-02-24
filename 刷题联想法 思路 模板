@@ -29,3 +29,8 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Slidin
         while father[x] != -1: #或者 != 
             x= father[x]
         return x
+    def union (a,b):
+        rootA = find(a)
+        rootB = find(b)
+        if rootA != rootB:
+            father[rootA] = rootB
