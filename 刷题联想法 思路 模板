@@ -23,3 +23,9 @@ dfs问题里的检查a + b = sum?类题，最好换成检查if target - sum <0 �
 
 Sliding Window问题集：
 https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.
+
+并查集union find:
+    def find(self, x, father):
+        while father[x] != -1: #或者 != 
+            x= father[x]
+        return x
