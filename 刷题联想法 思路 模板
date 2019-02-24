@@ -41,7 +41,8 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Slidin
 4 查询当前集合的个数
 
 
-Trie问题 
+Trie问题， 需要的时候
+需要一个一个字母遍历，需要节约空间，需要找前缀
 1 Trie直接实现
 用map实现
 2 利用Trie的前缀特性
