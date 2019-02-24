@@ -34,3 +34,15 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/Slidin
         rootB = find(b)
         if rootA != rootB:
             father[rootA] = rootB
+大部分带图的题
+1 查询两个元素是否在同一个集合内
+2 合并两个元素所在的集合
+3 查询某个元素所在的集合的元素个数
+4 查询当前集合的个数
+
+
+Trie问题 
+1 Trie直接实现
+用map实现
+2 利用Trie的前缀特性
+3 字符搜索
