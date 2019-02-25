@@ -1,0 +1,15 @@
+
+Print numbers from 1 to the largest number with N digits by recursion.
+
+    def numbersByRecursion(self, n):
+        # write your code here
+        if n==0:
+            return []
+        if n==1:
+            return [1,2,3,4,5,6,7,8,9]
+        tmp = self.numbersByRecursion(n-1)
+        ans = []
+        ans.extend(tmp) #把两列合并
+        for i in range(10**(n-1),10**n):
+            ans.append(i)
+        return ans
