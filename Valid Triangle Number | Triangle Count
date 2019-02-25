@@ -27,7 +27,7 @@ class Solution(object):
             second = third - 1
             while one < second:
                 if nums[one] + nums[second] > nums[third]:
-                    count+= second - one
+                    count+= second - one #为什么不是+1？因为有second - one个one向右边移动满足条件
                     second-=1
                 else:
                     one+=1
