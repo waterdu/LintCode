@@ -1,0 +1,37 @@
+给定一个multiple tree，以及需要删除的多个nodes，要求返回一个node的list，以便在nodes被删除之后可以找到这些nodes的child。
+例子：
+                a
+       /     /     \      \
+     b      d      c      f. Waral 博客有更多文章,
+  /   \   \
+h     z   i 
+假如删除b和f，返回{a, d, c, h, z, i}
+假如删除a和b，返回{d, c, f, h, z, i}
+可以用level traverse解
+
+得到level traveral的答案后，再从list里面删
+
+def getNodes(self, deleteList, root):
+        if not root:
+            return []
+        
+        q = []
+        q.append(root)
+        res = []
+        
+        while q:
+            lvl = []
+            size = len(q)
+            for j in range(size):
+                curr = q.pop(0)
+                lvl.append(curr.val)
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+            
+            res.append(lvl)
+        for d in  deleteList:
+            res.remove(d)
+            
+        return res
