@@ -1,0 +1,23 @@
+Write a function to detect if two trees are isomorphic. 
+Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. 
+by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+For example, following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+class Node:
+    def _init_(self, data):
+        self.data = data:
+        self.left = None
+        self.right = None
+def isIsomorphic(n1, n2):
+    if not n1 and not n2:
+        return True
+    if not n1 or not n2:
+        return False
+    if n1.data != n2.data:
+        return False
+    return ((isIsomorphic(n1.left, n2.left)and 
+            isIsomorphic(n1.right, n2.right)) or
+            (isIsomorphic(n1.left, n2.right) and 
+            isIsomorphic(n1.right, n2.left)) 
+            ) 
