@@ -17,6 +17,24 @@ Input: "226"
 Output: 3
 Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
 
+    def numDecodings(self, s):
+        if not s:
+            return 0
+        n = len(s)
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        if s[0] != '0':
+            dp[1] = 1
+
+        for i in range(2, n+ 1, 1):
+            first = int(s[i - 1:i])
+            second = int(s[i - 2:i])
+            if first >= 1 and first <= 9:
+                dp[i] += dp[i - 1]
+            if second >= 10 and second <= 26:
+                dp[i] += dp[i - 2]
+        return dp[n]
+
 class Solution(object):
     def numDecodings(self, s):
         """
