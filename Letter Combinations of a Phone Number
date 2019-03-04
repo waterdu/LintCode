@@ -1,3 +1,50 @@
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+Example:
+
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', 
+                   '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        if not digits:
+            return []
+        if len(digits) == 1:
+            return list(dic[digits[0]])
+        res = ['']
+        for i in range(len(digits)):
+            letters = dic[digits[i]]
+            res = [w + c for w in res for c in letters]
+
+        return res
+
+
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', 
+                   '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        if not digits:
+            return []
+        if len(digits) == 1:
+            return list(dic[digits[0]])
+        prev = self.letterCombinations(digits[:-1])
+        addtional = dic[digits[-1]]
+        if addtional != None:
+            return [s+c for s in prev for c in addtional]
+            
+            
 class Solution {
     public List<String> letterCombinations(String digits) {
         ArrayList<String> result = new ArrayList<>();
