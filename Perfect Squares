@@ -1,0 +1,38 @@
+Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
+
+Example 1:
+
+Input: n = 12
+Output: 3 
+Explanation: 12 = 4 + 4 + 4.
+Example 2:
+
+Input: n = 13
+Output: 2
+Explanation: 13 = 4 + 9.
+
+一般看到这道题大家第一反应可能是dp，记dp[i]表示组成和为i的平方数的最优个数，则dp[n]为所求。
+递推式为：dp[n] = 1 + min(dp[n-1],dp[n-4],dp[n-9],...)
+当然这是完全正确的，但是这里我们如果用bfs方法应该怎么做呢？
+
+//bsf解法
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        Q = collections.deque([n])
+        visited = set()
+        level = 0
+        while Q:
+            l = len(Q)# 按层处理
+            for i in range(l):
+                n = Q.popleft()
+                if n == 0: return level
+                for i in range(1,int(n**0.5)+1):# 遍历相邻节点 and  不重复计算
+                    val = n - i**2
+                    if val in visited: continue
+                    Q.append(val)
+                    visited.add(val)
+            level += 1
