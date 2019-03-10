@@ -1,0 +1,49 @@
+Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.
+
+The distance between two adjacent cells is 1.
+Example 1: 
+Input:
+
+0 0 0
+0 1 0
+0 0 0
+Output:
+0 0 0
+0 1 0
+0 0 0
+Example 2: 
+Input:
+
+0 0 0
+0 1 0
+1 1 1
+Output:
+0 0 0
+0 1 0
+1 2 1
+
+class Solution(object):
+    def updateMatrix(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        m,n = len(matrix),len(matrix[0])
+        Q = collections.deque([])
+        visited = set()
+    # 初始化队列，将所有起始点加入
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    Q.append((i,j))
+                    visited.add((i,j))
+    # 标准bfs写法，将相邻节点加入队列
+        while Q:
+            i,j = Q.popleft()
+            for x,y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:
+                if 0<=x<m and 0<=y<n and (x,y) not in visited:# 不出界 and 不走回头路
+                    matrix[x][y] = matrix[i][j] + 1
+                # visited一定要在这里添加，否则产生大量重复计算
+                    visited.add((x,y))
+                    Q.append((x,y))
+        return matrix
