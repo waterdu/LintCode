@@ -1,3 +1,70 @@
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+
+Example 1:
+
+Input: "A man, a plan, a canal: Panama"
+Output: true
+Example 2:
+
+Input: "race a car"
+Output: false
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+        s = "".join(c for c in s.lower() if c.isalnum())
+        
+        if s == s[::-1]:
+            return True
+        return False
+    
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        r = [x.lower() for x in s if x.isalnum()]
+        s = "".join(r)
+        n = len(s)
+        left = 0
+        right = n - 1
+        while left< right:
+            if s[left] != s[right]:
+                return False
+            left+=1
+            right-=1
+        return True
+    
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+        n = len(s)
+        left = 0
+        right = n -1
+
+        while left<right:
+            while left<right and not s[left].isalnum():
+                left+=1
+            while left<right and not s[right].isalnum():
+                right-=1
+            if s[left].lower() != s[right].lower():
+                return False
+            left += 1
+            right -= 1
+        return True
+
 public class Solution {
     /*
      * @param s: A string
