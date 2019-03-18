@@ -1,0 +1,53 @@
+LZ 感恩节前的电面，跪了，碰到的是Alien Dictionary, Find Median in a Large File。两轮45min视频Back to back真的是比想象中要累，第二轮写代码的时候稍微乱，File的长度是奇数还是偶数的时候有点混乱，不知道是不是因为这个原因被挂了。
+分享之下准备电面的刷的面经，是近期空气床的高频题，有一些是为On Site准备的（谁知道没过电面，悲剧）
+
+有两道新题，我把我自己的解法也分享在下面了。其他的题不是蠡口的原题就是深秋版或者几个盛传的空气床题库里有的。建议大家每道题都要当自己没有solution做一遍，千万不是直接看了solution就脑子过一遍，一定自己要花时间解题！！！题库这么public，面试的人多多少少都刷过，你要想自己的竞争力在哪里，个人认为写码之前的交流很重要，表明你是如果从了解题目的需求开始，一步一步的慢慢建立起知道最后你准备运用什么Algorithm的过程会make a huge difference。唉，虽然LZ没过，但是我觉得写前的思路展示应该是拉开你别人差距的地方！
+
+稍微设点分限制一下烙印。
+
+最后大家加油！希望大家都有Offer！看在LZ一个帖子一个帖子看整理资料频率的份上，大家走过都留点大米吧！（给别人大米自己是不会扣的）跪谢！！
+. check 1point3acres for more.
+以下内容需要积分高于 150 您已经可以浏览
+
+频率：8
+Palindrome Pairs
+      -会有IsPalindrome, Palindrom Substring 作为热身
+倒水题
+      -Follow up: 打印出来Water Drop之后的样子、如果两边没有墙（Water可以流出去会怎么样？）
+Rounding Price
+
+频率：6
+Iterator of iterator
+File System
+
+频率：5
+Menu Order
+Alien Dictionary
+Cheapest Flight Within K Stops
+
+频率：4
+8 Puzzle
+10 Wizards
+滑雪题（新题）
+因为是求Longest Path, 不能直接Dijsktra，不然由于另外一条路径回来可能会增加path的长度，所以要用Topological Sort，然后按照从top到bottom Topological Sort 出来的edge的顺序来进行BFS
+https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=444503&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption%5B3089%5D%5Bvalue%5D%5B2%5D%3D2%26searchoption%5B3089%5D%5Btype%5D%3Dcheckbox%26searchoption%5B3046%5D%5Bvalue%5D%3D37%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311
+
+
+频率3以下的：
+Find Buddy
+Wiggle Sort
+IP to CIDR
+Find median in a large file
+Bank System
+CSV parser
+Collatz Conjecture
+Display Page
+Guess Number
+Boggle Game
+Fixed Length Queue
+Board Score（新题）
+根据帖子link的帖主说这个题的难度是时间，由于要整理Input，Input根据LZ的理解应该会是这样：
+# W:Water | L:Land | T:Tree | M:Mud | S:Sand | R:Rock
+input = ['S0 W1 W1 W0 L2','W0 W0 T0 T0 T0','W0 W1 T0 M2 M1','S0 L0 S1 S0 S0','M0 R2 R0 S1 T0']
+整理成2D Board之后建议直接dfs一边check land 的类型一边计算得分就可以了
+https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=455445&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption%255B3089%255D%255Bvalue%255D%255B2%255D%3D2%26searchoption%255B3089%255D%255Btype%255D%3Dcheckbox%26searchoption%255B3046%255D%255Bvalue%255D%3D37%26searchoption%255B3046%255D%255Btype%255D%3Dradio%26searchoption%255B3109%255D%255Bvalue%255D%3D1%26searchoption%255B3109%255D%255Btype%255D%3Dradio%26orderby%3Ddateline&page=2
