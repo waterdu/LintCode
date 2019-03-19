@@ -1,29 +1,56 @@
-class Solution:
+Given a list of unique words, find all pairs of distinct indices (i, j) in the given list, 
+so that the concatenation of the two words, i.e. words[i] + words[j] is a palindrome.
+
+Example 1:
+
+Input: ["abcd","dcba","lls","s","sssll"]
+Output: [[0,1],[1,0],[3,2],[2,4]] 
+Explanation: The palindromes are ["dcbaabcd","abcddcba","slls","llssssll"]
+Example 2:
+
+Input: ["bat","tab","cat"]
+Output: [[0,1],[1,0]] 
+Explanation: The palindromes are ["battab","tabbat"]
+1). 若当前单词word本身为回文，且words中存在空串，则将空串下标bidx与idx加入答案
+
+2). 若当前单词的逆序串在words中，则将逆序串下标ridx与idx加入答案
+
+3). 将当前单词word拆分为左右两半left，right。
+
+     3.1) 若left为回文，并且right的逆序串在words中，则将right的逆序串下标rridx与idx加入答案
+     
+     3.2) 若right为回文，并且left的逆序串在words中，则将left的逆序串下标idx与rlidx加入答案
+
+
+class Solution(object):
     def palindromePairs(self, words):
         """
         :type words: List[str]
         :rtype: List[List[int]]
         """
         def isPalindrome(s):
-            reverse = "".join(reversed(s))
-            return s == reverse
-        
-        lookup = {w:index for index, w in enumerate(words)}
+            if s == s[::-1]:
+                return True
+            return False
+        lookup = {w:index for index,w in enumerate(words)}
         res = []
-        for i, w in enumerate(words):
-            for j in range(len(w) + 1):
+        for i,w in enumerate(words):
+            for j in range(len(w)+1):
                 left = w[:j]
-                right = w[j:]
+                right = w[j:] #right can be empty
+                
                 leftReverse = left[::-1]
                 rightReverse = right[::-1]
-                if rightReverse in lookup and isPalindrome(left):
-                    if lookup[rightReverse] != i:
-                        res.append([lookup[rightReverse], i])
-                #重点这里要检查是否空
-                if len(right) != 0 and leftReverse in lookup and isPalindrome(right):
+                # left + right + leftReverse = palin
+                if isPalindrome(right) and leftReverse in lookup:
                     if lookup[leftReverse] != i:
                         res.append([i, lookup[leftReverse]])
-
+                    
+                # rightReverse + left + right = palin
+                if isPalindrome(left) and len(left)!=0 and rightReverse in lookup:
+                #为啥要检查孔？因为left是空的话，就和上面重复了，上面的已经检查过了
+                    if lookup[rightReverse] != i:
+                        res.append([lookup[rightReverse],i])
         return res
         
 
