@@ -3,3 +3,22 @@ https://www.interviewbit.com/courses/system-design/
 https://github.com/checkcheckzz/system-design-interview#intro
 http://blog.gainlo.co/index.php/category/system-design-interview-questions/
 https://github.com/donnemartin/system-design-primer
+
+这些是我认为比较有帮助的一些资料：
+
+http://blog.gainlo.co
+http://horicky.blogspot.com
+https://www.hiredintech.com/classrooms/system-design/lesson/52
+http://www.lecloud.net/tagged/scalability
+http://tutorials.jenkov.com/software-architecture/index.html
+http://highscalability.com/
+
+虽然系统设计面试会涵盖很多主题，如何回答这些问题还是有一些通用思路的：
+
+先明白需求，然后考虑大框架，最后是具体设计。不要马上跳到细节上，而不弄明白需求是什么。
+没有完美的系统设计。根据需要做出取舍（trade-off）。
+
+尽管如此，准备系统设计面试的最好方法就是坐下来设计一个系统，深入探索你平时使用的工具、框架和库。举个例子，要是工作中用到 HBase，有的人可能就只是简单的用一下 Client 跑一些 DDL，做一些 Get，但有的人可能就会摄入一些了解整个系统的设计，包括整个读/写流程、如何保证很强的一致性、次要/主要压缩起到作用、LRU 缓存和 Bloom Filter 的作用等等。你甚至可以将 HBase 和 Cassandra 进行比较，看看它们设计上的相似点和不同之处。面试时如果要求你设计一个分布式的键值存储，你就不会觉得太突然。 
+许多博客也能提供很多知识，比如 Hacker Noon、一些公司的工程博客以及开源项目的官方文档。
+
+最重要的是要保持好奇心和谦虚。像海绵一样吸收知识的养分。
