@@ -49,3 +49,23 @@ class Solution(object):
                     if j not in visited:
                         heapq.heappush(heap, (p + f[i][j], j, k - 1))
         return -1
+
+class Solution(object):
+    def findCheapestPrice(self, n, flights, src, dst, K):
+        #k 是最多可以停多少次
+        f = collections.defaultdict(dict)
+        for fromA, toB, price in flights:
+            f[fromA][toB] = price
+        # (price, stop, 已经停了多少次)
+        heap = [(0, src, K + 1)]
+        visited = set()
+        while heap:
+            price, i, curK = heapq.heappop(heap)
+            visited.add(i)
+            if i == dst:
+                return price
+            if curK > 0:
+                for j in f[i]:
+                    if j not in visited:
+                        heapq.heappush(heap, (price + f[i][j], j, curK - 1))
+        return -1
