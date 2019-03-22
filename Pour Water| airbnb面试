@@ -125,11 +125,13 @@ def pourwater(heights, v, k):
     right = K
     while left > 0 and heights[left] >= heights[left - 1]:
       left -= 1
+    #回滚
     while left < k and heights[left] == heights[left + 1]:
       left += 1
     
     while right < n and heights[right] >= heights[right + 1]:
       right += 1
+    #回滚
     while right > k and heights[right] == heights[right - 1]:
       left -= 1
     if heights[left] <= heights[right]:
