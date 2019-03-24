@@ -74,3 +74,54 @@ class WordDictionary(object):
                 return True
         
         return False
+
+//解法2
+class WordDictionary(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = {}
+
+    def addWord(self, word):
+        """
+        Adds a word into the data structure.
+        :type word: str
+        :rtype: void
+        """
+        if not word:
+            return
+        node = self.root
+        for c in word:
+            if c not in node:
+                node[c] = {}
+            node = node[c]
+        node['$'] = None
+        
+
+    def search(self, word):
+        """
+        Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
+        :type word: str
+        :rtype: bool
+        """
+        if not word:
+            return False
+        cur = [self.root]
+        for c in word:
+            if not cur:
+                return False
+            newNodes = []
+            for node in cur:
+                if not node:
+                    continue
+                elif c == '.':
+                    newNodes.extend(node.values())
+                elif c in node:
+                    newNodes.append(node[c])
+            cur = newNodes
+        for node in cur:
+            if node and '$' in node:
+                return True
+        return False
