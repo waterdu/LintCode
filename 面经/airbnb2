@@ -1,0 +1,152 @@
+
+最近在准备Airbnb的面试，两轮电面过了现在准备安排onsite。
+
+准备题目的时候主要依据了这个帖子：
+https://www.1point3acres.com/bbs/thread-474878-1-1.html
+然后我自己找了类似的蠡口的题目，或者是面经详细描述，知识点链接等。。贴在下面，希望对大家有所帮助吧~
+
+说句题外话，我其实不太赞同这种使用很小题库的面试方法。前几天看到了这个帖子的讨论，感觉大家说的都很有道理： https://www.1point3acres.com/bbs/thread-421347-1-1.html
+个人认为算法是SDE的基础，是必须要考的。但作为基础，只需要考察到基础的水平就够了，应该多分一些时间在OO design，coding style， system design等等。实际上对面试官来说如果你看了题目就秒了的话，我是觉得并没有提供太多data point。Airbnb我感觉就是会有这样的问题。作为面试官可能都不知道他的真实水平如何： 如果你没做过原题，一般的非研究算法/ACM的人45 分钟内很难达到标准：想到正确的思路，写出code，跑test成功。如果你做过原题，那可能只能说明你会这道题的解法。
+可能现在公司对于面试的理解，就像高考，托福，GRE，至少算法这部分，就像这些考试一样。你能考的过，就证明你有这个能力，算法这关就给过。但是就我看来，题目写的6，实际代码依然shi的不行的也是有可能的。。。
+
+另一方面讲，随着做的题越来越多，自然会的方法就越来越多，思路越来越广，没见过的题也能一下子想到答案。这算是真正的水平的提高。不过这么说的话，还有很多很多其他的area可以（需要）提高。如果只为了面试，需要仔细考虑花这么多时间去准备的回报值不值了。就像GRE一样，我们准备那么久，背的单词可能都忘了，但是为了学校offer，花的时间就是值的。所以从面试者的角度来讲，为了offer，我觉得学啥都行。
+
+以下内容需要积分高于 150 您已经可以浏览
+
+2019 新题：
+掷骰子(Shut the box) （四.2）
+
+https://www.1point3acres.com/bbs/thread-325445-1-1.html
+https://boardgames.stackexchange.com/questions/35476/whats-the-strategy-for-shut-the-box
+
+Boardgame score (四.4)
+BuildGraph+LCA
+
+https://www.1point3acres.com/bbs/thread-470844-1-1.html
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+
+Round price：
+
+https://leetcode.com/discuss/interview-question/125001/round-numbers
+
+
+
+一档：超超超高频(超大概率遇到，甚至可能3轮全都考到)
+(46) 15.4%  倒水 (1. 没有高墙  2. 打印倒水前后情况)
+
+https://leetcode.com/problems/pour-water/
+
+(46) 15.4%  所有有向图找最大最小问题(cheapest flights/10 wizards/滑雪/nodes最大得分/换着方式问) (1.找出路径  2. 一题多解 BFS+剪枝，DFS+剪枝，Dijkstra，DP)
+
+https://leetcode.com/problems/cheapest-flights-within-k-stops/
+https://leetcode.com/problems/number-of-longest-increasing-subsequence/
+https://leetcode.com/problems/course-schedule
+https://leetcode.com/problems/course-schedule-ii
+http://storypku.com/2017/10/leetcode-question-14-wizards/
+滑雪：https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=444503
+
+(40) 13.4%  file system (. implement watch function 2. Trie or HashTable)
+
+https://leetcode.com/problems/add-and-search-word-data-structure-design/
+(not same) https://leetcode.com/problems/longest-absolute-file-path
+
+(27) 9.1%    alien dictionary (1. how to solve with DFS  2. 如何找出所有可能方案 3. What if has cycle)
+
+https://leetcode.com/problems/alien-dictionary/
+
+二档: 高频(一档的补充，一二档基本覆盖面试百分之90情况)
+(16)   5.4%   sliding puzzle (1. OOP 定义board, shuffle 2. can solve/solve 3. 优化)
+
+https://leetcode.com/problems/sliding-puzzle/
+
+(13)   4.4%   Palindrome Pairs (1. 先写isPanlindrom热身)
+
+https://leetcode.com/problems/valid-palindrome/
+https://leetcode.com/problems/palindrome-pairs/
+
+(12)   4%  find the median in large file
+
+https://leetcode.com/problems/find-median-from-data-stream
+(use this to test your code) https://leetcode.com/problems/median-of-two-sorted-arrays/
+
+(12)   4%  2D list iterator (1. remove  2. 如果有多层嵌套怎么处理)
+
+https://leetcode.com/problems/flatten-2d-vector/
+https://leetcode.com/problems/flatten-nested-list-iterator/
+
+(11)   3.7%  menu combination/prices sum to k   (1. 菜品可以/不可以重复，每个菜选一次/多次   2.  注意double精度问题)
+
+https://www.1point3acres.com/bbs/thread-320436-1-1.html
+https://leetcode.com/problems/combination-sum/ (无限背包）
+https://leetcode.com/problems/combination-sum-ii/ (0-1背包)
+https://leetcode.com/problems/combination-sum-iv/ (无限背包+memo)
+https://leetcode.com/problems/coin-change-2/ (无限背包+dp) real combination sum
+
+(11)   3.7%  IP to CIDR (1. 题目不难但是很难解释)
+
+https://leetcode.com/problems/ip-to-cidr/
+
+(9)   3%      Boggle game (1. 直接两层DFS + Trie求解， 先把代码写出来再说   2. 如果可以斜着走)
+
+https://leetcode.com/problems/word-search-ii/
+https://huangwenjimmy.github.io/2016/11/17/airbnb-boggle-game.html
+
+(9)   3%      guess number
+
+https://leetcode.com/problems/guess-the-word/
+
+三档： 低频(有可能会遇到，有时间还是需要复习)
+(7)   2.3%  queue using fixed size array(1. 实现pop)
+
+https://leetcode.com/problems/design-circular-queue
+
+(7)   2.3%  wiggle sort 2 (1. quick select find median就可以，不需要spaceO(1))
+
+https://leetcode.com/problems/wiggle-sort/
+https://leetcode.com/problems/wiggle-sort-ii/
+
+(6)   2%     travel buddy
+(5)   1.7%  display page
+(4)   1.3%  Collatz Conjecture(1. iterative and recursion  2. hashmap来优化)
+
+https://en.wikipedia.org/wiki/Collatz_conjecture
+https://leetcode.com/problems/integer-replacement/
+
+(4)   1.3%  Minimum Vertices to Traverse Directed Grap
+
+https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+https://www.cnblogs.com/nullzx/p/6437926.html
+https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=319799&page=3
+https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+
+四档： 超低频(2年内偶尔出现，或者是比较新的题，数据较少)
+(2)   0.7%    employee interval
+(2)   0.7%    csv parser (移动到OA)
+(2)   0.7 %   bank system
+(2)   0.7%    Board Score(*新题 皇冠题，每个点开始DFS计算得分，类似于Number of Island)
+
+https://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=455445&_dsign=629273e9
+
+(2)   0.7%    Maximum Number a Night You Can Accommodate(house robber)/Interval Schedule Profit (带间隔的DP问题)
+(2)   0.3%    flip tile(*新题，类似于shut the box)
+
+-baidu 1point3acre
+五档: (deprecated,  2年内没有出现过，或者我miss掉了，基本可以直接无视)
+(0)   0% Calculator
+. check 1point3acres for more.
+https://leetcode.com/problems/basic-calculator/
+https://leetcode.com/problems/basic-calculator-ii/
+https://leetcode.com/problems/basic-calculator-iii/
+
+(0)   0% Regular Expression
+
+https://leetcode.com/problems/wildcard-matching/
+https://leetcode.com/problems/regular-expression-matching/
+
+(0)   0% Hilbert Curve
+(0)   0% Simulate Diplomacy
+(0)   0% Finding Ocean
+(0)   0% K Edit Distance
+(0)   0% String Pyramids Transition Matrix-baidu 1point3acres
+(0)   0% Number of Intersected Rectangle
+(0)   0% echo TCP client
