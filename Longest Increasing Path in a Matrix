@@ -1,0 +1,96 @@
+iven an integer matrix, find the length of the longest increasing path.
+
+From each cell, you can either move to four directions: left, right, up or down. 
+You may NOT move diagonally or move outside of the boundary (i.e. wrap-around is not allowed).
+
+Example 1:
+
+Input: nums = 
+[
+  [9,9,4],
+  [6,6,8],
+  [2,1,1]
+] 
+Output: 4 
+Explanation: The longest increasing path is [1, 2, 6, 9].
+Example 2:
+
+Input: nums = 
+[
+  [3,4,5],
+  [3,2,6],
+  [2,2,1]
+] 
+Output: 4 
+Explanation: The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
+
+class Solution(object):
+    def longestIncreasingPath(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: int
+        """
+        if not matrix or not matrix[0]:
+            return 0
+        m = len(matrix)
+        n = len(matrix[0])
+        neibors = [[-1,0],[1,0],[0,-1],[0,1]]
+        #从那个点出发最远有几条路，9出发的话默认1
+        cache = [[0] * n for x in range(m)]
+        def dfs(i, j):
+            if cache[i][j] !=  0:
+                return cache[i][j]
+            res = 1
+            for neibo in neibors:
+                x = i + neibo[0]
+                y = j + neibo[1]
+                if x < 0 or x >= m or y<0 or y>=n or matrix[x][y] <= matrix[i][j]:
+                    continue
+                l = 1 + dfs(x,y)
+                res = max(res, l)
+            cache[i][j] = res
+            return res
+        
+        Max = 1
+        for i in range(m):
+            for j in range(n):
+                Len = dfs(i, j)
+                Max = max(Len, Max)
+        return Max
+
+class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        if (matrix.length == 0){
+            return 0;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] cache = new int[m][n];
+        int max = 1;
+        for (int i = 0; i < m;i++){
+            for(int j = 0; j< n;j++){
+                int len = dfs(matrix, i,j,m,n, cache);
+                max = Math.max(max, len);
+            }
+        }
+        return max;
+    }
+    public int dfs(int[][] matrix, int i, int j, int m, int n, int[][] cache) {
+        if (cache[i][j] != 0) {
+            return cache[i][j];
+        }
+        int max = 1;
+        int[][] neibors = {{1,0},{-1,0},{0,-1},{0,1}};
+        for (int[] neibor:neibors){
+            int x = i + neibor[0];
+            int y = j + neibor[1];
+            if (x < 0 || x >= m||y<0||y>=n || matrix[x][y] <= matrix[i][j]){
+                continue;
+            }
+            int len = 1 + dfs(matrix, x,y,m,n,cache);
+            max = Math.max(max, len);
+        }
+        cache[i][j] = max;
+        return max;
+    }
+}
