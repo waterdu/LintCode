@@ -1,0 +1,148 @@
+/*
+ * Given the largest rectangle in given grid.
+ * -> Rectangle should be formed by 'True'values in the given grid.
+ * -> Assume each grid dimension will be less than 10 in size.
+ *
+ * Example:
+ * T T T T
+ * T T F T
+ * F T T T
+ *
+ * The perimeter of the largest rectangle in the given grid 
+ * contains 8 cells. (3x3 rectangle on the right, excluding the first column).
+ * 
+ * - Return -1 if the given grid has no rectangles
+ * - Single cell does not comprise a rentangle.
+ * - Rectangle does not have to be a filled, as in the given example.
+ *
+ */
+
+public class Solution {
+  // O(m^2n^2)
+  public static int maxPerimeterMatrix(boolean[][] grid) {
+    // Implement this method
+    if (grid == null || grid.length == 0 || grid[0].length == 0) {
+      return -1;
+    }
+    int m = grid.length;
+    int n = grid[0].length;
+    //max line to updown to the point
+    int[][] vertical = new int[m][n];
+    //max line leftright to the point
+    int[][] horizontal = new int[m][n];
+    
+    for (int i = 0; i < m; i++){
+      for (int j = 0; j < n; j++){
+        if (grid[i][j]){
+          if (i == 0){
+            vertical[i][j] = 1;
+          } else {
+            vertical[i][j] = vertical[i - 1][j] + 1;
+          }
+          if (j == 0){
+             horizontal[i][j] = 1;
+          } else {
+             horizontal[i][j] =  horizontal[i][j-1] + 1; 
+          }  
+        }  
+      }
+    }
+    int res = 0;
+    
+    
+    for (int x1 = 0; x1 < m; x1++){
+      for (int y1 = 0; y1 < n; y1++){
+         for (int x2 = x1; x2 < m; x2++){
+            for (int y2 = y1; y2 < n; y2++){
+              if(x1 == x2 && y1 == y2){
+                continue; 
+              }
+              //length
+              int l = y2 - y1 + 1;
+              //height
+              int h = x2 - x1 + 1;
+              if (horizontal[x1][y2] >= l && horizontal[x2][y2] >= l
+                  && vertical[x2][y1] >= h && vertical[x2][y2] >= h){
+                int perimeter = 2*(l -1) + 2*(h-1);
+                //it's a line
+                if (l == 1 && h > 1){
+                  perimeter =h;
+                } else if(l > 1 && h == 1) {
+                  perimeter =l;
+                }
+                res = Math.max(res, perimeter);
+              }
+            }
+         }
+                  
+      }
+    }
+    if(res == 0){
+      return -1;
+    }
+    return res;
+    
+  }
+  
+  public static void main(String[] args) {
+    // Create your test grid
+    boolean grid[][] = {
+      {true,  true,  true,  true},
+      {true,  true,  false, true},
+      {false, true,  true,  true}
+    };
+    boolean empty[][] = null;
+    boolean empty2[][] = {};
+    
+    boolean allTrue[][] = {
+      {true,  true,  true,  true},
+      {true,  true,  true, true},
+      {true, true,  true,  true},
+      {true, true,  true,  true}
+    };
+    
+    boolean allFalse[][] = {
+      {false,  false,  false,  false},
+      {false,  false,  false, false},
+      {false, false,  false,  false}
+    };
+    
+    boolean test1[][] = {
+      {false,  true,  true,  false},
+      {false,  false,  false, false},
+      {false, true,  false,  false}
+    };
+    
+    boolean test2[][] = {
+      {false,  false,  false,  true},
+      {false,  true,  false, false},
+      {false, false,  false,  false}
+    };
+    
+    boolean test3[][] = {
+      {true,  false,  false,  false},
+      {false,  false,  false, false},
+      {false, false,  false,  true}
+    };
+    
+    boolean test4[][] = {
+      {true,  false,  false,  true},
+      {false,  true,  false, true},
+      {true, false,  false,  true}
+    };
+    boolean test5[][] = {
+      {true}
+    };
+    // Print maxPerimeterMatrix(grid);
+    System.out.println(maxPerimeterMatrix(grid));
+    System.out.println(maxPerimeterMatrix(empty));
+    System.out.println(maxPerimeterMatrix(empty2));
+    System.out.println(maxPerimeterMatrix(allTrue));
+    System.out.println(maxPerimeterMatrix(allFalse));
+    System.out.println(maxPerimeterMatrix(test1));
+    System.out.println(maxPerimeterMatrix(test2));
+    System.out.println(maxPerimeterMatrix(test3));
+    System.out.println(maxPerimeterMatrix(test4));
+    System.out.println(maxPerimeterMatrix(test5));
+  }
+}
