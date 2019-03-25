@@ -1,0 +1,59 @@
+1. how to solve with DFS  2. 如何找出所有可能方案 3. What if has cycle
+
+There is a new alien language which uses the latin alphabet. 
+However, the order among letters are unknown to you. 
+You receive a list ofnon-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. 
+Derive the order of letters in this language.
+
+Example 1:
+Given the following words in dictionary,
+
+[
+  "wrt",
+  "wrf",
+  "er",
+  "ett",
+  "rftt"
+]
+这个能知道w < e < r. r< t< f. 
+The correct order is: "wertf".
+
+Example 2:
+Given the following words in dictionary,
+
+[
+  "z",
+  "x"
+]
+The correct order is: "zx".
+
+Example 3:
+Given the following words in dictionary,
+
+[
+  "z",
+  "x",
+  "z"
+]
+The order is invalid, so return "".
+
+Note:
+
+You may assume all letters are in lowercase.
+You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+If the order is invalid, return an empty string.
+There may be multiple valid order of letters, return any one of them is fine.
+
+这道题让给了我们一些按“字母顺序”排列的单词，但是这个字母顺序不是我们熟知的顺序，而是另类的顺序，
+让我们根据这些“有序”的单词来找出新的字母顺序，这实际上是一道有向图遍历的问题，
+跟之前的那两道 Course Schedule II 和 Course Schedule 的解法很类似
+
+def alienOrder(word):
+    degree = {}
+    nodes = set()
+    for word in words:
+        for c in word:
+            nodes.add(c)
+    for i in range(1, len(words)):
+        if 
+    
