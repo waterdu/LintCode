@@ -21,6 +21,73 @@ cache.get(1);       // returns -1 (not found)
 cache.get(3);       // returns 3
 cache.get(4);       // returns 4
 
+//py写法
+class ListNode:
+    def __init__(self, k, v):
+        self.key = k
+        self.val = v
+        self.next = None
+        self.prev = None
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.cap = capacity
+        self.head = ListNode(0,0)
+        self.tail = ListNode(0,0)
+        self.head.prev = self.tail
+        self.tail.next = self.head
+        self.map = {}
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if key in self.map:
+            n = self.map[key]
+            self._remove(n)
+            self._add(n)
+            return n.val
+        return -1
+        
+        
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: void
+        """
+        if key in self.map:
+            self._remove(self.map[key])
+
+        n = ListNode(key,value)
+        self.map[key] = n
+        self._add(n)
+        
+        if len(self.map) > self.cap:
+            n = self.tail.next
+            del self.map[n.key]
+            self._remove(n)
+    
+    def _add(self, node):
+        n = self.head.prev
+        n.next = node
+        node.prev = n
+        node.next = self.head
+        self.head.prev = node
+    
+    def _remove(self, node):
+        prev = node.prev
+        next = node.next
+        prev.next = next
+        next.prev = prev
+
+
 class LRUCache {
     HashMap<Integer, Node> map;
     int capacity, count;
