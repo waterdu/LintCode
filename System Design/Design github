@@ -1,0 +1,45 @@
+print "Hello"
+
+design github
+
+feature: 1 search
+2 
+
+repo rid timestamp createdBy
+@OneToMany
+branch branchId rid
+@OneToMany
+version vid timestamp rid
+@OneToMany  可能会出现性能问题，3个level的话
+files fid fName vid
+@OneToMany
+rows rowId fileId add_del
+
+listrows[{row1,
+          time,
+,row2,row3]  file
+
+运行一年，后面很多version以后，就要开始压缩
+
+
+1, 0
+getDiff(v1, v2)
+
+commit(filesDiff, rowsDiff, rid)
+
+
+master 20, localBrach 25 
+merge
+
+10000 version, 1000 index 1001-2000, inde2 2001-2003
+              mysql         S3             
+                  1009
+
+                  7000   S3 
+oldVersionQueryService
+cache RLU 1000
+S3, 2 hot, cold
+
+
+
+
